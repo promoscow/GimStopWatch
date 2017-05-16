@@ -1,5 +1,6 @@
 package ru.xpendence.development.gimstopwatch;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 public class StopWatchActivity extends AppCompatActivity {
     ScrollView myScroll;
@@ -17,6 +19,7 @@ public class StopWatchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stop_watch_scroll_layout);
 
