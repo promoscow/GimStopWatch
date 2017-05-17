@@ -1,7 +1,10 @@
 package ru.xpendence.development.gimstopwatch;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -9,13 +12,26 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import ru.xpendence.development.gimstopwatch.fragments.Timer;
+import ru.xpendence.development.gimstopwatch.fragments.Timer2;
+
 public class StopWatchActivity extends AppCompatActivity {
     ScrollView myScroll;
+    LinearLayout linearLayout;
+    Timer timer;
+    Timer2 timer2;
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+
     public static int resolutionX;
     public static int resolutionY;
+    public static float dpHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +39,27 @@ public class StopWatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stop_watch_scroll_layout);
 
+        final float scale = getResources().getDisplayMetrics().density;
+
         getResolutions();
         Log.d("calcDP", String.valueOf(calcDP(100)));
         defineDensity();
 
-        View view = findViewById(R.id.main_fragment_view);
+        timer = new Timer();
+        timer2 = new Timer2();
 
+
+
+//        View view = findViewById(R.id.main_fragment_view);
+
+        linearLayout = (LinearLayout) findViewById(R.id.main_linear_container);
+        linearLayout.setLayoutParams(new FrameLayout.LayoutParams(resolutionX, resolutionY + (101 * (int) scale)));
+        Log.d("linearLayoutX", String.valueOf(resolutionX));
+        Log.d("linearLayoutY", String.valueOf(resolutionY + (101 * (int) scale)));
         myScroll = (ScrollView) findViewById(R.id.stop_watch_scroll);
-        myScroll.post(new Runnable(){
-            public void run(){
+        Log.d("myScroll", String.valueOf(resolutionY + 101 * scale));
+        myScroll.post(new Runnable() {
+            public void run() {
                 myScroll.scrollBy(0, (int) calcDP(101));
             }
         });
@@ -65,12 +93,32 @@ public class StopWatchActivity extends AppCompatActivity {
 
     public void defineDensity() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         Log.d("density", String.valueOf(displayMetrics.density));
         Log.d("heightPixels", String.valueOf(displayMetrics.heightPixels));
         Log.d("widthPixels", String.valueOf(displayMetrics.widthPixels));
         Log.d("dpHeight", String.valueOf(dpHeight));
         Log.d("dpWidth", String.valueOf(dpWidth));
+    }
+
+    public void onClickMenu(View view) {
+        fragmentManager = getFragmentManager();
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        Log.d("onClick", String.valueOf(fragmentTransaction));
+
+        switch (view.getId()) {
+            case R.id.timer1 :
+                Log.d("onClick", "timer");
+                fragmentTransaction.replace(R.id.main_fragment_view, timer);
+                break;
+            case R.id.timer2 :
+                Log.d("onClick", "timer2");
+                fragmentTransaction.replace(R.id.main_fragment_view, timer2);
+                break;
+        }
+        fragmentTransaction.addToBackStack("1");
+        fragmentTransaction.commit();
+        Log.d("onClick", "commited");
     }
 }

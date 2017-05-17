@@ -9,14 +9,18 @@ import android.util.DisplayMetrics;
  */
 
 public class MathHelper {
-    private static boolean isFirst = true;
+    public static boolean isFirst = true;
     private static int[] colors = {
             0xFFFFFFFF, 0xFFF24AB9, 0xFF4E5CD1, 0xFFF6DE42, 0xFF973F8B, 0xFF97E17F, 0xFFF25750, 0xFF457333
     };
 
     private static int i = 1;
-    private static int y = 1;
-    public static boolean isStoped = false;
+
+    public static int getI() {
+        return i;
+    }
+
+    public static boolean isStoped = true;
 
     public static float[] defineDensity(Activity activity) {
 

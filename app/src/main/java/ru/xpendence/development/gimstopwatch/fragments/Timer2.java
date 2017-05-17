@@ -11,7 +11,6 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,11 +21,10 @@ import ru.xpendence.development.gimstopwatch.util.MathHelper;
  * Main activity for timer frame.
  */
 
-public class Timer extends Fragment {
+public class Timer2 extends Fragment {
 
     private static int fragmentHeight = 0;
     private static int fragmentWidth = 0;
-    private static float angle = 1;
 
     DrawView drawView;
 
@@ -42,14 +40,14 @@ public class Timer extends Fragment {
         drawView.post(new Runnable() {
             @Override
             public void run() {
-//                if (container != null) {
-//                    fragmentHeight = container.getHeight();
-//                    fragmentWidth = container.getWidth();
-//                    Log.e("TEST",
-//                            "Parent height = " + container.getHeight()
-//                                    + ", Parent width = " + container.getWidth()
-//                    );
-//                }
+                if (container != null) {
+                    fragmentHeight = container.getHeight();
+                    fragmentWidth = container.getWidth();
+                    Log.e("TEST",
+                            "Parent height = " + container.getHeight()
+                                    + ", Parent width = " + container.getWidth()
+                    );
+                }
                 fragmentHeight = drawView.getHeight();
                 fragmentWidth = drawView.getWidth();
                 Log.e("TEST",
@@ -58,24 +56,13 @@ public class Timer extends Fragment {
                 );
             }
         });
-//        drawView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("Timer", "onClick");
-//                MathHelper.isStoped = !MathHelper.isStoped;
-//            }
-//        });
-        drawView.setOnTouchListener(new View.OnTouchListener() {
+        drawView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            public void onClick(View v) {
                 Log.d("Timer", "onClick");
                 MathHelper.isStoped = !MathHelper.isStoped;
-                }
-                return false;
             }
         });
-        Log.d("onCreateView", "exit");
         return drawView;
     }
 
@@ -95,7 +82,6 @@ public class Timer extends Fragment {
 
         private static final long FPS = 200;
         private static final long TIME_DELAY = 1000 / FPS;
-        private boolean isSized = false;
 
         private float[] coordinates = new float[5];
 
@@ -103,11 +89,11 @@ public class Timer extends Fragment {
             coordinates = MathHelper.defineDensity(getActivity());
         }
 
-        private float DENSITY = coordinates[0];
-        private float HEIGHT = coordinates[2] / coordinates[4] * 400;
-        private float WIDTH = coordinates[2];
-        private float DP_HEIGHT = 400;
-        private float DP_WIDTH = coordinates[4];
+        private final float DENSITY = coordinates[0];
+        private final float HEIGHT = coordinates[2] / coordinates[4] * 400;
+        private final float WIDTH = coordinates[2];
+        private final float DP_HEIGHT = 400;
+        private final float DP_WIDTH = coordinates[4];
 
         {
             Log.d("Timer.density", String.valueOf(DENSITY));
@@ -115,11 +101,6 @@ public class Timer extends Fragment {
             Log.d("Timer.width", String.valueOf(WIDTH));
             Log.d("Timer.dpHeight", String.valueOf(DP_HEIGHT));
             Log.d("Timer.dpWidth", String.valueOf(DP_WIDTH));
-        }
-
-        protected void onFinishInflate() {
-            super.onFinishInflate();
-            Log.d("onFinishInflate", "okay");
         }
 
         private final Runnable mInvalidator = new Runnable() {
@@ -131,7 +112,7 @@ public class Timer extends Fragment {
 
         private final Paint mPaint = new Paint();
         private final RectF rectF = new RectF();
-//        private float angle;
+        private float angle;
 
         {
             mPaint.setStrokeWidth(20);
@@ -142,7 +123,7 @@ public class Timer extends Fragment {
                     (WIDTH / 2) + (WIDTH / 3),
                     (HEIGHT / 2) + (WIDTH / 3));
 
-//            angle = 0;
+            angle = 0;
         }
 
         public DrawView(Context context) {
@@ -164,53 +145,28 @@ public class Timer extends Fragment {
 
         @Override
         protected final void onDraw(final Canvas canvas) {
-//            if (!isSized) {
-//                if (fragmentHeight != 0) HEIGHT = fragmentHeight;
-//                if (fragmentWidth != 0) WIDTH = fragmentWidth;
-//                if (HEIGHT == fragmentHeight && WIDTH == fragmentWidth) {
-//                    isSized = true;
-//                    rectF.set((WIDTH / 2) - (WIDTH / 3),
-//                            (HEIGHT / 2) - (WIDTH / 3),
-//                            (WIDTH / 2) + (WIDTH / 3),
-//                            (HEIGHT / 2) + (WIDTH / 3));
-//                }
-//            }
-
-
-            HEIGHT = canvas.getHeight();
-            WIDTH = canvas.getWidth();
-            rectF.set((WIDTH / 2) - (WIDTH / 3),
-                    (HEIGHT / 2) - (WIDTH / 3),
-                    (WIDTH / 2) + (WIDTH / 3),
-                    (HEIGHT / 2) + (WIDTH / 3));
-
             super.onDraw(canvas);
-//            Log.d("canvasHeight", String.valueOf(canvas.getHeight()));
-//            Log.d("canvasWidth", String.valueOf(canvas.getWidth()));
 
 //            Log.d("fragmentHeight", String.valueOf(fragmentHeight));
 //            Log.d("fragmentWidth", String.valueOf(fragmentWidth));
 
+//            mPaint.setColor(MathHelper.setBgI());
+//            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, (WIDTH / 3), mPaint);
+//
+//            angle = MathHelper.getAngle(angle);
+//            mPaint.setColor(MathHelper.setTimelineColor(angle));
+//
+//            canvas.drawArc(rectF, 270, angle, false, mPaint);
+//            mPaint.setTextSize(100);
 //            mPaint.setStyle(Paint.Style.FILL);
-            mPaint.setColor(MathHelper.setBgI());
-            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, (WIDTH / 3), mPaint);
-
-            angle = MathHelper.getAngle(angle);
-            mPaint.setColor(MathHelper.setTimelineColor(angle));
-
-            canvas.drawArc(rectF, 270, angle, false, mPaint);
-            canvas.drawLine(WIDTH / 2, HEIGHT / 2 - WIDTH / 3 + 20, WIDTH / 2, HEIGHT / 2 - WIDTH / 3 - 30, mPaint);
-
-            mPaint.setTextSize(100);
-            mPaint.setStyle(Paint.Style.FILL);
-            canvas.drawText(String.valueOf(MathHelper.getI()), 100, 200, mPaint);
-            mPaint.setStyle(Paint.Style.STROKE);
-
-            if (angle % 360 == 0) {
-                angle = 0;
-                MathHelper.setI();
-            }
-            postDelayed(mInvalidator, TIME_DELAY);
+//            canvas.drawText("2", 100, 200, mPaint);
+//            mPaint.setStyle(Paint.Style.STROKE);
+//
+//            if (angle % 360 == 0) {
+//                angle = 0;
+//                MathHelper.setI();
+//            }
+//            postDelayed(mInvalidator, TIME_DELAY);
         }
     }
 }
