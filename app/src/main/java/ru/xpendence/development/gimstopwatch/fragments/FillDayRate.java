@@ -2,8 +2,12 @@ package ru.xpendence.development.gimstopwatch.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.xpendence.development.gimstopwatch.R;
+import ru.xpendence.development.gimstopwatch.util.BitmapHelper;
 import ru.xpendence.development.gimstopwatch.util.MathHelper;
 
 /**
@@ -21,7 +27,7 @@ import ru.xpendence.development.gimstopwatch.util.MathHelper;
  * Main activity for timer frame.
  */
 
-public class Timer2 extends Fragment {
+public class FillDayRate extends Fragment {
 
     private static int fragmentHeight = 0;
     private static int fragmentWidth = 0;
@@ -80,7 +86,9 @@ public class Timer2 extends Fragment {
 
     public class DrawView extends View {
 
-        private static final long FPS = 200;
+        Resources resources = this.getResources();
+
+        private static final long FPS = 10;
         private static final long TIME_DELAY = 1000 / FPS;
 
         private float[] coordinates = new float[5];
@@ -111,12 +119,19 @@ public class Timer2 extends Fragment {
         };
 
         private final Paint mPaint = new Paint();
+        private final Rect mRect = new Rect();
         private final RectF rectF = new RectF();
+        private final Bitmap calContainer = BitmapFactory.decodeResource(resources, R.drawable.cal_container_200);
+        private final Bitmap calContainerFill =
+                BitmapFactory.decodeResource(resources,
+                        BitmapHelper.getCalContainerFill());
         private float angle;
 
         {
-            mPaint.setStrokeWidth(20);
+            mPaint.setStrokeWidth(10);
             mPaint.setStyle(Paint.Style.STROKE);
+
+            mRect.set((int) (WIDTH * 0.3f), (int) (HEIGHT * 0.2f), (int) (WIDTH * 0.7f), (int) (HEIGHT * 0.8f));
 
             rectF.set((WIDTH / 2) - (WIDTH / 3),
                     (HEIGHT / 2) - (WIDTH / 3),
@@ -147,6 +162,18 @@ public class Timer2 extends Fragment {
         protected final void onDraw(final Canvas canvas) {
             super.onDraw(canvas);
 
+            canvas.drawBitmap(calContainer,
+                    canvas.getWidth() / 2 - calContainer.getWidth() / 2,
+                    canvas.getHeight() / 2 - calContainer.getHeight() / 2,
+                    mPaint);
+
+            canvas.drawBitmap(calContainerFill,
+                    canvas.getWidth() / 2 - calContainer.getWidth() / 2,
+                    canvas.getHeight() / 2 - calContainer.getHeight() / 2,
+                    mPaint);
+//            mPaint.setColor(Color.WHITE);
+//            canvas.drawRect(mRect, mPaint);
+
 //            Log.d("fragmentHeight", String.valueOf(fragmentHeight));
 //            Log.d("fragmentWidth", String.valueOf(fragmentWidth));
 
@@ -166,7 +193,7 @@ public class Timer2 extends Fragment {
 //                angle = 0;
 //                MathHelper.setI();
 //            }
-//            postDelayed(mInvalidator, TIME_DELAY);
+            postDelayed(mInvalidator, TIME_DELAY);
         }
     }
 }

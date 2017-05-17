@@ -58,13 +58,7 @@ public class Timer extends Fragment {
                 );
             }
         });
-//        drawView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("Timer", "onClick");
-//                MathHelper.isStoped = !MathHelper.isStoped;
-//            }
-//        });
+
         drawView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -134,7 +128,7 @@ public class Timer extends Fragment {
 //        private float angle;
 
         {
-            mPaint.setStrokeWidth(20);
+            mPaint.setStrokeWidth(10);
             mPaint.setStyle(Paint.Style.STROKE);
 
             rectF.set((WIDTH / 2) - (WIDTH / 3),
