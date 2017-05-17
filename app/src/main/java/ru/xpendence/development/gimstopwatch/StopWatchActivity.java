@@ -23,6 +23,7 @@ import ru.xpendence.development.gimstopwatch.fragments.Timer2;
 public class StopWatchActivity extends AppCompatActivity {
     ScrollView myScroll;
     LinearLayout linearLayout;
+    LinearLayout mainLayout;
     Timer timer;
     Timer2 timer2;
 
@@ -53,6 +54,8 @@ public class StopWatchActivity extends AppCompatActivity {
 //        View view = findViewById(R.id.main_fragment_view);
 
         linearLayout = (LinearLayout) findViewById(R.id.main_linear_container);
+//        linearLayout.setLayoutParams(new FrameLayout.LayoutParams(resolutionX, resolutionY + (101 * (int) scale)));
+        mainLayout = (LinearLayout) findViewById(R.id.main_linear_layout);
         linearLayout.setLayoutParams(new FrameLayout.LayoutParams(resolutionX, resolutionY + (101 * (int) scale)));
         Log.d("linearLayoutX", String.valueOf(resolutionX));
         Log.d("linearLayoutY", String.valueOf(resolutionY + (101 * (int) scale)));
