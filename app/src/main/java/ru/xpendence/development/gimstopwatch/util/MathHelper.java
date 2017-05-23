@@ -51,4 +51,8 @@ public class MathHelper {
     public static int setBgI() {
         return (i == 1 && !isFirst) ? colors[colors.length - 1] : colors[i - 1];
     }
+
+    public static int getAbsoluteSize(int fragmentHeight, int fragmentWidth) {
+        return fragmentHeight > fragmentWidth ? fragmentWidth : fragmentHeight;
+    }
 }

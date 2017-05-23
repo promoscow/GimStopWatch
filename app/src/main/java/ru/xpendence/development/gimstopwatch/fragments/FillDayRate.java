@@ -103,14 +103,6 @@ public class FillDayRate extends Fragment {
         private final float DP_HEIGHT = 400;
         private final float DP_WIDTH = coordinates[4];
 
-        {
-            Log.d("Timer.density", String.valueOf(DENSITY));
-            Log.d("Timer.height", String.valueOf(HEIGHT));
-            Log.d("Timer.width", String.valueOf(WIDTH));
-            Log.d("Timer.dpHeight", String.valueOf(DP_HEIGHT));
-            Log.d("Timer.dpWidth", String.valueOf(DP_WIDTH));
-        }
-
         private final Runnable mInvalidator = new Runnable() {
             @Override
             public final void run() {

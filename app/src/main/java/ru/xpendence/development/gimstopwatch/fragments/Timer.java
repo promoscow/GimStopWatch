@@ -24,6 +24,8 @@ import ru.xpendence.development.gimstopwatch.util.MathHelper;
 
 public class Timer extends Fragment {
 
+    private static int absoluteSize = 0;
+
     private static int fragmentHeight = 0;
     private static int fragmentWidth = 0;
     private static float angle = 1;
@@ -97,18 +99,18 @@ public class Timer extends Fragment {
             coordinates = MathHelper.defineDensity(getActivity());
         }
 
-        private float DENSITY = coordinates[0];
-        private float HEIGHT = coordinates[2] / coordinates[4] * 400;
-        private float WIDTH = coordinates[2];
-        private float DP_HEIGHT = 400;
-        private float DP_WIDTH = coordinates[4];
+        private float density = coordinates[0];
+        private float height = coordinates[2] / coordinates[4] * 400;
+        private float width = coordinates[2];
+        private float dpHeight = 400;
+        private float dpWidth = coordinates[4];
 
         {
-            Log.d("Timer.density", String.valueOf(DENSITY));
-            Log.d("Timer.height", String.valueOf(HEIGHT));
-            Log.d("Timer.width", String.valueOf(WIDTH));
-            Log.d("Timer.dpHeight", String.valueOf(DP_HEIGHT));
-            Log.d("Timer.dpWidth", String.valueOf(DP_WIDTH));
+            Log.d("Timer.density", String.valueOf(density));
+            Log.d("Timer.height", String.valueOf(height));
+            Log.d("Timer.width", String.valueOf(width));
+            Log.d("Timer.dpHeight", String.valueOf(dpHeight));
+            Log.d("Timer.dpWidth", String.valueOf(dpWidth));
         }
 
         protected void onFinishInflate() {
@@ -131,10 +133,10 @@ public class Timer extends Fragment {
             mPaint.setStrokeWidth(10);
             mPaint.setStyle(Paint.Style.STROKE);
 
-            rectF.set((WIDTH / 2) - (WIDTH / 3),
-                    (HEIGHT / 2) - (WIDTH / 3),
-                    (WIDTH / 2) + (WIDTH / 3),
-                    (HEIGHT / 2) + (WIDTH / 3));
+            rectF.set((width / 2) - (width / 3),
+                    (height / 2) - (width / 3),
+                    (width / 2) + (width / 3),
+                    (height / 2) + (width / 3));
 
 //            angle = 0;
         }
@@ -159,24 +161,28 @@ public class Timer extends Fragment {
         @Override
         protected final void onDraw(final Canvas canvas) {
 //            if (!isSized) {
-//                if (fragmentHeight != 0) HEIGHT = fragmentHeight;
-//                if (fragmentWidth != 0) WIDTH = fragmentWidth;
-//                if (HEIGHT == fragmentHeight && WIDTH == fragmentWidth) {
+//                if (fragmentHeight != 0) height = fragmentHeight;
+//                if (fragmentWidth != 0) width = fragmentWidth;
+//                if (height == fragmentHeight && width == fragmentWidth) {
 //                    isSized = true;
-//                    rectF.set((WIDTH / 2) - (WIDTH / 3),
-//                            (HEIGHT / 2) - (WIDTH / 3),
-//                            (WIDTH / 2) + (WIDTH / 3),
-//                            (HEIGHT / 2) + (WIDTH / 3));
+//                    rectF.set((width / 2) - (width / 3),
+//                            (height / 2) - (width / 3),
+//                            (width / 2) + (width / 3),
+//                            (height / 2) + (width / 3));
 //                }
 //            }
 
 
-            HEIGHT = canvas.getHeight();
-            WIDTH = canvas.getWidth();
-            rectF.set((WIDTH / 2) - (WIDTH / 3),
-                    (HEIGHT / 2) - (WIDTH / 3),
-                    (WIDTH / 2) + (WIDTH / 3),
-                    (HEIGHT / 2) + (WIDTH / 3));
+            height = canvas.getHeight();
+            width = canvas.getWidth();
+
+            rectF.set((width / 2) - (absoluteSize / 3),
+                    (height / 2) - (absoluteSize / 3),
+                    (width / 2) + (absoluteSize / 3),
+                    (height / 2) + (absoluteSize / 3));
+
+
+            absoluteSize = MathHelper.getAbsoluteSize(canvas.getHeight(), canvas.getWidth());
 
             super.onDraw(canvas);
 //            Log.d("canvasHeight", String.valueOf(canvas.getHeight()));
@@ -187,13 +193,13 @@ public class Timer extends Fragment {
 
 //            mPaint.setStyle(Paint.Style.FILL);
             mPaint.setColor(MathHelper.setBgI());
-            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, (WIDTH / 3), mPaint);
+            canvas.drawCircle(width / 2, height / 2, (absoluteSize / 3), mPaint);
 
             angle = MathHelper.getAngle(angle);
             mPaint.setColor(MathHelper.setTimelineColor(angle));
 
             canvas.drawArc(rectF, 270, angle, false, mPaint);
-            canvas.drawLine(WIDTH / 2, HEIGHT / 2 - WIDTH / 3 + 20, WIDTH / 2, HEIGHT / 2 - WIDTH / 3 - 30, mPaint);
+//            canvas.drawLine(width / 2, height / 2 - width / 3 + 20, width / 2, height / 2 - width / 3 - 30, mPaint);
 
             mPaint.setTextSize(100);
             mPaint.setStyle(Paint.Style.FILL);

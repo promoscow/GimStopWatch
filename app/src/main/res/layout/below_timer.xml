@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:overScrollMode="never"
+    android:scrollbars="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Листая старую тетрадь расстрелянного генерала, я краем уха наблюдал за новостями по CNN, рассказывающими о беспорядках в Лондоне. Много вопросов накопилось у читателей моего блога по поводу того, что там происходит. Часть блоггеров даже ошибочно приняла лондонский бунт черни за новую твиттерную революцию, потребовали у ООН немедленно объявить бесполетную зону над Лондоном и гуманитарных ковровых бомбардировок для защиты мирного населения. В правозащитном угаре некоторые потребовали отставки королевы, которая находится у власти даже больше чем Каддафи и нанесения ракетных ударов по Букингемскому дворцу. Соответственно, в связи с её внезапной нелегитимностью, были высказаны пожелания замораживания счетов королевы во всем мире."
+        android:textColor="@android:color/white" />
+</ScrollView>

@@ -17,6 +17,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import ru.xpendence.development.gimstopwatch.fragments.BelowTimer;
 import ru.xpendence.development.gimstopwatch.fragments.FillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.NutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.Timer;
@@ -34,15 +35,15 @@ public class StopWatchActivity extends AppCompatActivity {
     /**
      * All layouts in this activity.
      */
-    LinearLayout mainLinearContainer;
-    ScrollView stopWatchScroll;
-    LinearLayout mainLinearLayout;
-    HorizontalScrollView horizontalMenu;
-    LinearLayout horizontalMenuLayout;
-    LinearLayout timerMainFrame;
-    ConstraintLayout upArrowLayout;
-    ConstraintLayout mainFragmentLayout;
-    LinearLayout fragmentBelowNameLinearLayout;
+//    LinearLayout mainLinearContainer;
+//    ScrollView stopWatchScroll;
+//    LinearLayout mainLinearLayout;
+//    HorizontalScrollView horizontalMenu;
+//    LinearLayout horizontalMenuLayout;
+//    LinearLayout timerMainFrame;
+//    ConstraintLayout upArrowLayout;
+//    ConstraintLayout mainFragmentLayout;
+//    LinearLayout fragmentBelowNameLinearLayout;
 
     /**
      * All fragments on this activity & its utils.
@@ -50,7 +51,7 @@ public class StopWatchActivity extends AppCompatActivity {
     Timer timer;
     FillDayRate fillDayRate;
     NutrientsRatio nutrientsRatio;
-    FragmentManager fragmentManager;
+    BelowTimer belowTimer;
     FragmentTransaction fragmentTransaction;
 
     @Override
@@ -67,34 +68,35 @@ public class StopWatchActivity extends AppCompatActivity {
         timer = new Timer();
         fillDayRate = new FillDayRate();
         nutrientsRatio = new NutrientsRatio();
+        belowTimer = new BelowTimer();
 
-        mainLinearContainer = (LinearLayout) findViewById(R.id.main_linear_container);
-        stopWatchScroll = (ScrollView) findViewById(R.id.stop_watch_scroll);
-        mainLinearLayout = (LinearLayout) findViewById(R.id.main_linear_layout);
-        horizontalMenu = (HorizontalScrollView) findViewById(R.id.horizontal_menu);
-        horizontalMenuLayout = (LinearLayout) findViewById(R.id.horizontal_menu_layout);
-        timerMainFrame = (LinearLayout) findViewById(R.id.timer_main_frame);
-        upArrowLayout = (ConstraintLayout) findViewById(R.id.up_arrow_layout);
-        mainFragmentLayout = (ConstraintLayout) findViewById(R.id.main_fragment_layout);
-        fragmentBelowNameLinearLayout = (LinearLayout) findViewById(R.id.fragment_below_main_linearlayout);
+//        mainLinearContainer = (LinearLayout) findViewById(R.id.main_linear_container);
+//        stopWatchScroll = (ScrollView) findViewById(R.id.stop_watch_scroll);
+//        mainLinearLayout = (LinearLayout) findViewById(R.id.main_linear_layout);
+//        horizontalMenu = (HorizontalScrollView) findViewById(R.id.horizontal_menu);
+//        horizontalMenuLayout = (LinearLayout) findViewById(R.id.horizontal_menu_layout);
+//        timerMainFrame = (LinearLayout) findViewById(R.id.timer_main_frame);
+////        upArrowLayout = (ConstraintLayout) findViewById(R.id.up_arrow_layout);
+//        mainFragmentLayout = (ConstraintLayout) findViewById(R.id.main_fragment_layout);
+//        fragmentBelowNameLinearLayout = (LinearLayout) findViewById(R.id.fragment_below_main_linearlayout);
+//
+//        Log.d("mainLinearContainer1", String.valueOf(mainLinearContainer.getLayoutParams().height));
 
-        Log.d("mainLinearContainer1", String.valueOf(mainLinearContainer.getLayoutParams().height));
-
-        mainLinearContainer.setLayoutParams(new FrameLayout.LayoutParams(resolutionX, resolutionY + (int) (101 * scale)));
-        stopWatchScroll.setLayoutParams(new LinearLayout.LayoutParams(resolutionX, resolutionY + (int) (101 * scale)));
-        mainLinearLayout.setLayoutParams(new FrameLayout.LayoutParams(resolutionX, resolutionY + (int) (101 * scale)));
-        horizontalMenu.setLayoutParams(new LinearLayout.LayoutParams(resolutionX, (int) (101 * scale)));
-        timerMainFrame.setLayoutParams(new LinearLayout.LayoutParams(resolutionX, (int) (resolutionY * 0.6)));
-        fragmentBelowNameLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(resolutionX, (int) (resolutionY * 0.4)));
-
-        Log.d("mainLinearContainer", String.valueOf(mainLinearContainer.getLayoutParams().height));
-
-        Log.d("mainLinearContainer", String.format("%d, %d", mainLinearContainer.getWidth(), mainLinearContainer.getHeight()));
-        Log.d("stopWatchScroll", String.format("%d, %d", stopWatchScroll.getWidth(), stopWatchScroll.getHeight()));
-        Log.d("mainLinearLayout", String.format("%d, %d", mainLinearLayout.getWidth(), mainLinearLayout.getHeight()));
-        Log.d("horizontalMenu", String.format("%d, %d", horizontalMenu.getWidth(), horizontalMenu.getHeight()));
-        Log.d("timerMainFrame", String.format("%d, %d", timerMainFrame.getWidth(), timerMainFrame.getHeight()));
-        Log.d("fragmentBelowNameLL", String.format("%d, %d", fragmentBelowNameLinearLayout.getWidth(), fragmentBelowNameLinearLayout.getHeight()));
+//        mainLinearContainer.setLayoutParams(new FrameLayout.LayoutParams(resolutionX, resolutionY + (int) (101 * scale)));
+//        stopWatchScroll.setLayoutParams(new LinearLayout.LayoutParams(resolutionX, resolutionY + (int) (101 * scale)));
+//        mainLinearLayout.setLayoutParams(new FrameLayout.LayoutParams(resolutionX, resolutionY + (int) (101 * scale)));
+//        horizontalMenu.setLayoutParams(new LinearLayout.LayoutParams(resolutionX, (int) (101 * scale)));
+//        timerMainFrame.setLayoutParams(new LinearLayout.LayoutParams(resolutionX, (int) (resolutionY * 0.6)));
+//        fragmentBelowNameLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(resolutionX, (int) (resolutionY * 0.4)));
+//
+//        Log.d("mainLinearContainer", String.valueOf(mainLinearContainer.getLayoutParams().height));
+//
+//        Log.d("mainLinearContainer", String.format("%d, %d", mainLinearContainer.getWidth(), mainLinearContainer.getHeight()));
+//        Log.d("stopWatchScroll", String.format("%d, %d", stopWatchScroll.getWidth(), stopWatchScroll.getHeight()));
+//        Log.d("mainLinearLayout", String.format("%d, %d", mainLinearLayout.getWidth(), mainLinearLayout.getHeight()));
+//        Log.d("horizontalMenu", String.format("%d, %d", horizontalMenu.getWidth(), horizontalMenu.getHeight()));
+//        Log.d("timerMainFrame", String.format("%d, %d", timerMainFrame.getWidth(), timerMainFrame.getHeight()));
+//        Log.d("fragmentBelowNameLL", String.format("%d, %d", fragmentBelowNameLinearLayout.getWidth(), fragmentBelowNameLinearLayout.getHeight()));
 
         Log.d("calcDP", String.valueOf(calcDP(100)));
 
@@ -106,11 +108,11 @@ public class StopWatchActivity extends AppCompatActivity {
 //        mainLinearContainer.getLayoutParams().height = 100;
 //        Log.d("mainLinearContainer", String.valueOf(mainLinearContainer.getLayoutParams().height));
 
-        stopWatchScroll.post(new Runnable() {
-            public void run() {
-                stopWatchScroll.scrollBy(0, (int) calcDP(101));
-            }
-        });
+//        stopWatchScroll.post(new Runnable() {
+//            public void run() {
+//                stopWatchScroll.scrollBy(0, (int) calcDP(101));
+//            }
+//        });
     }
 
     private void getResolutions() {
@@ -142,7 +144,6 @@ public class StopWatchActivity extends AppCompatActivity {
     }
 
     public void onClickMenu(View view) {
-        fragmentManager = getFragmentManager();
         fragmentTransaction = getFragmentManager().beginTransaction();
         Log.d("onClick", String.valueOf(fragmentTransaction));
 
@@ -150,15 +151,18 @@ public class StopWatchActivity extends AppCompatActivity {
             case R.id.timer:
                 Log.d("onClick", "timer");
                 fragmentTransaction.replace(R.id.main_fragment_view, timer);
+                fragmentTransaction.replace(R.id.fragment_below_main, belowTimer);
                 break;
             case R.id.fill_day_rate:
                 Log.d("onClick", "fillDayRate");
                 fragmentTransaction.replace(R.id.main_fragment_view, fillDayRate);
+                fragmentTransaction.replace(R.id.fragment_below_main, belowTimer);
                 break;
             case R.id.nutrients_ratio:
                 fragmentTransaction.replace(R.id.main_fragment_view, nutrientsRatio);
+                fragmentTransaction.replace(R.id.fragment_below_main, belowTimer);
         }
-        fragmentTransaction.addToBackStack("1");
+//        fragmentTransaction.addToBackStack("1");
         fragmentTransaction.commit();
         Log.d("onClick", "okay");
     }
