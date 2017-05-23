@@ -22,7 +22,7 @@ import ru.xpendence.development.gimstopwatch.fragments.FillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.NutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.Timer;
 
-public class StopWatchActivity extends AppCompatActivity {
+public class AppActivity extends AppCompatActivity {
 
     /**
      * Static sizes of display.
@@ -161,6 +161,7 @@ public class StopWatchActivity extends AppCompatActivity {
             case R.id.nutrients_ratio:
                 fragmentTransaction.replace(R.id.main_fragment_view, nutrientsRatio);
                 fragmentTransaction.replace(R.id.fragment_below_main, belowTimer);
+                break;
         }
 //        fragmentTransaction.addToBackStack("1");
         fragmentTransaction.commit();

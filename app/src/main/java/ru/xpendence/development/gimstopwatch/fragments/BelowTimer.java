@@ -15,6 +15,6 @@ import ru.xpendence.development.gimstopwatch.R;
 public class BelowTimer extends Fragment {
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.below_timer, null);
+        return inflater.inflate(R.layout.below_timer, container, false);
     }
 }

@@ -3,8 +3,6 @@ package ru.xpendence.development.gimstopwatch;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ScrollView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, StopWatchActivity.class);
+        Intent intent = new Intent(MainActivity.this, AppActivity.class);
         startActivity(intent);
     }
 

@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StopWatchActivity" />
+        <activity android:name=".AppActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".AuthorizationActivity" />
         <activity android:name=".DietActivity" />

@@ -53,6 +53,11 @@ public class MathHelper {
     }
 
     public static int getAbsoluteSize(int fragmentHeight, int fragmentWidth) {
-        return fragmentHeight > fragmentWidth ? fragmentWidth : fragmentHeight;
+        return fragmentHeight > fragmentWidth
+                ? fragmentWidth : fragmentHeight;
+    }
+
+    public static int getIndent(int height) {
+        return (int) (height * 0.2);
     }
 }
