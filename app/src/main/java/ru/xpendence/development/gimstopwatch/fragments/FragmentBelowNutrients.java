@@ -1,7 +1,7 @@
 package ru.xpendence.development.gimstopwatch.fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,22 +9,19 @@ import android.view.ViewGroup;
 import ru.xpendence.development.gimstopwatch.R;
 
 /**
- * Created by promoscow on 23.05.17.
+ * Created by promoscow on 24.05.17.
  */
 
-public class BelowTimer extends Fragment {
+public class FragmentBelowNutrients extends Fragment {
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.below_timer, container, false);
+        return inflater.inflate(R.layout.fragment_below_nutrients, container, false);
     }
-
 
     public static Fragment newInstance() {
         Bundle args = new Bundle();
-        BelowTimer fragment = new BelowTimer();
+        FragmentBelowNutrients fragment = new FragmentBelowNutrients();
         fragment.setArguments(args);
         return fragment;
     }
-
-    public BelowTimer() {}
 }

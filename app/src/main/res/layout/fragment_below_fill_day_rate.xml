@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    android:paddingBottom="32dp"
+    android:paddingEnd="32dp"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
+    android:scrollbars="vertical">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Что же, придется пояснить молодому поколению правозащиты основные заблуждения по событиям в Лондоне. Не надо путать бунт черномазых ублюдков в Мекке всех униженных и оскорбленных с твиттерными революциями в странах Магриба. Это особый случай. Начнем с того, что свободных людей угнетают тоталитарные режимы. А в приличных цивилизованных странах оппозиции нет в принципе. Потому что есть триста сортов колбасы. И есть агенты КГБ, которые устраивают беспорядки и провокации. Ошибка начинающих правозащитников в том, что лондонские беспорядки по всем признакам напоминают твиттерную революцию – мирные демонстранты на улицах, борющееся за свободу, разгром магазинов и машин сатрапов режима, даже мой лозунг «Грабь, бухай, отдыхай», которые я использовал в командировках по Северной Африке, как нельзя кстати подходит к вышеописанной ситуации. Тем более, что многие вспомнили, что я находился в Лондоне перед самым началом беспорядков. А там где в командировке Лев Щаранский – там твиттерная революция и борьба против тоталитарного режима."
+        android:textColor="@android:color/white" />
+</ScrollView>

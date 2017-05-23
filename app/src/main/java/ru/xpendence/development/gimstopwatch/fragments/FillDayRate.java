@@ -1,6 +1,6 @@
 package ru.xpendence.development.gimstopwatch.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -33,6 +33,13 @@ public class FillDayRate extends Fragment {
     private static int fragmentWidth = 0;
 
     DrawView drawView;
+
+    public static Fragment newInstance() {
+        Bundle args = new Bundle();
+        FillDayRate fragment = new FillDayRate();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

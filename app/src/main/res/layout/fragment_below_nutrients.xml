@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    android:paddingBottom="32dp"
+    android:paddingEnd="32dp"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
+    android:scrollbars="vertical">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="Понятно, что если бы подобное произошло в этой стране, мировое сообщество немедленно потребовало у российского правительства покинуть страну и передать всю власть в руки повстанцев. Вот тут и необходимо все умение держать нос по ветру. Чтобы не путать погромы мародеров с твиттерными революциями. Чтобы не путать борцов за свободу с грязными скотами и бандитами. Чтобы не путать приличных афроафриканцев, выступающих против тоталитарных режимов, с вонючими ублюдочными ниггерами, понаехавшими в цивилизованную страну. Не для этого мы, англосаксы, много веков несли бремя белого человека, чтобы черномазая мразь бушевала в наших городах. Докатились до того, что даже тоталитарный Иран потребовал у Британии соблюдать права демонстрантов и найти компромисс с мародерами. Стало вдруг совестливо и гадливо на душе. Как из душа окатило. Лезут со свиным рылом в калашный ряд. Ведь кто нарушает права человека и утратил легитимность, а кто нет, должны определять исключительно цивилизованные страны."
+        android:textColor="@android:color/white" />
+</ScrollView>

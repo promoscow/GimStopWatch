@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -19,6 +20,8 @@ import android.widget.ScrollView;
 
 import ru.xpendence.development.gimstopwatch.fragments.BelowTimer;
 import ru.xpendence.development.gimstopwatch.fragments.FillDayRate;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowFillDayRate;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
 import ru.xpendence.development.gimstopwatch.fragments.NutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.Timer;
 
@@ -52,6 +55,7 @@ public class AppActivity extends AppCompatActivity {
     FillDayRate fillDayRate;
     NutrientsRatio nutrientsRatio;
     BelowTimer belowTimer;
+    FragmentBelowFillDayRate fragmentBelowFillDayRate;
     FragmentTransaction fragmentTransaction;
 
     @Override
@@ -144,27 +148,38 @@ public class AppActivity extends AppCompatActivity {
     }
 
     public void onClickMenu(View view) {
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        Log.d("onClick", String.valueOf(fragmentTransaction));
 
         switch (view.getId()) {
             case R.id.timer:
                 Log.d("onClick", "timer");
-                fragmentTransaction.replace(R.id.main_fragment_view, timer);
-                fragmentTransaction.replace(R.id.fragment_below_main, belowTimer);
+                showFragmentTop(Timer.newInstance());
+                showFragmentBottom(BelowTimer.newInstance());
                 break;
             case R.id.fill_day_rate:
                 Log.d("onClick", "fillDayRate");
-                fragmentTransaction.replace(R.id.main_fragment_view, fillDayRate);
-                fragmentTransaction.replace(R.id.fragment_below_main, belowTimer);
+                showFragmentTop(FillDayRate.newInstance());
+                showFragmentBottom(FragmentBelowFillDayRate.newInstance());
                 break;
             case R.id.nutrients_ratio:
-                fragmentTransaction.replace(R.id.main_fragment_view, nutrientsRatio);
-                fragmentTransaction.replace(R.id.fragment_below_main, belowTimer);
+                showFragmentTop(NutrientsRatio.newInstance());
+                showFragmentBottom(FragmentBelowNutrients.newInstance());
                 break;
         }
-//        fragmentTransaction.addToBackStack("1");
-        fragmentTransaction.commit();
         Log.d("onClick", "okay");
+    }
+
+    void showFragmentTop(Fragment fragment) {
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_view, fragment)
+                .commit();
+    }
+
+    void showFragmentBottom(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_below_main, fragment)
+                .commit();
     }
 }

@@ -1,6 +1,6 @@
 package ru.xpendence.development.gimstopwatch.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.sql.Time;
 
 import ru.xpendence.development.gimstopwatch.util.MathHelper;
 
@@ -32,6 +34,13 @@ public class Timer extends Fragment {
 
     DrawView drawView;
 
+    public static Fragment newInstance() {
+        Bundle args = new Bundle();
+        Timer fragment = new Timer();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("Timer.onCreate", String.valueOf(getActivity()));
@@ -44,14 +53,7 @@ public class Timer extends Fragment {
         drawView.post(new Runnable() {
             @Override
             public void run() {
-//                if (container != null) {
-//                    fragmentHeight = container.getHeight();
-//                    fragmentWidth = container.getWidth();
-//                    Log.e("TEST",
-//                            "Parent height = " + container.getHeight()
-//                                    + ", Parent width = " + container.getWidth()
-//                    );
-//                }
+
                 fragmentHeight = drawView.getHeight();
                 fragmentWidth = drawView.getWidth();
                 Log.e("TEST",
@@ -160,18 +162,6 @@ public class Timer extends Fragment {
 
         @Override
         protected final void onDraw(final Canvas canvas) {
-//            if (!isSized) {
-//                if (fragmentHeight != 0) height = fragmentHeight;
-//                if (fragmentWidth != 0) width = fragmentWidth;
-//                if (height == fragmentHeight && width == fragmentWidth) {
-//                    isSized = true;
-//                    rectF.set((width / 2) - (width / 3),
-//                            (height / 2) - (width / 3),
-//                            (width / 2) + (width / 3),
-//                            (height / 2) + (width / 3));
-//                }
-//            }
-
 
             height = canvas.getHeight();
             width = canvas.getWidth();
@@ -185,13 +175,6 @@ public class Timer extends Fragment {
             absoluteSize = MathHelper.getAbsoluteSize(canvas.getHeight(), canvas.getWidth());
 
             super.onDraw(canvas);
-//            Log.d("canvasHeight", String.valueOf(canvas.getHeight()));
-//            Log.d("canvasWidth", String.valueOf(canvas.getWidth()));
-
-//            Log.d("fragmentHeight", String.valueOf(fragmentHeight));
-//            Log.d("fragmentWidth", String.valueOf(fragmentWidth));
-
-//            mPaint.setStyle(Paint.Style.FILL);
             mPaint.setColor(MathHelper.setBgI());
             canvas.drawCircle(width / 2, height / 2, (absoluteSize / 3), mPaint);
 
@@ -199,7 +182,6 @@ public class Timer extends Fragment {
             mPaint.setColor(MathHelper.setTimelineColor(angle));
 
             canvas.drawArc(rectF, 270, angle, false, mPaint);
-//            canvas.drawLine(width / 2, height / 2 - width / 3 + 20, width / 2, height / 2 - width / 3 - 30, mPaint);
 
             mPaint.setTextSize(100);
             mPaint.setStyle(Paint.Style.FILL);
