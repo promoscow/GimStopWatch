@@ -125,7 +125,7 @@ public class FillDayRate extends Fragment {
         private final Bitmap calContainerFill =
                 BitmapFactory.decodeResource(resources,
                         BitmapHelper.getCalContainerFill());
-        private float angle;
+//        private float angle;
 
         {
             mPaint.setStrokeWidth(10);
@@ -138,7 +138,7 @@ public class FillDayRate extends Fragment {
                     (WIDTH / 2) + (WIDTH / 3),
                     (HEIGHT / 2) + (WIDTH / 3));
 
-            angle = 0;
+//            angle = 0;
         }
 
         public DrawView(Context context) {
@@ -171,28 +171,7 @@ public class FillDayRate extends Fragment {
                     canvas.getWidth() / 2 - calContainer.getWidth() / 2,
                     canvas.getHeight() / 2 - calContainer.getHeight() / 2,
                     mPaint);
-//            mPaint.setColor(Color.WHITE);
-//            canvas.drawRect(mRect, mPaint);
 
-//            Log.d("fragmentHeight", String.valueOf(fragmentHeight));
-//            Log.d("fragmentWidth", String.valueOf(fragmentWidth));
-
-//            mPaint.setColor(MathHelper.setBgI());
-//            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, (WIDTH / 3), mPaint);
-//
-//            angle = MathHelper.getAngle(angle);
-//            mPaint.setColor(MathHelper.setTimelineColor(angle));
-//
-//            canvas.drawArc(rectF, 270, angle, false, mPaint);
-//            mPaint.setTextSize(100);
-//            mPaint.setStyle(Paint.Style.FILL);
-//            canvas.drawText("2", 100, 200, mPaint);
-//            mPaint.setStyle(Paint.Style.STROKE);
-//
-//            if (angle % 360 == 0) {
-//                angle = 0;
-//                MathHelper.setI();
-//            }
             postDelayed(mInvalidator, TIME_DELAY);
         }
     }

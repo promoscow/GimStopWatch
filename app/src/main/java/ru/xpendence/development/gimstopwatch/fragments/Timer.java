@@ -89,7 +89,7 @@ public class Timer extends Fragment {
 
         private static final long FPS = 200;
         private static final long TIME_DELAY = 1000 / FPS;
-        private boolean isSized = false;
+//        private boolean isSized = false;
 
         private float[] coordinates = new float[5];
 

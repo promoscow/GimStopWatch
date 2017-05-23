@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import ru.xpendence.development.gimstopwatch.fragments.FillDayRate;
+import ru.xpendence.development.gimstopwatch.fragments.NutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.Timer;
 
 public class StopWatchActivity extends AppCompatActivity {
@@ -41,7 +42,6 @@ public class StopWatchActivity extends AppCompatActivity {
     LinearLayout timerMainFrame;
     ConstraintLayout upArrowLayout;
     ConstraintLayout mainFragmentLayout;
-    ScrollView fragmentBelowMain;
     LinearLayout fragmentBelowNameLinearLayout;
 
     /**
@@ -49,6 +49,7 @@ public class StopWatchActivity extends AppCompatActivity {
      */
     Timer timer;
     FillDayRate fillDayRate;
+    NutrientsRatio nutrientsRatio;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
@@ -56,7 +57,7 @@ public class StopWatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stop_watch_scroll_layout);
+        setContentView(R.layout.main_layout);
 
         final float scale = getResources().getDisplayMetrics().density;
 
@@ -65,6 +66,7 @@ public class StopWatchActivity extends AppCompatActivity {
 
         timer = new Timer();
         fillDayRate = new FillDayRate();
+        nutrientsRatio = new NutrientsRatio();
 
         mainLinearContainer = (LinearLayout) findViewById(R.id.main_linear_container);
         stopWatchScroll = (ScrollView) findViewById(R.id.stop_watch_scroll);
@@ -153,9 +155,11 @@ public class StopWatchActivity extends AppCompatActivity {
                 Log.d("onClick", "fillDayRate");
                 fragmentTransaction.replace(R.id.main_fragment_view, fillDayRate);
                 break;
+            case R.id.nutrients_ratio:
+                fragmentTransaction.replace(R.id.main_fragment_view, nutrientsRatio);
         }
         fragmentTransaction.addToBackStack("1");
         fragmentTransaction.commit();
-        Log.d("onClick", "commited");
+        Log.d("onClick", "okay");
     }
 }
