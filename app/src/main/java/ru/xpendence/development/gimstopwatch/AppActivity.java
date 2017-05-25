@@ -1,29 +1,30 @@
 package ru.xpendence.development.gimstopwatch;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.TextView;
 
-import ru.xpendence.development.gimstopwatch.fragments.BelowTimer;
-import ru.xpendence.development.gimstopwatch.fragments.FillDayRate;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentAccount;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowAccount;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowTimer;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentFillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowFillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
-import ru.xpendence.development.gimstopwatch.fragments.NutrientsRatio;
-import ru.xpendence.development.gimstopwatch.fragments.Timer;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentTimer;
 
 public class AppActivity extends AppCompatActivity {
 
@@ -48,15 +49,13 @@ public class AppActivity extends AppCompatActivity {
 //    ConstraintLayout mainFragmentLayout;
 //    LinearLayout fragmentBelowNameLinearLayout;
 
-    /**
-     * All fragments on this activity & its utils.
-     */
-    Timer timer;
-    FillDayRate fillDayRate;
-    NutrientsRatio nutrientsRatio;
-    BelowTimer belowTimer;
-    FragmentBelowFillDayRate fragmentBelowFillDayRate;
-    FragmentTransaction fragmentTransaction;
+    View accountUnderline;
+    View fillUnderline;
+    View nutrientsUnderline;
+    View timerUnderline;
+    View settingsUnderline;
+
+    ViewGroup defaultViewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +68,19 @@ public class AppActivity extends AppCompatActivity {
         getResolutions();
         defineDensity();
 
-        timer = new Timer();
-        fillDayRate = new FillDayRate();
-        nutrientsRatio = new NutrientsRatio();
-        belowTimer = new BelowTimer();
+        defaultViewGroup = (FrameLayout) findViewById(R.id.main_fragment_view);
+
+        accountUnderline = findViewById(R.id.account_underline);
+        fillUnderline = findViewById(R.id.fill_day_rate_underline);
+        nutrientsUnderline = findViewById(R.id.nutrients_ratio_underline);
+        timerUnderline = findViewById(R.id.timer_underline);
+        settingsUnderline = findViewById(R.id.settings_underline);
+
+        accountUnderline.setAlpha(1);
+        fillUnderline.setAlpha(0);
+        nutrientsUnderline.setAlpha(0);
+        timerUnderline.setAlpha(0);
+        settingsUnderline.setAlpha(0);
 
 //        mainLinearContainer = (LinearLayout) findViewById(R.id.main_linear_container);
 //        stopWatchScroll = (ScrollView) findViewById(R.id.stop_watch_scroll);
@@ -149,23 +157,65 @@ public class AppActivity extends AppCompatActivity {
 
     public void onClickMenu(View view) {
 
+        TextView headingText = (TextView) findViewById(R.id.heading);
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        ViewGroup viewGroup = (FrameLayout) findViewById(R.id.main_fragment_view);
+
         switch (view.getId()) {
             case R.id.timer:
                 Log.d("onClick", "timer");
-                showFragmentTop(Timer.newInstance());
-                showFragmentBottom(BelowTimer.newInstance());
+                setUnderlineAlpha(timerUnderline);
+                headingText.setText("Таймер отдыха");
+                showFragmentTop(FragmentTimer.newInstance());
+                showFragmentBottom(FragmentBelowTimer.newInstance());
                 break;
             case R.id.fill_day_rate:
                 Log.d("onClick", "fillDayRate");
-                showFragmentTop(FillDayRate.newInstance());
+                setUnderlineAlpha(fillUnderline);
+                headingText.setText("Дневная норма калорий");
+                showFragmentTop(FragmentFillDayRate.newInstance());
                 showFragmentBottom(FragmentBelowFillDayRate.newInstance());
                 break;
             case R.id.nutrients_ratio:
-                showFragmentTop(NutrientsRatio.newInstance());
+                setUnderlineAlpha(nutrientsUnderline);
+                headingText.setText("Соотношение нутриентов");
+
+//                viewGroup.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics.widthPixels,
+//                        (int) (250 * displayMetrics.density)));
+//                try {
+//                    Thread.sleep(300);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                showFragmentTop(FragmentNutrientsRatio.newInstance());
                 showFragmentBottom(FragmentBelowNutrients.newInstance());
+                break;
+            case R.id.account:
+                setUnderlineAlpha(accountUnderline);
+                headingText.setText("Данные пользователя");
+
+                Fragment fragment = FragmentAccount.newInstance();
+                viewGroup.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics.widthPixels,
+                        (int) (displayMetrics.heightPixels - (123 * displayMetrics.density))));
+                showFragmentTop(fragment);
+                showFragmentBottom(FragmentBelowAccount.newInstance());
+                break;
+            case R.id.settings:
+                setUnderlineAlpha(settingsUnderline);
+                headingText.setText("Настройки");
                 break;
         }
         Log.d("onClick", "okay");
+    }
+
+    private void setUnderlineAlpha(View view) {
+        accountUnderline.setAlpha(0);
+        fillUnderline.setAlpha(0);
+        nutrientsUnderline.setAlpha(0);
+        timerUnderline.setAlpha(0);
+        settingsUnderline.setAlpha(0);
+
+        view.setAlpha(1);
     }
 
     void showFragmentTop(Fragment fragment) {

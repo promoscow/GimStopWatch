@@ -5,9 +5,9 @@
     android:orientation="vertical"
     android:overScrollMode="never"
     android:paddingBottom="16dp"
-    android:paddingEnd="32dp"
-    android:paddingLeft="32dp"
-    android:paddingRight="64dp"
+    android:paddingEnd="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:scrollbars="vertical">
 
     <LinearLayout
@@ -16,31 +16,28 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/daily_calories"
+            android:id="@+id/timer1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="8dp"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/calories_percent"
+            android:id="@+id/timer2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="8dp"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"  />
 
         <TextView
-            android:id="@+id/goal_calories"
+            android:id="@+id/timer3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingBottom="8dp"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"  />
 
     </LinearLayout>
 </ScrollView>

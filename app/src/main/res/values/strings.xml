@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">GimStopWatch</string>
     <string name="hello">hello</string>
+    <string name="how_much_proteins_text">Белков:</string>
+    <string name="how_much_fats_text">Жиров:</string>
+    <string name="how_much_carbohydrates_text">Углеводов:</string>
 </resources>

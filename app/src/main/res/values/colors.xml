@@ -2,6 +2,9 @@
 <resources>
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="colorBackground">#131416</color>
+    <color name="nutrientBlue">#00bfe8</color>
+    <color name="nutrientYellow">#ffd55a</color>
+    <color name="nutrientGreen">#86d55a</color>
 </resources>

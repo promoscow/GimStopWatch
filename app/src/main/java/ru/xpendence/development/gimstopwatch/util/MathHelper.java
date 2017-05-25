@@ -1,6 +1,7 @@
 package ru.xpendence.development.gimstopwatch.util;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
 
 /**
@@ -15,12 +16,12 @@ public class MathHelper {
     };
 
     private static int i = 1;
+    public static boolean isStoped = true;
+    public static int bgColor = 0x09FFFFFF;
 
     public static int getI() {
         return i;
     }
-
-    public static boolean isStoped = true;
 
     public static float[] defineDensity(Activity activity) {
 
@@ -59,5 +60,9 @@ public class MathHelper {
 
     public static int getIndent(int height) {
         return (int) (height * 0.2);
+    }
+
+    public static Bitmap getBitmap(Bitmap playButton, Bitmap pauseButton) {
+        return isStoped ? playButton : pauseButton;
     }
 }

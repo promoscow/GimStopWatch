@@ -4,17 +4,131 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:overScrollMode="never"
-    android:paddingBottom="32dp"
-    android:paddingEnd="32dp"
-    android:paddingLeft="32dp"
-    android:paddingRight="32dp"
+    android:paddingBottom="16dp"
+    android:paddingEnd="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:scrollbars="vertical">
 
-    <TextView
-        android:id="@+id/textView1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="Понятно, что если бы подобное произошло в этой стране, мировое сообщество немедленно потребовало у российского правительства покинуть страну и передать всю власть в руки повстанцев. Вот тут и необходимо все умение держать нос по ветру. Чтобы не путать погромы мародеров с твиттерными революциями. Чтобы не путать борцов за свободу с грязными скотами и бандитами. Чтобы не путать приличных афроафриканцев, выступающих против тоталитарных режимов, с вонючими ублюдочными ниггерами, понаехавшими в цивилизованную страну. Не для этого мы, англосаксы, много веков несли бремя белого человека, чтобы черномазая мразь бушевала в наших городах. Докатились до того, что даже тоталитарный Иран потребовал у Британии соблюдать права демонстрантов и найти компромисс с мародерами. Стало вдруг совестливо и гадливо на душе. Как из душа окатило. Лезут со свиным рылом в калашный ряд. Ведь кто нарушает права человека и утратил легитимность, а кто нет, должны определять исключительно цивилизованные страны."
-        android:textColor="@android:color/white" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nutrients_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingBottom="16dp"
+            android:text="С начала дня Вы употребили:"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/nutrients_proteins"
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:text="@string/how_much_proteins_text"
+                    android:textColor="@color/nutrientBlue"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/nutrients_proteins_values"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/nutrients_fat"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:text="@string/how_much_fats_text"
+                    android:textColor="@color/nutrientYellow"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/nutrients_fat_values"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/nutrients_carbohydrates"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:text="@string/how_much_carbohydrates_text"
+                    android:textColor="@color/nutrientGreen"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/nutrients_carbohydrates_values"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </TableRow>
+
+        </TableLayout>
+
+        <View
+            android:id="@+id/horizontal_line_low"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/nutrients_lower"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingBottom="16dp"
+            android:text="Идеальное соотношение нутриентов для активного образа жизни: 35% — белки, 15% — жиры и 50% — углеводы."
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 </ScrollView>

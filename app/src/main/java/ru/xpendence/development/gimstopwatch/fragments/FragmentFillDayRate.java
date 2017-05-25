@@ -1,5 +1,6 @@
 package ru.xpendence.development.gimstopwatch.fragments;
 
+import android.graphics.RectF;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,8 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -27,7 +26,7 @@ import ru.xpendence.development.gimstopwatch.util.MathHelper;
  * Main activity for timer frame.
  */
 
-public class FillDayRate extends Fragment {
+public class FragmentFillDayRate extends Fragment {
 
     private static int fragmentHeight = 0;
     private static int fragmentWidth = 0;
@@ -36,18 +35,17 @@ public class FillDayRate extends Fragment {
 
     public static Fragment newInstance() {
         Bundle args = new Bundle();
-        FillDayRate fragment = new FillDayRate();
+        FragmentFillDayRate fragment = new FragmentFillDayRate();
         fragment.setArguments(args);
         return fragment;
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Timer.onCreate", String.valueOf(getActivity()));
+        Log.d("FragmentTimer.onCreate", String.valueOf(getActivity()));
     }
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        Log.d("Timer.onCreateView", String.valueOf(inflater));
         drawView = new DrawView(getActivity());
 
         drawView.post(new Runnable() {
@@ -72,10 +70,11 @@ public class FillDayRate extends Fragment {
         drawView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Timer", "onClick");
+                Log.d("FragmentTimer", "onClick");
                 MathHelper.isStoped = !MathHelper.isStoped;
             }
         });
+
         return drawView;
     }
 
@@ -118,26 +117,23 @@ public class FillDayRate extends Fragment {
         };
 
         private final Paint mPaint = new Paint();
-        private final Rect mRect = new Rect();
+//        private final Rect mRect = new Rect();
         private final RectF rectF = new RectF();
-        private final Bitmap calContainer = BitmapFactory.decodeResource(resources, R.drawable.cal_container_200);
+        private final Bitmap calContainer =
+                BitmapFactory.decodeResource(resources,
+                        R.drawable.cal_container_200);
         private final Bitmap calContainerFill =
                 BitmapFactory.decodeResource(resources,
                         BitmapHelper.getCalContainerFill());
-//        private float angle;
+        private final Bitmap plusIcon =
+                BitmapFactory.decodeResource(resources,
+                        R.drawable.plus_top);
 
         {
             mPaint.setStrokeWidth(10);
             mPaint.setStyle(Paint.Style.STROKE);
 
-            mRect.set((int) (WIDTH * 0.3f), (int) (HEIGHT * 0.2f), (int) (WIDTH * 0.7f), (int) (HEIGHT * 0.8f));
-
-            rectF.set((WIDTH / 2) - (WIDTH / 3),
-                    (HEIGHT / 2) - (WIDTH / 3),
-                    (WIDTH / 2) + (WIDTH / 3),
-                    (HEIGHT / 2) + (WIDTH / 3));
-
-//            angle = 0;
+            rectF.set(WIDTH - 100, 200, WIDTH + 100, 300);
         }
 
         public DrawView(Context context) {
@@ -161,17 +157,36 @@ public class FillDayRate extends Fragment {
         protected final void onDraw(final Canvas canvas) {
             super.onDraw(canvas);
 
-            canvas.drawBitmap(calContainer,
-                    canvas.getWidth() / 2 - calContainer.getWidth() / 2,
-                    canvas.getHeight() / 2 - calContainer.getHeight() / 2,
-                    mPaint);
+            drawFill(canvas);
+
+            postDelayed(mInvalidator, TIME_DELAY);
+        }
+
+        private void drawPlusButton(Canvas canvas) {
+            mPaint.setColor(0xFFFFFFFF);
+            mPaint.setStyle(Paint.Style.FILL);
+            canvas.drawRoundRect(canvas.getWidth() - 150, 50, canvas.getWidth() + 150, 200, 150, 150, mPaint);
+            canvas.drawBitmap(plusIcon, canvas.getWidth() - 135, 63, mPaint);
+        }
+
+        private void drawFill(Canvas canvas) {
+
+            mPaint.setColor(0xFFFFFFFF);
+
+//            canvas.drawBitmap(calContainer,
+//                    canvas.getWidth() / 2 - calContainer.getWidth() / 2,
+//                    canvas.getHeight() / 2 - calContainer.getHeight() / 2,
+//                    mPaint);
 
             canvas.drawBitmap(calContainerFill,
                     canvas.getWidth() / 2 - calContainer.getWidth() / 2,
                     canvas.getHeight() / 2 - calContainer.getHeight() / 2,
                     mPaint);
 
-            postDelayed(mInvalidator, TIME_DELAY);
+//            canvas.drawBitmap(plusIcon,
+//                    canvas.getWidth() / 2 - calContainer.getWidth() / 2,
+//                    canvas.getHeight() / 2 - calContainer.getHeight() / 2,
+//                    mPaint);
         }
     }
 }

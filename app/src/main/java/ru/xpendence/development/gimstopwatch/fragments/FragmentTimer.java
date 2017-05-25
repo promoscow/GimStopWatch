@@ -1,5 +1,9 @@
 package ru.xpendence.development.gimstopwatch.fragments;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -15,8 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.sql.Time;
-
+import ru.xpendence.development.gimstopwatch.R;
 import ru.xpendence.development.gimstopwatch.util.MathHelper;
 
 /**
@@ -24,7 +27,7 @@ import ru.xpendence.development.gimstopwatch.util.MathHelper;
  * Main activity for timer frame.
  */
 
-public class Timer extends Fragment {
+public class FragmentTimer extends Fragment {
 
     private static int absoluteSize = 0;
 
@@ -36,18 +39,18 @@ public class Timer extends Fragment {
 
     public static Fragment newInstance() {
         Bundle args = new Bundle();
-        Timer fragment = new Timer();
+        FragmentTimer fragment = new FragmentTimer();
         fragment.setArguments(args);
         return fragment;
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Timer.onCreate", String.valueOf(getActivity()));
+        Log.d("FragmentTimer.onCreate", String.valueOf(getActivity()));
     }
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        Log.d("Timer.onCreateView", String.valueOf(inflater));
+        Log.d("FragmentTimer.onCreateView", String.valueOf(inflater));
         drawView = new DrawView(getActivity());
 
         drawView.post(new Runnable() {
@@ -67,12 +70,16 @@ public class Timer extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                Log.d("Timer", "onClick");
+                Log.d("FragmentTimer", "onClick");
                 MathHelper.isStoped = !MathHelper.isStoped;
                 }
                 return false;
             }
         });
+
+//        DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
+//        drawView.setLayoutParams(new ViewGroup.LayoutParams(displayMetrics.widthPixels,
+//                displayMetrics.heightPixels - (int) (50 / displayMetrics.density)));
         Log.d("onCreateView", "exit");
         return drawView;
     }
@@ -108,11 +115,11 @@ public class Timer extends Fragment {
         private float dpWidth = coordinates[4];
 
         {
-            Log.d("Timer.density", String.valueOf(density));
-            Log.d("Timer.height", String.valueOf(height));
-            Log.d("Timer.width", String.valueOf(width));
-            Log.d("Timer.dpHeight", String.valueOf(dpHeight));
-            Log.d("Timer.dpWidth", String.valueOf(dpWidth));
+            Log.d("FragmentTimer.density", String.valueOf(density));
+            Log.d("FragmentTimer.height", String.valueOf(height));
+            Log.d("FragmentTimer.width", String.valueOf(width));
+            Log.d("FragmentTimer.dpHeight", String.valueOf(dpHeight));
+            Log.d("FragmentTimer.dpWidth", String.valueOf(dpWidth));
         }
 
         protected void onFinishInflate() {
@@ -127,8 +134,15 @@ public class Timer extends Fragment {
             }
         };
 
+        Resources resources = this.getResources();
         private final Paint mPaint = new Paint();
         private final RectF rectF = new RectF();
+        private final Bitmap playButton =
+                BitmapFactory.decodeResource(resources,
+                        R.drawable.play);
+        private final Bitmap pauseButton =
+                BitmapFactory.decodeResource(resources,
+                        R.drawable.pause);
 //        private float angle;
 
         {
@@ -175,24 +189,41 @@ public class Timer extends Fragment {
             absoluteSize = MathHelper.getAbsoluteSize(canvas.getHeight(), canvas.getWidth());
 
             super.onDraw(canvas);
-            mPaint.setColor(MathHelper.setBgI());
-            canvas.drawCircle(width / 2, height / 2, (absoluteSize / 3), mPaint);
 
-            angle = MathHelper.getAngle(angle);
-            mPaint.setColor(MathHelper.setTimelineColor(angle));
+            drawBgCircle(canvas);
 
-            canvas.drawArc(rectF, 270, angle, false, mPaint);
+            mPaint.setColor(Color.WHITE);
+            canvas.drawBitmap(MathHelper.getBitmap(playButton, pauseButton),
+                    canvas.getWidth() / 2 - playButton.getWidth() / 2,
+                    canvas.getHeight() / 2 - playButton.getHeight() / 2, mPaint);
 
-            mPaint.setTextSize(100);
-            mPaint.setStyle(Paint.Style.FILL);
-            canvas.drawText(String.valueOf(MathHelper.getI()), 100, 200, mPaint);
-            mPaint.setStyle(Paint.Style.STROKE);
+            drawCircle(canvas);
+            drawMainArc(canvas);
 
             if (angle % 360 == 0) {
                 angle = 0;
                 MathHelper.setI();
             }
             postDelayed(mInvalidator, TIME_DELAY);
+        }
+
+        private void drawMainArc(Canvas canvas) {
+            angle = MathHelper.getAngle(angle);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setColor(MathHelper.setTimelineColor(angle));
+            canvas.drawArc(rectF, 270, angle, false, mPaint);
+        }
+
+        private void drawCircle(Canvas canvas) {
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setColor(MathHelper.setBgI());
+            canvas.drawCircle(width / 2, height / 2, (absoluteSize / 3), mPaint);
+        }
+
+        private void drawBgCircle(Canvas canvas) {
+            mPaint.setColor(MathHelper.bgColor);
+            mPaint.setStyle(Paint.Style.FILL);
+            canvas.drawCircle(width / 2, height / 2, absoluteSize / 3, mPaint);
         }
     }
 }
