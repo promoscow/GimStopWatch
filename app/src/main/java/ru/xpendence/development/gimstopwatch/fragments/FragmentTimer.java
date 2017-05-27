@@ -50,7 +50,6 @@ public class FragmentTimer extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        Log.d("FragmentTimer.onCreateView", String.valueOf(inflater));
         drawView = new DrawView(getActivity());
 
         drawView.post(new Runnable() {
@@ -76,10 +75,6 @@ public class FragmentTimer extends Fragment {
                 return false;
             }
         });
-
-//        DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
-//        drawView.setLayoutParams(new ViewGroup.LayoutParams(displayMetrics.widthPixels,
-//                displayMetrics.heightPixels - (int) (50 / displayMetrics.density)));
         Log.d("onCreateView", "exit");
         return drawView;
     }

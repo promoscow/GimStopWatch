@@ -2,6 +2,7 @@ package ru.xpendence.development.gimstopwatch.util;
 
 /**
  * Created by promoscow on 24.05.17.
+ * All user personal data is here.
  */
 
 public class PersonalData {
@@ -30,7 +31,7 @@ public class PersonalData {
      * Temporary static hardcode block.
      */
     static {
-        dailyCalories = 1344;
+        dailyCalories = 0;
         goalCalories = 2500;
 
         dailyProteins = 392;

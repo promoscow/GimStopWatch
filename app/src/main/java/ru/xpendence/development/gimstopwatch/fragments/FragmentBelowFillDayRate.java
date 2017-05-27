@@ -15,6 +15,7 @@ import ru.xpendence.development.gimstopwatch.util.TextHelper;
 
 /**
  * Created by promoscow on 23.05.17.
+ * Fragment with text below fragment with calories daily filling.
  */
 
 public class FragmentBelowFillDayRate extends Fragment {
@@ -22,7 +23,6 @@ public class FragmentBelowFillDayRate extends Fragment {
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_below_fill_day_rate, container, false);
-//        view.setLayoutParams(new FrameLayout.LayoutParams(container.getWidth(), container.getHeight()));
         final TextView dailyCaloriesText;
         dailyCaloriesText = (TextView) view.findViewById(R.id.daily_calories);
         dailyCaloriesText.setTextSize(16);

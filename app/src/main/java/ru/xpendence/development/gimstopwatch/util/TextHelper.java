@@ -2,6 +2,7 @@ package ru.xpendence.development.gimstopwatch.util;
 
 /**
  * Created by promoscow on 24.05.17.
+ * Helps to generate all texts.
  */
 
 public class TextHelper {

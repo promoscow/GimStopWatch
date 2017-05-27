@@ -4,4 +4,9 @@
     <string name="how_much_proteins_text">Белков:</string>
     <string name="how_much_fats_text">Жиров:</string>
     <string name="how_much_carbohydrates_text">Углеводов:</string>
+    <string name="user_name">Новый пользователь</string>
+    <string name="_21">ИМТ: 21</string>
+    <string name="add">Добавить</string>
+    <string name="day_norm_of_calories">Дневная норма калорий</string>
+    <string name="nutrients_ratio">Соотношение нутриентов</string>
 </resources>

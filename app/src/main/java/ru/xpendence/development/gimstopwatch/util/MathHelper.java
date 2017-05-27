@@ -23,6 +23,12 @@ public class MathHelper {
         return i;
     }
 
+    /**
+     * Defines all parameters of device.
+     * @param activity - display of device with all its parameters.
+     * @return array with main parameters of display —
+     * density, width & height in pixels, width & height in dp.
+     */
     public static float[] defineDensity(Activity activity) {
 
         DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();

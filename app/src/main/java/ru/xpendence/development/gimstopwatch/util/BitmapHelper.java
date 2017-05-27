@@ -13,7 +13,9 @@ public class BitmapHelper {
         double result = (double) PersonalData.dailyCalories / (double) PersonalData.goalCalories;
         Log.e("containerResult", String.valueOf(result));
 
-        return (result < 0.15) ? R.drawable.cal_container_complete_10 : (result < 0.25)
+        return (result == 0)
+                ? R.drawable.cal_container_200 : (result < 0.15)
+                ? R.drawable.cal_container_complete_10 : (result < 0.25)
                 ? R.drawable.cal_container_complete_20 : (result < 0.35)
                 ? R.drawable.cal_container_complete_30 : (result < 0.45)
                 ? R.drawable.cal_container_complete_40 : (result < 0.55)

@@ -173,20 +173,10 @@ public class FragmentFillDayRate extends Fragment {
 
             mPaint.setColor(0xFFFFFFFF);
 
-//            canvas.drawBitmap(calContainer,
-//                    canvas.getWidth() / 2 - calContainer.getWidth() / 2,
-//                    canvas.getHeight() / 2 - calContainer.getHeight() / 2,
-//                    mPaint);
-
             canvas.drawBitmap(calContainerFill,
                     canvas.getWidth() / 2 - calContainer.getWidth() / 2,
                     canvas.getHeight() / 2 - calContainer.getHeight() / 2,
                     mPaint);
-
-//            canvas.drawBitmap(plusIcon,
-//                    canvas.getWidth() / 2 - calContainer.getWidth() / 2,
-//                    canvas.getHeight() / 2 - calContainer.getHeight() / 2,
-//                    mPaint);
         }
     }
 }
