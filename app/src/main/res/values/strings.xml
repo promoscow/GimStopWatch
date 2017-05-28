@@ -17,4 +17,5 @@
     <string name="how_much_calories_text">Калорийность:</string>
     <string name="calories">кКал.</string>
     <string name="nutrients_in_100">В 100 гр. продукта содержится:</string>
+    <string name="add_amount_in_grams">Введите кол-во в граммах:</string>
 </resources>

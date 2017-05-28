@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +27,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Date;
 
 import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
+import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentAccount;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowAccount;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowTimer;
@@ -37,6 +43,8 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentTimer;
 
+import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.count;
+import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.dailyGoods;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.goodsList;
 
 /**
@@ -209,12 +217,17 @@ public class AppActivity extends AppCompatActivity {
 //        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
 
-
         TableLayout nutrientsTable = (TableLayout) addFoodView.findViewById(R.id.nutrients_table);
         nutrientsTable.setVisibility(View.GONE);
 
         TextView in100 = (TextView) addFoodView.findViewById(R.id.in_100_text);
         in100.setVisibility(View.GONE);
+
+        TextView goodNameText = (TextView) addFoodView.findViewById(R.id.good_name);
+        goodNameText.setVisibility(View.GONE);
+
+        TextView addGoodInGramsText = (TextView) addFoodView.findViewById(R.id.add_good_in_grams);
+        addGoodInGramsText.setVisibility(View.GONE);
 
         RelativeLayout addGood = (RelativeLayout) addFoodView.findViewById(R.id.add_good_layout);
         addGood.setVisibility(View.GONE);
@@ -250,6 +263,7 @@ public class AppActivity extends AppCompatActivity {
         autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line,
                 goodsList));
+        autoCompleteTextView.setTextColor(Color.WHITE);
 
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -268,6 +282,7 @@ public class AppActivity extends AppCompatActivity {
                 if (s != null && s.length() != 0) {
                     String goodName = String.valueOf(s);
                     if (goodsList.contains(goodName)) {
+                        autoCompleteTextView.setTextColor(Color.DKGRAY);
                         addGoodsToRation(goodName);
                         textView.setText(s);
                     } else textView.setText("");
@@ -309,19 +324,53 @@ public class AppActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
 
-        Good  good = FoodStuffsData.goods.get(goodName);
+        final Good good = FoodStuffsData.goods.get(goodName);
 
         TableLayout nutrientsTable = (TableLayout) addFoodView.findViewById(R.id.nutrients_table);
         nutrientsTable.setVisibility(View.VISIBLE);
 
+        TextView goodNameText = (TextView) addFoodView.findViewById(R.id.good_name);
+        goodNameText.setVisibility(View.VISIBLE);
+
         TextView in100 = (TextView) addFoodView.findViewById(R.id.in_100_text);
         in100.setVisibility(View.VISIBLE);
+
+        TextView addGoodInGramsText = (TextView) addFoodView.findViewById(R.id.add_good_in_grams);
+        addGoodInGramsText.setVisibility(View.VISIBLE);
 
         RelativeLayout addGood = (RelativeLayout) addFoodView.findViewById(R.id.add_good_layout);
         addGood.setVisibility(View.VISIBLE);
 
-        EditText addGoodEditText = (EditText) addFoodView.findViewById(R.id.add_good_edit_text);
+        final EditText addGoodEditText = (EditText) addFoodView.findViewById(R.id.add_good_edit_text);
         addGoodEditText.requestFocus();
+        addGoodEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    int amount = Integer.parseInt(addGoodEditText.getText().toString());
+
+                    GoodInDayRation newPortion = new GoodInDayRation();
+                    newPortion.setName(good.getName());
+                    newPortion.setProteins(good.getProteins(), amount);
+                    newPortion.setFats(good.getFats(), amount);
+                    newPortion.setCarbohydrates(good.getCarbohydrates(), amount);
+                    newPortion.setCalories(good.getCalories(), amount);
+                    newPortion.setCategory(good.getCategory());
+                    newPortion.setAmount(amount);
+                    newPortion.setDate(new Date());
+                    System.out.println(newPortion.toString());
+                    dailyGoods.put(count++, newPortion);
+
+                    alertDialog.cancel();
+                    Toast.makeText(getBaseContext(),
+                            "Блюдо (" + newPortion.getName() + " , " + newPortion.getAmount() + " гр.) успешно добавлено.",
+                            Toast.LENGTH_LONG).show();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         TextView proteinsTableText = (TextView) addFoodView.findViewById(R.id.good_proteins);
         proteinsTableText.setText(R.string.how_much_proteins_text);

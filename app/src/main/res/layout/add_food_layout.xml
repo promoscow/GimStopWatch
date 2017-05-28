@@ -7,20 +7,50 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <AutoCompleteTextView
-        android:id="@+id/add_food_name_text"
-        style="@android:style/Widget.AutoCompleteTextView"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:dropDownAnchor="@+id/good_name"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:popupBackground="?attr/colorPrimary"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-        android:textColor="@android:color/white"
-        android:textColorLink="?attr/colorButtonNormal"
-        tools:text="@string/enter_good" />
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/transparent"
+            app:srcCompat="@drawable/plus_one"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/add_food_name_text"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintHorizontal_bias="1.0" />
+
+        <AutoCompleteTextView
+            android:id="@+id/add_food_name_text"
+            style="@android:style/Widget.AutoCompleteTextView"
+            android:layout_width="248dp"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:popupBackground="?attr/colorPrimary"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:textColor="@android:color/white"
+            android:textColorLink="?attr/colorButtonNormal"
+            tools:text="@string/enter_good"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintHorizontal_bias="0.117"
+            app:layout_constraintVertical_bias="0.0" />
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
         android:id="@+id/good_name"
@@ -157,6 +187,15 @@
 
     </TableLayout>
 
+    <TextView
+        android:id="@+id/add_good_in_grams"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/add_amount_in_grams"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
     <RelativeLayout
         android:id="@+id/add_good_layout"
         android:layout_width="match_parent"
@@ -173,8 +212,7 @@
             android:ems="10"
             android:inputType="number"
             android:textColor="?attr/colorButtonNormal"
-            android:textColorHint="?attr/colorButtonNormal"
-            tools:text="Добавить (в граммах)" />
+            android:textColorHint="?attr/colorButtonNormal" />
 
         <ImageButton
             android:id="@+id/imageButton"
