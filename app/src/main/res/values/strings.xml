@@ -12,5 +12,9 @@
     <string name="settings">Настройки</string>
     <string name="user_data">Данные пользователя</string>
     <string name="recovery_timer">Таймер отдыха</string>
-    <string name="enter_good">Введите продукт</string>
+    <string name="enter_good">Начните вводить наименование продукта</string>
+    <string name="grams">гр.</string>
+    <string name="how_much_calories_text">Калорийность:</string>
+    <string name="calories">кКал.</string>
+    <string name="nutrients_in_100">В 100 гр. продукта содержится:</string>
 </resources>

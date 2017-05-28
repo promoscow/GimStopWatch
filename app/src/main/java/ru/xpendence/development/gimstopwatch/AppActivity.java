@@ -1,6 +1,7 @@
 package ru.xpendence.development.gimstopwatch;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
@@ -12,23 +13,21 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
-import android.R.layout;
-
-import java.sql.SQLOutput;
-import java.util.List;
-
 import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
+import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentAccount;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowAccount;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowTimer;
@@ -37,7 +36,6 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowFillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentTimer;
-import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.goodsList;
 
@@ -198,9 +196,6 @@ public class AppActivity extends AppCompatActivity {
     AlertDialog.Builder alertDialogBuilder;
     AlertDialog alertDialog;
     AutoCompleteTextView autoCompleteTextView;
-    final String[] COUNTRIES = new String[] {
-            "Belgium", "France", "Italy", "Germany", "Spain"
-    };
 
     /** Обработчик поиска продукта */
     public void onClickAddFoodButton(View view) {
@@ -209,6 +204,20 @@ public class AppActivity extends AppCompatActivity {
         alertDialogBuilder = new AlertDialog.Builder(view.getContext());
         alertDialogBuilder.setView(addFoodView);
         alertDialog = alertDialogBuilder.create();
+
+//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+
+
+        TableLayout nutrientsTable = (TableLayout) addFoodView.findViewById(R.id.nutrients_table);
+        nutrientsTable.setVisibility(View.GONE);
+
+        TextView in100 = (TextView) addFoodView.findViewById(R.id.in_100_text);
+        in100.setVisibility(View.GONE);
+
+        RelativeLayout addGood = (RelativeLayout) addFoodView.findViewById(R.id.add_good_layout);
+        addGood.setVisibility(View.GONE);
 
 //        final EditText addFoodEditText = (EditText) addFoodView.findViewById(R.id.add_food_name_text);
 //        addFoodEditText.addTextChangedListener(new TextWatcher() {
@@ -253,12 +262,15 @@ public class AppActivity extends AppCompatActivity {
 
             }
 
-            TextView textView = (TextView) addFoodView.findViewById(R.id.testing_listener);
+            TextView textView = (TextView) addFoodView.findViewById(R.id.good_name);
             @Override
             public void afterTextChanged(Editable s) {
                 if (s != null && s.length() != 0) {
-                    if (goodsList.contains(String.valueOf(s))) textView.setText(s);
-                        else textView.setText("");
+                    String goodName = String.valueOf(s);
+                    if (goodsList.contains(goodName)) {
+                        addGoodsToRation(goodName);
+                        textView.setText(s);
+                    } else textView.setText("");
                 }
             }
         });
@@ -289,6 +301,55 @@ public class AppActivity extends AppCompatActivity {
 
         alertDialog.show();
         alertDialog.setCanceledOnTouchOutside(true);
+    }
+
+    /** Информация о выбранном продукте и добавление его в список съеденных */
+    private void addGoodsToRation(String goodName) {
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+
+        Good  good = FoodStuffsData.goods.get(goodName);
+
+        TableLayout nutrientsTable = (TableLayout) addFoodView.findViewById(R.id.nutrients_table);
+        nutrientsTable.setVisibility(View.VISIBLE);
+
+        TextView in100 = (TextView) addFoodView.findViewById(R.id.in_100_text);
+        in100.setVisibility(View.VISIBLE);
+
+        RelativeLayout addGood = (RelativeLayout) addFoodView.findViewById(R.id.add_good_layout);
+        addGood.setVisibility(View.VISIBLE);
+
+        EditText addGoodEditText = (EditText) addFoodView.findViewById(R.id.add_good_edit_text);
+        addGoodEditText.requestFocus();
+
+        TextView proteinsTableText = (TextView) addFoodView.findViewById(R.id.good_proteins);
+        proteinsTableText.setText(R.string.how_much_proteins_text);
+
+        TextView proteinsTableValue = (TextView) addFoodView.findViewById(R.id.good_proteins_values);
+        String proteinsValue = String.valueOf(good.getProteins()) + " " + getString(R.string.grams);
+        proteinsTableValue.setText(proteinsValue);
+
+        TextView fatsTableText = (TextView) addFoodView.findViewById(R.id.good_fat);
+        fatsTableText.setText(R.string.how_much_fats_text);
+
+        TextView fatsTableValue = (TextView) addFoodView.findViewById(R.id.good_fat_values);
+        String fatsValue = String.valueOf(good.getFats()) + " " + getString(R.string.grams);
+        fatsTableValue.setText(fatsValue);
+
+        TextView carbonsTableText = (TextView) addFoodView.findViewById(R.id.good_carbohydrates);
+        carbonsTableText.setText(R.string.how_much_carbohydrates_text);
+
+        TextView carbonsTableValue = (TextView) addFoodView.findViewById(R.id.good_carbohydrates_values);
+        String carbonsValue = String.valueOf(good.getCarbohydrates()) + " " + getString(R.string.grams);
+        carbonsTableValue.setText(carbonsValue);
+
+        TextView caloriesTableText = (TextView) addFoodView.findViewById(R.id.good_calories);
+        caloriesTableText.setText(R.string.how_much_calories_text);
+
+        TextView caloriesTableValue = (TextView) addFoodView.findViewById(R.id.good_calories_values);
+        String caloriesValue = String.valueOf(good.getCalories()) + " " + getString(R.string.calories);
+        caloriesTableValue.setText(caloriesValue);
     }
 
     /** Переход на фрагмент, вместо @FragmentBelowFillDayRate выводим фрагмент
