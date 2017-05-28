@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:id="@+id/add_food_name_text"
+        style="@android:style/Widget.AutoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:dropDownAnchor="@+id/testing_listener"
+        android:inputType="textPersonName"
+        android:popupBackground="?attr/colorPrimary"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="@android:color/white"
+        android:textColorLink="?attr/colorButtonNormal"
+        tools:text="@string/enter_good" />
+
+    <TextView
+        android:id="@+id/testing_listener"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@android:color/white" />
+</LinearLayout>

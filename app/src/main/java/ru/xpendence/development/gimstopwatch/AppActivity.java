@@ -1,20 +1,34 @@
 package ru.xpendence.development.gimstopwatch;
 
+import android.app.AlertDialog;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.R.layout;
+
+import java.sql.SQLOutput;
+import java.util.List;
+
+import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentAccount;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowAccount;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowTimer;
@@ -23,12 +37,17 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowFillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentTimer;
+import ru.xpendence.development.gimstopwatch.util.PersonalData;
+
+import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.goodsList;
 
 /**
  * Main Activity for all frames.
  */
 
 public class AppActivity extends AppCompatActivity {
+
+    private final String TAG = this.getClass().getSimpleName();
 
     /**
      * Static sizes of display.
@@ -114,29 +133,27 @@ public class AppActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.timer:
-                Log.d("onClick", "timer");
                 setUnderlineAlpha(timerUnderline);
-                headingText.setText("Таймер отдыха");
+                headingText.setText(R.string.recovery_timer);
                 showFragmentTop(FragmentTimer.newInstance());
                 showFragmentBottom(FragmentBelowTimer.newInstance());
                 break;
             case R.id.fill_day_rate:
-                Log.d("onClick", "fillDayRate");
                 setUnderlineAlpha(fillUnderline);
-                headingText.setText("Дневная норма калорий");
+                headingText.setText(R.string.cal_daily_norm);
                 showFragmentTop(FragmentFillDayRate.newInstance());
                 showFragmentBottom(FragmentBelowFillDayRate.newInstance());
                 break;
             case R.id.nutrients_ratio:
                 setUnderlineAlpha(nutrientsUnderline);
-                headingText.setText("Соотношение нутриентов");
+                headingText.setText(R.string.nutrients_ratio);
 
                 showFragmentTop(FragmentNutrientsRatio.newInstance());
                 showFragmentBottom(FragmentBelowNutrients.newInstance());
                 break;
             case R.id.account:
                 setUnderlineAlpha(accountUnderline);
-                headingText.setText("Данные пользователя");
+                headingText.setText(R.string.user_data);
 
                 Fragment fragment = FragmentAccount.newInstance();
                 viewGroup.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics.widthPixels,
@@ -146,10 +163,9 @@ public class AppActivity extends AppCompatActivity {
                 break;
             case R.id.settings:
                 setUnderlineAlpha(settingsUnderline);
-                headingText.setText("Настройки");
+                headingText.setText(R.string.settings);
                 break;
         }
-        Log.d("onClick", "okay");
     }
 
     private void setUnderlineAlpha(View view) {
@@ -175,5 +191,125 @@ public class AppActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.fragment_below_main, fragment)
                 .commit();
+    }
+
+    LayoutInflater layoutInflater;
+    View addFoodView;
+    AlertDialog.Builder alertDialogBuilder;
+    AlertDialog alertDialog;
+    AutoCompleteTextView autoCompleteTextView;
+    final String[] COUNTRIES = new String[] {
+            "Belgium", "France", "Italy", "Germany", "Spain"
+    };
+
+    /** Обработчик поиска продукта */
+    public void onClickAddFoodButton(View view) {
+        layoutInflater = LayoutInflater.from(view.getContext());
+        addFoodView = layoutInflater.inflate(R.layout.add_food_layout, null);
+        alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+        alertDialogBuilder.setView(addFoodView);
+        alertDialog = alertDialogBuilder.create();
+
+//        final EditText addFoodEditText = (EditText) addFoodView.findViewById(R.id.add_food_name_text);
+//        addFoodEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s != null && s.length() != 0) {
+//                    try {
+//                        TextView textView = (TextView) addFoodView.findViewById(R.id.testing_listener);
+//                        textView.setText(s);
+//                    } catch (NullPointerException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Log.d(TAG, String.valueOf(s));
+//                }
+//            }
+//        });
+
+//        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+
+        autoCompleteTextView = (AutoCompleteTextView) addFoodView.findViewById(R.id.add_food_name_text);
+        Log.i(TAG, String.valueOf(autoCompleteTextView));
+        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line,
+                goodsList));
+
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            TextView textView = (TextView) addFoodView.findViewById(R.id.testing_listener);
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s != null && s.length() != 0) {
+                    if (goodsList.contains(String.valueOf(s))) textView.setText(s);
+                        else textView.setText("");
+                }
+            }
+        });
+
+//        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String s = autoCompleteTextView.getText().toString();
+//                System.out.println(s);
+//                TextView textView = (TextView) addFoodView.findViewById(R.id.testing_listener);
+//                textView.setText(s);
+//            }
+//        });
+
+//        autoCompleteTextView.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+//                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+//                    String s = autoCompleteTextView.getText().toString();
+//                    TextView textView = (TextView) addFoodView.findViewById(R.id.testing_listener);
+//                    textView.setText(s);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
+        alertDialog.show();
+        alertDialog.setCanceledOnTouchOutside(true);
+    }
+
+    /** Переход на фрагмент, вместо @FragmentBelowFillDayRate выводим фрагмент
+     * со списком съеденных продуктов и возможностью их удалять/редактировать.
+     * @param view
+     */
+    public void onClickEditFoodButton(View view) {
+    }
+
+    /** Переход на @FragmentFillDayRate */
+    public void onClickInfoFoodButton(View view) {
+        setUnderlineAlpha(fillUnderline);
+        TextView headingText = (TextView) findViewById(R.id.heading);
+        headingText.setText(R.string.cal_daily_norm);
+        showFragmentTop(FragmentFillDayRate.newInstance());
+        showFragmentBottom(FragmentBelowFillDayRate.newInstance());
+    }
+
+    public void onClickEditAccountButton(View view) {
+    }
+
+    public void onClickInfoAccountButton(View view) {
     }
 }

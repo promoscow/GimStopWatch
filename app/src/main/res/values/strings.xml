@@ -7,6 +7,10 @@
     <string name="user_name">Новый пользователь</string>
     <string name="_21">ИМТ: 21</string>
     <string name="add">Добавить</string>
-    <string name="day_norm_of_calories">Дневная норма калорий</string>
     <string name="nutrients_ratio">Соотношение нутриентов</string>
+    <string name="cal_daily_norm">Дневная норма калорий</string>
+    <string name="settings">Настройки</string>
+    <string name="user_data">Данные пользователя</string>
+    <string name="recovery_timer">Таймер отдыха</string>
+    <string name="enter_good">Введите продукт</string>
 </resources>

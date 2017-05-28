@@ -20,6 +20,8 @@ import ru.xpendence.development.gimstopwatch.util.TextHelper;
 
 public class FragmentBelowFillDayRate extends Fragment {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_below_fill_day_rate, container, false);

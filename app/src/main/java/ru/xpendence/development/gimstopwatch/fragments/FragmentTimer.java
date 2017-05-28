@@ -29,6 +29,8 @@ import ru.xpendence.development.gimstopwatch.util.MathHelper;
 
 public class FragmentTimer extends Fragment {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     private static int absoluteSize = 0;
 
     private static int fragmentHeight = 0;

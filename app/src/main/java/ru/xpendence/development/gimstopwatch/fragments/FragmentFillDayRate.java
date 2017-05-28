@@ -28,6 +28,8 @@ import ru.xpendence.development.gimstopwatch.util.MathHelper;
 
 public class FragmentFillDayRate extends Fragment {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     private static int fragmentHeight = 0;
     private static int fragmentWidth = 0;
 

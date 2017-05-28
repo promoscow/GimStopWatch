@@ -15,6 +15,8 @@ import ru.xpendence.development.gimstopwatch.R;
 
 public class FragmentBelowTimer extends Fragment {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_below_timer, container, false);
     }

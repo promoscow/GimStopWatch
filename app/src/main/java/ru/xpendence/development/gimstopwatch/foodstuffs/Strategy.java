@@ -6,6 +6,4 @@ package ru.xpendence.development.gimstopwatch.foodstuffs;
  */
 
 public class Strategy {
-
-
 }

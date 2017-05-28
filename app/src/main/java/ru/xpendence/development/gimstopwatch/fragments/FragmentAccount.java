@@ -19,16 +19,18 @@ import ru.xpendence.development.gimstopwatch.R;
 
 public class FragmentAccount extends Fragment {
 
+    private final String TAG = this.getClass().getSimpleName();
+
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_account, container, false);
-        Button addFoodButton = (Button) view.findViewById(R.id.add_food_button);
-        addFoodButton.setBackgroundResource(R.drawable.roundbutton);
-
-        Button editButton = (Button) view.findViewById(R.id.edit_food_button);
-        editButton.setBackgroundResource(R.drawable.roundbutton);
-
-        Button removeButton = (Button) view.findViewById(R.id.remove_food_button);
-        removeButton.setBackgroundResource(R.drawable.roundbutton);
+//        Button addFoodButton = (Button) view.findViewById(R.id.add_food_button);
+//        addFoodButton.setBackgroundResource(R.drawable.roundbutton);
+//
+//        Button editButton = (Button) view.findViewById(R.id.edit_food_button);
+//        editButton.setBackgroundResource(R.drawable.roundbutton);
+//
+//        Button removeButton = (Button) view.findViewById(R.id.remove_food_button);
+//        removeButton.setBackgroundResource(R.drawable.roundbutton);
 
         showFragmentNutrientsPie(FragmentNutrientsRatio.newInstance());
         return view;

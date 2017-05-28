@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.Map;
 
 import ru.xpendence.development.gimstopwatch.foodstuffs.ExcellParser;
+import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
@@ -32,7 +34,12 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert goods != null;
         Log.d(TAG, String.valueOf(goods.size()));
+        FoodStuffsData.goods = goods;
+
+        for (String good : goods.keySet()) FoodStuffsData.goodsList.add(good);
+        System.out.println(FoodStuffsData.goodsList.size());
 
         Intent intent = new Intent(MainActivity.this, AppActivity.class);
         startActivity(intent);
