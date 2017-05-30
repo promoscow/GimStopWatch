@@ -42,6 +42,7 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowFillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentTimer;
+import ru.xpendence.development.gimstopwatch.util.BitmapHelper;
 
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.count;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.dailyGoods;
@@ -360,7 +361,26 @@ public class AppActivity extends AppCompatActivity {
                     newPortion.setAmount(amount);
                     newPortion.setDate(new Date());
                     System.out.println(newPortion.toString());
-                    dailyGoods.put(count++, newPortion);
+                    dailyGoods.put(++count, newPortion);
+                    FoodStuffsData.setDailyCaloriesSummary(dailyGoods.get(count).getCalories());
+                    FragmentFillDayRate.isCaloriesChanged = true;
+
+
+//                    DisplayMetrics displayMetrics1 = getResources().getDisplayMetrics();
+//                    Log.d(TAG, String.valueOf(displayMetrics1.heightPixels));
+//                    ViewGroup viewGroup1 = (FrameLayout) findViewById(R.id.main_fragment_view);
+//                    ViewGroup viewGroup2 = (FrameLayout) findViewById(R.id.fragment_below_main);
+//                    Fragment fragment1 = FragmentAccount.newInstance();
+
+//                    viewGroup2.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics1.widthPixels,
+//                            0));
+//                    viewGroup1.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics1.widthPixels,
+//                            (int) (displayMetrics1.heightPixels - (123 * displayMetrics1.density))));
+//
+//                    viewGroup2.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics1.widthPixels,
+//                            0));
+//                    showFragmentTop(fragment1);
+//                    showFragmentBottom(FragmentBelowAccount.newInstance());
 
                     alertDialog.cancel();
                     Toast.makeText(getBaseContext(),

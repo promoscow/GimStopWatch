@@ -7,10 +7,11 @@ package ru.xpendence.development.gimstopwatch.util;
 import android.util.Log;
 
 import ru.xpendence.development.gimstopwatch.R;
+import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 
 public class BitmapHelper {
     public static int getCalContainerFill() {
-        double result = (double) PersonalData.dailyCalories / (double) PersonalData.goalCalories;
+        double result = (double) FoodStuffsData.dailyCaloriesSummary / (double) PersonalData.goalCalories;
         Log.e("containerResult", String.valueOf(result));
 
         return (result == 0)

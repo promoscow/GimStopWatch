@@ -1,5 +1,7 @@
 package ru.xpendence.development.gimstopwatch.fragments;
 
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -32,6 +34,8 @@ public class FragmentFillDayRate extends Fragment {
 
     private static int fragmentHeight = 0;
     private static int fragmentWidth = 0;
+
+    public static boolean isCaloriesChanged = true;
 
     DrawView drawView;
 
@@ -119,23 +123,27 @@ public class FragmentFillDayRate extends Fragment {
         };
 
         private final Paint mPaint = new Paint();
-//        private final Rect mRect = new Rect();
+        private final Rect rectCanvas = new Rect();
         private final RectF rectF = new RectF();
-        private final Bitmap calContainer =
-                BitmapFactory.decodeResource(resources,
-                        R.drawable.cal_container_200);
-        private final Bitmap calContainerFill =
-                BitmapFactory.decodeResource(resources,
-                        BitmapHelper.getCalContainerFill());
-        private final Bitmap plusIcon =
-                BitmapFactory.decodeResource(resources,
-                        R.drawable.plus_top);
+//        private final Bitmap calContainer =
+//                BitmapFactory.decodeResource(resources,
+//                        R.drawable.cal_container_200);
+        private Bitmap calContainerFill;
+//        private final Bitmap plusIcon =
+//                BitmapFactory.decodeResource(resources,
+//                        R.drawable.plus_top);
 
         {
             mPaint.setStrokeWidth(10);
             mPaint.setStyle(Paint.Style.STROKE);
 
             rectF.set(WIDTH - 100, 200, WIDTH + 100, 300);
+            reCreateBitmap();
+
+//            rectCanvas.set((int) (fragmentWidth * 0.25),
+//                    (int) (fragmentHeight * 0.125),
+//                    (int) (fragmentWidth * 0.75),
+//                    (int) (fragmentHeight * 0.875));
         }
 
         public DrawView(Context context) {
@@ -159,26 +167,41 @@ public class FragmentFillDayRate extends Fragment {
         protected final void onDraw(final Canvas canvas) {
             super.onDraw(canvas);
 
+            if (isCaloriesChanged) {
+                isCaloriesChanged = false;
+                reCreateBitmap();
+            }
+
+//            mPaint.setColor(Color.WHITE);
+//            mPaint.setStyle(Paint.Style.STROKE);
+//            canvas.drawRect(rectCanvas, mPaint);
+
             drawFill(canvas);
 
             postDelayed(mInvalidator, TIME_DELAY);
         }
 
-        private void drawPlusButton(Canvas canvas) {
-            mPaint.setColor(0xFFFFFFFF);
-            mPaint.setStyle(Paint.Style.FILL);
-            canvas.drawRoundRect(canvas.getWidth() - 150, 50, canvas.getWidth() + 150, 200, 150, 150, mPaint);
-            canvas.drawBitmap(plusIcon, canvas.getWidth() - 135, 63, mPaint);
-        }
+//        private void drawPlusButton(Canvas canvas) {
+//            mPaint.setColor(0xFFFFFFFF);
+//            mPaint.setStyle(Paint.Style.FILL);
+//            canvas.drawRoundRect(canvas.getWidth() - 150, 50, canvas.getWidth() + 150, 200, 150, 150, mPaint);
+//            canvas.drawBitmap(plusIcon, canvas.getWidth() - 135, 63, mPaint);
+//        }
 
         private void drawFill(Canvas canvas) {
 
             mPaint.setColor(0xFFFFFFFF);
 
             canvas.drawBitmap(calContainerFill,
-                    canvas.getWidth() / 2 - calContainer.getWidth() / 2,
-                    canvas.getHeight() / 2 - calContainer.getHeight() / 2,
+                    canvas.getWidth() / 2 - calContainerFill.getWidth() / 2,
+                    canvas.getHeight() / 2 - calContainerFill.getHeight() / 2,
                     mPaint);
+        }
+
+        public void reCreateBitmap() {
+            calContainerFill =
+                    BitmapFactory.decodeResource(resources,
+                            BitmapHelper.getCalContainerFill());
         }
     }
 }

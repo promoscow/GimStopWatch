@@ -53,7 +53,7 @@ public class GoodInDayRation {
     }
 
     public void setCalories(int calories, int amount) {
-        this.calories = calories / 100 * amount;
+        this.calories = (int) ((calories / 100d) * amount);
     }
 
     public String getCategory() {

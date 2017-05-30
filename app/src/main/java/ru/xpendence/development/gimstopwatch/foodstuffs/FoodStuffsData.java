@@ -1,5 +1,6 @@
 package ru.xpendence.development.gimstopwatch.foodstuffs;
 
+import android.util.Log;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import java.util.Map;
  */
 
 public class FoodStuffsData {
+
+    private static final String TAG = "FoodStuffData";
 
     /** Каталог продуктов */
     public static Map<String, Good> goods;
@@ -26,4 +29,10 @@ public class FoodStuffsData {
     public static Map<String, SparseArray<GoodInDayRation>> archiveRations = new HashMap<>();
 
     public static int count = 0;
+    public static int dailyCaloriesSummary = 0;
+
+    public static void setDailyCaloriesSummary(int calories) {
+        dailyCaloriesSummary += calories;
+        Log.d(TAG, String.valueOf(dailyCaloriesSummary));
+    }
 }

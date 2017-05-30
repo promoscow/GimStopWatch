@@ -1,7 +1,5 @@
 package ru.xpendence.development.gimstopwatch.util;
 
-import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
-
 /**
  * Created by promoscow on 24.05.17.
  * All user personal data is here.

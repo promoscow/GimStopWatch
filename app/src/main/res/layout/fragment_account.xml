@@ -201,8 +201,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.734"
-                app:srcCompat="@drawable/cal_container_complete_70" />
+                app:layout_constraintVertical_bias="0.734" />
 
             <TextView
                 android:id="@+id/fill_calories"
@@ -225,7 +224,7 @@
                 app:layout_constraintVertical_bias="0.049" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/fill_calories_goal"
                 android:layout_width="158dp"
                 android:layout_height="22dp"
                 android:layout_marginBottom="8dp"
@@ -243,8 +242,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.284"
-                tools:layout_editor_absoluteY="52dp"
-                tools:layout_editor_absoluteX="180dp" />
+                tools:layout_editor_absoluteX="180dp"
+                tools:layout_editor_absoluteY="52dp" />
 
         </android.support.constraint.ConstraintLayout>
 
