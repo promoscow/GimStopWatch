@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
+            android:textColor="@color/primary_text"
             android:textSize="14sp" />
 
         <TextView
@@ -28,16 +28,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"  />
+            android:textColor="@color/primary_text"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/timer3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"  />
+            android:textColor="@color/primary_text"
+            android:textSize="14sp" />
 
     </LinearLayout>
 </ScrollView>

@@ -7,4 +7,5 @@
     <color name="nutrientBlue">#00bfe8</color>
     <color name="nutrientYellow">#ffd55a</color>
     <color name="nutrientGreen">#86d55a</color>
+    <color name="backgroundColor">#cde2ec</color>
 </resources>

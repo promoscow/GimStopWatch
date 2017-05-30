@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
@@ -15,17 +15,17 @@
             android:id="@+id/imageButton3"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/transparent"
-            app:srcCompat="@drawable/plus_one"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="@+id/add_food_name_text"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="@+id/add_food_name_text"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintHorizontal_bias="1.0" />
+            app:srcCompat="@drawable/plus_one" />
 
         <AutoCompleteTextView
             android:id="@+id/add_food_name_text"
@@ -33,23 +33,24 @@
             android:layout_width="248dp"
             android:layout_height="50dp"
             android:layout_margin="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:popupBackground="?attr/colorPrimary"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            android:textColor="@android:color/white"
-            android:textColorLink="?attr/colorButtonNormal"
-            tools:text="@string/enter_good"
-            android:layout_marginLeft="8dp"
+            android:textColor="@color/primary_text"
+            android:textColorHighlight="@color/accent"
+            android:textColorLink="@color/primary_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.117"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintHorizontal_bias="0.117"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="@string/enter_good" />
     </android.support.constraint.ConstraintLayout>
 
     <TextView
@@ -57,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/primary_text"
         android:textSize="18sp" />
 
     <TextView
@@ -66,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/nutrients_in_100"
-        android:textColor="@android:color/white"
+        android:textColor="@color/primary_text"
         android:textSize="18sp" />
 
     <TableLayout
@@ -98,7 +99,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="16dp"
                 android:textAlignment="textEnd"
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp" />
         </TableRow>
 
@@ -125,7 +126,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="16dp"
                 android:textAlignment="textEnd"
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp" />
         </TableRow>
 
@@ -152,7 +153,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="16dp"
                 android:textAlignment="textEnd"
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp" />
         </TableRow>
 
@@ -168,7 +169,7 @@
                 android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingTop="24dp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp" />
 
             <TextView
@@ -181,7 +182,7 @@
                 android:paddingRight="16dp"
                 android:paddingTop="24dp"
                 android:textAlignment="textEnd"
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp" />
         </TableRow>
 
@@ -193,7 +194,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/add_amount_in_grams"
-        android:textColor="@android:color/white"
+        android:textColor="@color/primary_text"
         android:textSize="18sp" />
 
     <RelativeLayout
@@ -211,7 +212,7 @@
             android:layout_marginStart="8dp"
             android:ems="10"
             android:inputType="number"
-            android:textColor="?attr/colorButtonNormal"
+            android:textColor="@color/primary_text"
             android:textColorHint="?attr/colorButtonNormal" />
 
         <ImageButton

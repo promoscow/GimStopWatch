@@ -49,7 +49,7 @@
                 android:layout_marginTop="8dp"
                 android:onClick="onClickMenu"
                 android:text="@string/user_name"
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"
@@ -69,7 +69,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/_21"
-                android:textColor="?android:attr/colorButtonNormal"
+                android:textColor="@color/primary_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.434"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -121,15 +121,13 @@
             android:id="@+id/horizontal_line"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@android:color/darker_gray"
+            android:background="@color/divider"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="125dp" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="250dp">
 
             <ImageButton
                 android:id="@+id/add_food_button"
@@ -140,7 +138,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:alpha="0.5"
-                android:background="@drawable/transparent"
                 android:onClick="onClickAddFoodButton"
                 android:src="@drawable/plus_circle_36"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -188,10 +185,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.877" />
 
-            <ImageView
+            <FrameLayout
                 android:id="@+id/calories_fill_ratio_image"
                 android:layout_width="93dp"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="16dp"
@@ -214,7 +211,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/cal_daily_norm"
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.183"
@@ -234,7 +231,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="1355 / 2500 кКал."
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.838"
@@ -250,9 +247,7 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@android:color/darker_gray"
+            android:background="@color/divider"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="125dp" />
 
@@ -271,7 +266,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/nutrients_ratio"
-                android:textColor="@android:color/white"
+                android:textColor="@color/primary_text"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.202"
@@ -304,9 +299,7 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@android:color/darker_gray"
+            android:background="@color/divider"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="125dp" />
 

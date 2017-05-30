@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.xpendence.development.gimstopwatch.R;
+import ru.xpendence.development.gimstopwatch.util.BitmapHelper;
 import ru.xpendence.development.gimstopwatch.util.MathHelper;
 
 /**
@@ -134,12 +136,13 @@ public class FragmentTimer extends Fragment {
         Resources resources = this.getResources();
         private final Paint mPaint = new Paint();
         private final RectF rectF = new RectF();
+        private final Path glare = new Path();
         private final Bitmap playButton =
                 BitmapFactory.decodeResource(resources,
-                        R.drawable.play);
+                        R.drawable.play_dark);
         private final Bitmap pauseButton =
                 BitmapFactory.decodeResource(resources,
-                        R.drawable.pause);
+                        R.drawable.pause_dark);
 //        private float angle;
 
         {
@@ -177,19 +180,21 @@ public class FragmentTimer extends Fragment {
             height = canvas.getHeight();
             width = canvas.getWidth();
 
-            rectF.set((width / 2) - (absoluteSize / 3),
-                    (height / 2) - (absoluteSize / 3),
-                    (width / 2) + (absoluteSize / 3),
-                    (height / 2) + (absoluteSize / 3));
+            rectF.set((width / 2) - (absoluteSize / 2.5f),
+                    (height / 2) - (absoluteSize / 2.5f),
+                    (width / 2) + (absoluteSize / 2.5f),
+                    (height / 2) + (absoluteSize / 2.5f));
 
 
             absoluteSize = MathHelper.getAbsoluteSize(canvas.getHeight(), canvas.getWidth());
 
             super.onDraw(canvas);
 
+//            drawBackground(canvas);
             drawBgCircle(canvas);
 
             mPaint.setColor(Color.WHITE);
+//            Log.d("playButton", String.valueOf(playButton));
             canvas.drawBitmap(MathHelper.getBitmap(playButton, pauseButton),
                     canvas.getWidth() / 2 - playButton.getWidth() / 2,
                     canvas.getHeight() / 2 - playButton.getHeight() / 2, mPaint);
@@ -205,6 +210,7 @@ public class FragmentTimer extends Fragment {
         }
 
         private void drawMainArc(Canvas canvas) {
+            mPaint.setStrokeWidth(absoluteSize * 0.008f);
             angle = MathHelper.getAngle(angle);
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setColor(MathHelper.setTimelineColor(angle));
@@ -212,15 +218,31 @@ public class FragmentTimer extends Fragment {
         }
 
         private void drawCircle(Canvas canvas) {
+            mPaint.setStrokeWidth(absoluteSize * 0.008f);
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setColor(MathHelper.setBgI());
-            canvas.drawCircle(width / 2, height / 2, (absoluteSize / 3), mPaint);
+            canvas.drawCircle(width / 2, height / 2, (absoluteSize / 2.5f), mPaint);
         }
 
         private void drawBgCircle(Canvas canvas) {
+            mPaint.setStrokeWidth(absoluteSize * 0.008f);
             mPaint.setColor(MathHelper.bgColor);
             mPaint.setStyle(Paint.Style.FILL);
-            canvas.drawCircle(width / 2, height / 2, absoluteSize / 3, mPaint);
+            canvas.drawCircle(width / 2, height / 2, absoluteSize / 2.5f, mPaint);
+        }
+
+        private void drawBackground(Canvas canvas) {
+            glare.reset();
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(BitmapHelper.BACKGROUND_COLOR);
+            mPaint.setAlpha(255);
+            glare.moveTo(fragmentWidth, fragmentHeight * 0.75f);
+            glare.lineTo(fragmentWidth, fragmentHeight);
+            glare.lineTo(0, fragmentHeight);
+            glare.lineTo(0, fragmentHeight * 0.75f);
+            glare.close();
+
+            canvas.drawPath(glare, mPaint);
         }
     }
 }

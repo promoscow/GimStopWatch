@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import ru.xpendence.development.gimstopwatch.R;
 import ru.xpendence.development.gimstopwatch.util.BitmapHelper;
+import ru.xpendence.development.gimstopwatch.util.CommonSettings;
 
 /**
  * Created by promoscow on 25.05.17.
@@ -30,6 +32,21 @@ public class FragmentAccount extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_account, container, false);
         Log.d(TAG, "enter");
 
+        TextView userName = (TextView) view.findViewById(R.id.user_name);
+        userName.setTypeface(CommonSettings.getRobotoCondLight());
+
+        TextView imt = (TextView) view.findViewById(R.id.imt_text);
+        imt.setTypeface(CommonSettings.getRobotoCondLight());
+
+        TextView fillCalories = (TextView) view.findViewById(R.id.fill_calories);
+        fillCalories.setTypeface(CommonSettings.getRobotoCondLight());
+
+        TextView fillCaloriesGoal = (TextView) view.findViewById(R.id.fill_calories_goal);
+        fillCaloriesGoal.setTypeface(CommonSettings.getRobotoCondLight());
+
+        TextView nutrients = (TextView) view.findViewById(R.id.nutrients);
+        nutrients.setTypeface(CommonSettings.getRobotoCondLight());
+
 //        Button addFoodButton = (Button) view.findViewById(R.id.add_food_button);
 //        addFoodButton.setBackgroundResource(R.drawable.roundbutton);
 //
@@ -39,11 +56,12 @@ public class FragmentAccount extends Fragment {
 //        Button removeButton = (Button) view.findViewById(R.id.remove_food_button);
 //        removeButton.setBackgroundResource(R.drawable.roundbutton);
 
-        fragmentFillDayRatioImage = (ImageView) view.findViewById(R.id.calories_fill_ratio_image);
-        fragmentFillDayRatioImage.setImageResource(BitmapHelper.getCalContainerFill());
+//        fragmentFillDayRatioImage = (ImageView) view.findViewById(R.id.calories_fill_ratio_image);
+//        fragmentFillDayRatioImage.setImageResource(BitmapHelper.getCalContainerFill());
 
-//        showFragmentFilldayRatio(FragmentFillDayRate.newInstance());
+        showFragmentFilldayRatio(FragmentFillDayRateForAccount.newInstance());
         showFragmentNutrientsPie(FragmentNutrientsRatio.newInstance());
+
         return view;
     }
 
@@ -72,7 +90,6 @@ public class FragmentAccount extends Fragment {
     }
 
     void showFragmentNutrientsPie(Fragment fragment) {
-
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.nutrients_in_account, fragment)

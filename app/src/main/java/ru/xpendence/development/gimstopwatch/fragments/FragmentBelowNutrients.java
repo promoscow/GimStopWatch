@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import ru.xpendence.development.gimstopwatch.R;
+import ru.xpendence.development.gimstopwatch.util.CommonSettings;
 import ru.xpendence.development.gimstopwatch.util.NutrientsHelper;
 import ru.xpendence.development.gimstopwatch.util.TextHelper;
 
@@ -24,6 +27,21 @@ public class FragmentBelowNutrients extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_below_nutrients, container, false);
 
+        final TextView nutrientsHeader = (TextView) view.findViewById(R.id.nutrients_header);
+        nutrientsHeader.setTypeface(CommonSettings.getRobotoCondLight());
+
+        final TextView nutrientsProteins = (TextView) view.findViewById(R.id.nutrients_proteins);
+        nutrientsProteins.setTypeface(CommonSettings.getRobotoCondLight());
+
+        final TextView nutrientsFats = (TextView) view.findViewById(R.id.nutrients_fat);
+        nutrientsFats.setTypeface(CommonSettings.getRobotoCondLight());
+
+        final TextView nutrientsCarbohydrates = (TextView) view.findViewById(R.id.nutrients_carbohydrates);
+        nutrientsCarbohydrates.setTypeface(CommonSettings.getRobotoCondLight());
+
+        final TextView nutrientsLower = (TextView) view.findViewById(R.id.nutrients_lower);
+        nutrientsLower.setTypeface(CommonSettings.getRobotoCondLight());
+
         final TextView dailyCaloriesText;
 
         String getProteins = TextHelper.getProteins();
@@ -31,6 +49,7 @@ public class FragmentBelowNutrients extends Fragment {
                 getProteins, NutrientsHelper.getProteinsPercent());
         dailyCaloriesText = (TextView) view.findViewById(R.id.nutrients_proteins_values);
         dailyCaloriesText.setTextSize(16);
+        dailyCaloriesText.setTypeface(CommonSettings.getRobotoCondLight());
         dailyCaloriesText.setText(result);
 
         final TextView caloriesPercentText;
@@ -40,6 +59,7 @@ public class FragmentBelowNutrients extends Fragment {
                 getFats, NutrientsHelper.getFatsPercent());
         caloriesPercentText = (TextView) view.findViewById(R.id.nutrients_fat_values);
         caloriesPercentText.setTextSize(16);
+        caloriesPercentText.setTypeface(CommonSettings.getRobotoCondLight());
         caloriesPercentText.setText(resultFats);
 
         final TextView goalCaloriesText;
@@ -49,6 +69,7 @@ public class FragmentBelowNutrients extends Fragment {
                 getCarbons, NutrientsHelper.getCarbohydratesPercent());
         goalCaloriesText = (TextView) view.findViewById(R.id.nutrients_carbohydrates_values);
         goalCaloriesText.setTextSize(16);
+        goalCaloriesText.setTypeface(CommonSettings.getRobotoCondLight());
         goalCaloriesText.setText(resultCarbons);
 
         return view;

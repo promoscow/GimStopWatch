@@ -2,7 +2,10 @@ package ru.xpendence.development.gimstopwatch.util;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.util.DisplayMetrics;
+
+import ru.xpendence.development.gimstopwatch.R;
 
 /**
  * Created by promoscow on 13.05.17.
@@ -12,12 +15,12 @@ import android.util.DisplayMetrics;
 public class MathHelper {
     public static boolean isFirst = true;
     private static int[] colors = {
-            0xFFFFFFFF, 0xFFF24AB9, 0xFF4E5CD1, 0xFFF6DE42, 0xFF973F8B, 0xFF97E17F, 0xFFF25750, 0xFF457333
+            0xFF455A64, 0xFFF24AB9, 0xFF4E5CD1, 0xFFF6DE42, 0xFF973F8B, 0xFF97E17F, 0xFFF25750, 0xFF457333
     };
 
     private static int i = 1;
     public static boolean isStoped = true;
-    public static int bgColor = 0x09FFFFFF;
+    public static int bgColor = 0xffd8e2e7;
 
     public static int getI() {
         return i;
