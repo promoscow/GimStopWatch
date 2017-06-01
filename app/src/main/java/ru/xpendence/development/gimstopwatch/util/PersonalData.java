@@ -34,9 +34,9 @@ public class PersonalData {
         dailyCalories = 0;
         goalCalories = 2500;
 
-        dailyProteins = 392;
-        dailyFats = 198;
-        dailyCarbohydrates = 980;
+        dailyProteins = 0;
+        dailyFats = 0;
+        dailyCarbohydrates = 0;
     }
 
     /**
@@ -92,6 +92,22 @@ public class PersonalData {
 
     public static void setDailyCalories(int dailyCalories) {
         PersonalData.dailyCalories = dailyCalories;
+    }
+
+    public static void setDailyProteins(double dailyProteins) {
+        PersonalData.dailyProteins += dailyProteins;
+    }
+
+    public static void setDailyFats(double dailyFats) {
+        PersonalData.dailyFats += dailyFats;
+    }
+
+    public static void setDailyCarbohydrates(double dailyCarbohydrates) {
+        PersonalData.dailyCarbohydrates += dailyCarbohydrates;
+    }
+
+    public static void setTotalDailyNutrients() {
+        PersonalData.totalDailyNutrients = dailyProteins + dailyFats + dailyCarbohydrates;
     }
 
     public static int getGoalCalories() {

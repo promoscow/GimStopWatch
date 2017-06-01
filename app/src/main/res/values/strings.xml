@@ -18,4 +18,6 @@
     <string name="calories">кКал.</string>
     <string name="nutrients_in_100">В 100 гр. продукта содержится:</string>
     <string name="add_amount_in_grams">Введите кол-во в граммах:</string>
+    <string name="nutrients_daily">С начала дня Вы употребили:</string>
+    <string name="no_data">На сегодня пока нет данных. Увы.</string>
 </resources>

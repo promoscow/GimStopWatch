@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:overScrollMode="never">
+    android:overScrollMode="never"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -49,6 +50,7 @@
                 android:layout_marginTop="8dp"
                 android:onClick="onClickMenu"
                 android:text="@string/user_name"
+                android:textAlignment="textStart"
                 android:textColor="@color/primary_text"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -69,6 +71,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/_21"
+                android:textAlignment="textStart"
                 android:textColor="@color/primary_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.434"
@@ -94,7 +97,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.877" />
+                app:layout_constraintVertical_bias="0.877"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
             <ImageButton
                 android:id="@+id/info_account_button"
@@ -113,7 +118,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.877" />
+                app:layout_constraintVertical_bias="0.877"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -145,7 +152,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.878" />
+                app:layout_constraintVertical_bias="0.878"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
             <ImageButton
                 android:id="@+id/edit_food_button"
@@ -164,7 +173,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.878" />
+                app:layout_constraintVertical_bias="0.878"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
             <ImageButton
                 android:id="@+id/info_food_button"
@@ -183,7 +194,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.877" />
+                app:layout_constraintVertical_bias="0.877"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
             <FrameLayout
                 android:id="@+id/calories_fill_ratio_image"
@@ -230,7 +243,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="1355 / 2500 кКал."
                 android:textColor="@color/primary_text"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -238,9 +250,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.284"
-                tools:layout_editor_absoluteX="180dp"
-                tools:layout_editor_absoluteY="52dp" />
+                app:layout_constraintVertical_bias="0.284" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -281,7 +291,7 @@
                 android:layout_height="93dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"

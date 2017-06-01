@@ -22,11 +22,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingBottom="16dp"
+            android:paddingLeft="32dp"
             android:text="С начала дня Вы употребили:"
             android:textColor="@color/primary_text"
             android:textSize="16sp" />
 
         <TableLayout
+            android:id="@+id/nutrients_table"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -127,6 +129,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingBottom="16dp"
+            android:paddingLeft="32dp"
             android:text="Идеальное соотношение нутриентов для активного образа жизни: 35% — белки, 15% — жиры и 50% — углеводы."
             android:textColor="@color/primary_text"
             android:textSize="16sp" />

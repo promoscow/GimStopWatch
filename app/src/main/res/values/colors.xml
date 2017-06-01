@@ -8,4 +8,6 @@
     <color name="nutrientYellow">#ffd55a</color>
     <color name="nutrientGreen">#86d55a</color>
     <color name="backgroundColor">#cde2ec</color>
+    <color name="accent_custom">#00bcd4</color>
+    <color name="primary_dark_custom">#455a64</color>
 </resources>

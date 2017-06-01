@@ -13,9 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ru.xpendence.development.gimstopwatch.AppActivity;
 import ru.xpendence.development.gimstopwatch.R;
+import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.util.BitmapHelper;
 import ru.xpendence.development.gimstopwatch.util.CommonSettings;
+import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 /**
  * Created by promoscow on 25.05.17.
@@ -43,6 +46,9 @@ public class FragmentAccount extends Fragment {
 
         TextView fillCaloriesGoal = (TextView) view.findViewById(R.id.fill_calories_goal);
         fillCaloriesGoal.setTypeface(CommonSettings.getRobotoCondLight());
+        String sFillCaloriesGoal = FoodStuffsData.dailyCaloriesSummary + " / "
+                + PersonalData.getGoalCalories() + " гр.";
+        fillCaloriesGoal.setText(sFillCaloriesGoal);
 
         TextView nutrients = (TextView) view.findViewById(R.id.nutrients);
         nutrients.setTypeface(CommonSettings.getRobotoCondLight());
@@ -94,5 +100,9 @@ public class FragmentAccount extends Fragment {
                 .beginTransaction()
                 .replace(R.id.nutrients_in_account, fragment)
                 .commit();
+    }
+
+    public void onResume() {
+        super.onResume();
     }
 }

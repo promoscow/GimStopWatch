@@ -29,6 +29,11 @@ public class FoodStuffsData {
     public static Map<String, SparseArray<GoodInDayRation>> archiveRations = new HashMap<>();
 
     public static int count = 0;
+
+    public static int getDailyCaloriesSummary() {
+        return dailyCaloriesSummary;
+    }
+
     public static int dailyCaloriesSummary = 0;
 
     public static void setDailyCaloriesSummary(int calories) {

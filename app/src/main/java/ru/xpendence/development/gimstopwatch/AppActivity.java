@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,8 +43,10 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentFillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowFillDayRate;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentSettings;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentTimer;
 import ru.xpendence.development.gimstopwatch.util.CommonSettings;
+import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.count;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.dailyGoods;
@@ -68,11 +71,11 @@ public class AppActivity extends AppCompatActivity {
     /**
      * All layouts in this activity.
      */
-    View accountUnderline;
-    View fillUnderline;
-    View nutrientsUnderline;
-    View timerUnderline;
-    View settingsUnderline;
+//    View accountUnderline;
+//    View fillUnderline;
+//    View nutrientsUnderline;
+//    View timerUnderline;
+//    View settingsUnderline;
 
     ViewGroup defaultViewGroup;
 
@@ -84,6 +87,12 @@ public class AppActivity extends AppCompatActivity {
     ImageView nutrientsRatio;
     ImageView timer;
     ImageView settings;
+
+    TextView accountUnderline;
+    TextView fillDayRateUnderline;
+    TextView nutrientsRatioUnderline;
+    TextView timerUnderline;
+    TextView settingsUnderline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,27 +107,51 @@ public class AppActivity extends AppCompatActivity {
 
         defaultViewGroup = (FrameLayout) findViewById(R.id.main_fragment_view);
 
-        accountUnderline = findViewById(R.id.account_underline);
-        fillUnderline = findViewById(R.id.fill_day_rate_underline);
-        nutrientsUnderline = findViewById(R.id.nutrients_ratio_underline);
-        timerUnderline = findViewById(R.id.timer_underline);
-        settingsUnderline = findViewById(R.id.settings_underline);
+//        accountUnderline = findViewById(R.id.account_underline);
+//        fillUnderline = findViewById(R.id.fill_day_rate_underline);
+//        nutrientsUnderline = findViewById(R.id.nutrients_ratio_underline);
+//        timerUnderline = findViewById(R.id.timer_underline);
+//        settingsUnderline = findViewById(R.id.settings_underline);
+//
+//        accountUnderline.setAlpha(1);
+//        fillUnderline.setAlpha(1);
+//        nutrientsUnderline.setAlpha(1);
+//        timerUnderline.setAlpha(1);
+//        settingsUnderline.setAlpha(1);
 
-        accountUnderline.setAlpha(0);
-        fillUnderline.setAlpha(0);
-        nutrientsUnderline.setAlpha(0);
-        timerUnderline.setAlpha(0);
-        settingsUnderline.setAlpha(0);
-
+        /**
+         * Initialization & setting up menu buttons & its captions.
+         */
         account = (ImageView) findViewById(R.id.account);
         fillDayRate = (ImageView) findViewById(R.id.fill_day_rate);
         nutrientsRatio = (ImageView) findViewById(R.id.nutrients_ratio);
         timer = (ImageView) findViewById(R.id.timer);
         settings = (ImageView) findViewById(R.id.settings);
 
+        accountUnderline = (TextView) findViewById(R.id.account_underline);
+        fillDayRateUnderline = (TextView) findViewById(R.id.fill_day_rate_underline);
+        nutrientsRatioUnderline = (TextView) findViewById(R.id.nutrients_ratio_underline);
+        timerUnderline = (TextView) findViewById(R.id.timer_underline);
+        settingsUnderline = (TextView) findViewById(R.id.settings_underline);
+
+        accountUnderline.setTypeface(CommonSettings.getRobotoCondLight());
+        fillDayRateUnderline.setTypeface(CommonSettings.getRobotoCondLight());
+        nutrientsRatioUnderline.setTypeface(CommonSettings.getRobotoCondLight());
+        timerUnderline.setTypeface(CommonSettings.getRobotoCondLight());
+        settingsUnderline.setTypeface(CommonSettings.getRobotoCondLight());
+
         setIconsColorAsDefault();
+        setUnderlinesAsDefault();
 
         Log.d("calcDP", String.valueOf(calcDP(100)));
+    }
+
+    private void setUnderlinesAsDefault() {
+        accountUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
+        fillDayRateUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
+        nutrientsRatioUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
+        timerUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
+        settingsUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
     }
 
     private void setIconsColorAsDefault() {
@@ -167,34 +200,41 @@ public class AppActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.timer:
-                setUnderlineAlpha(timerUnderline);
+//                setUnderlineAlpha(timerUnderline);
                 headingText.setText(R.string.recovery_timer);
                 setIconsColorAsDefault();
+                setUnderlinesAsDefault();
                 timer.setImageResource(R.drawable.timer_accent);
+                timerUnderline.setTextColor(getResources().getColor(R.color.accent_custom));
                 showFragmentTop(FragmentTimer.newInstance());
                 showFragmentBottom(FragmentBelowTimer.newInstance());
                 break;
             case R.id.fill_day_rate:
-                setUnderlineAlpha(fillUnderline);
+//                setUnderlineAlpha(fillUnderline);
                 headingText.setText(R.string.cal_daily_norm);
                 setIconsColorAsDefault();
+                setUnderlinesAsDefault();
                 fillDayRate.setImageResource(R.drawable.format_line_weight_accent);
-                showFragmentTop(FragmentFillDayRate.newInstance());
-                showFragmentBottom(FragmentBelowFillDayRate.newInstance());
+                fillDayRateUnderline.setTextColor(getResources().getColor(R.color.accent_custom));
+                runFillDayRateFragment();
                 break;
             case R.id.nutrients_ratio:
-                setUnderlineAlpha(nutrientsUnderline);
+//                setUnderlineAlpha(nutrientsUnderline);
                 setIconsColorAsDefault();
+                setUnderlinesAsDefault();
                 nutrientsRatio.setImageResource(R.drawable.chart_donut_accent);
+                nutrientsRatioUnderline.setTextColor(getResources().getColor(R.color.accent_custom));
                 headingText.setText(R.string.nutrients_ratio);
 
                 showFragmentTop(FragmentNutrientsRatio.newInstance());
                 showFragmentBottom(FragmentBelowNutrients.newInstance());
                 break;
             case R.id.account:
-                setUnderlineAlpha(accountUnderline);
+//                setUnderlineAlpha(accountUnderline);
                 setIconsColorAsDefault();
+                setUnderlinesAsDefault();
                 account.setImageResource(R.drawable.account_accent);
+                accountUnderline.setTextColor(getResources().getColor(R.color.accent_custom));
                 headingText.setText(R.string.user_data);
 
                 Fragment fragment = FragmentAccount.newInstance();
@@ -204,10 +244,18 @@ public class AppActivity extends AppCompatActivity {
                 showFragmentBottom(FragmentBelowAccount.newInstance());
                 break;
             case R.id.settings:
-                setUnderlineAlpha(settingsUnderline);
+//                setUnderlineAlpha(settingsUnderline);
                 setIconsColorAsDefault();
+                setUnderlinesAsDefault();
                 settings.setImageResource(R.drawable.settings_accent);
+                settingsUnderline.setTextColor(getResources().getColor(R.color.accent_custom));
                 headingText.setText(R.string.settings);
+
+                Fragment fragmentSettings = FragmentSettings.newInstance();
+                viewGroup.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics.widthPixels,
+                        (int) (displayMetrics.heightPixels - (123 * displayMetrics.density))));
+                showFragmentTop(fragmentSettings);
+                showFragmentBottom(FragmentBelowAccount.newInstance());
                 break;
         }
     }
@@ -413,15 +461,18 @@ public class AppActivity extends AppCompatActivity {
                     System.out.println(newPortion.toString());
                     dailyGoods.put(++count, newPortion);
                     FoodStuffsData.setDailyCaloriesSummary(dailyGoods.get(count).getCalories());
+                    PersonalData.setDailyProteins(dailyGoods.get(count).getProteins());
+                    PersonalData.setDailyFats(dailyGoods.get(count).getFats());
+                    PersonalData.setDailyCarbohydrates(dailyGoods.get(count).getCarbohydrates());
+                    PersonalData.setTotalDailyNutrients();
                     FragmentFillDayRate.isCaloriesChanged = true;
 
                     TextView headingText = (TextView) findViewById(R.id.heading);
-                    setUnderlineAlpha(fillUnderline);
+//                    setUnderlineAlpha(fillUnderline);
                     headingText.setText(R.string.cal_daily_norm);
                     setIconsColorAsDefault();
                     fillDayRate.setImageResource(R.drawable.format_line_weight_accent);
-                    showFragmentTop(FragmentFillDayRate.newInstance());
-                    showFragmentBottom(FragmentBelowFillDayRate.newInstance());
+                    runFillDayRateFragment();
 
 //                    Display display = getWindowManager().getDefaultDisplay();
 //                    DisplayMetrics metricsB = new DisplayMetrics();
@@ -498,6 +549,11 @@ public class AppActivity extends AppCompatActivity {
         caloriesTableValue.setText(caloriesValue);
     }
 
+    private void runFillDayRateFragment() {
+        showFragmentTop(FragmentFillDayRate.newInstance());
+        showFragmentBottom(FragmentBelowFillDayRate.newInstance());
+    }
+
     /** Переход на фрагмент, вместо @FragmentBelowFillDayRate выводим фрагмент
      * со списком съеденных продуктов и возможностью их удалять/редактировать.
      * @param view
@@ -507,11 +563,10 @@ public class AppActivity extends AppCompatActivity {
 
     /** Переход на @FragmentFillDayRate */
     public void onClickInfoFoodButton(View view) {
-        setUnderlineAlpha(fillUnderline);
+//        setUnderlineAlpha(fillUnderline);
         TextView headingText = (TextView) findViewById(R.id.heading);
         headingText.setText(R.string.cal_daily_norm);
-        showFragmentTop(FragmentFillDayRate.newInstance());
-        showFragmentBottom(FragmentBelowFillDayRate.newInstance());
+        runFillDayRateFragment();
     }
 
     public void onClickEditAccountButton(View view) {
