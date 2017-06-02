@@ -179,19 +179,19 @@ public class FragmentFillDayRateForAccount extends Fragment {
 
             int indent = (int) (fragmentWidth * 0.05);
 
-            Log.d("little.fill", String.format("%d, %d", fragmentWidth, fragmentHeight));
+//            Log.d("little.fill", String.format("%d, %d", fragmentWidth, fragmentHeight));
 
             rectCanvas.set(
                     0, 0, fragmentWidth, fragmentHeight
             );
 
-            Log.d("dailyCal", String.valueOf(FoodStuffsData.dailyCaloriesSummary));
+//            Log.d("dailyCal", String.valueOf(FoodStuffsData.dailyCaloriesSummary));
             if (FoodStuffsData.dailyCaloriesSummary > 0) {
                 rectFill.set(
                         indent, getTop(indent), fragmentWidth - indent, fragmentHeight - indent
                 );
             }
-            Log.d("rectFill", String.valueOf(rectFill));
+//            Log.d("rectFill", String.valueOf(rectFill));
 
 //            if (isCaloriesChanged) {
 //                isCaloriesChanged = false;

@@ -42,5 +42,21 @@
             android:textColor="@color/primary_text"
             android:textSize="14sp" />
 
+        <View
+            android:id="@+id/horizontal_line_low"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/primary_dark" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/foods_view"
+            />
+
     </LinearLayout>
 </ScrollView>

@@ -22,6 +22,10 @@
         <activity android:name=".DietActivity" />
         <activity android:name=".ChooseDietActivity" />
         <activity android:name=".FillOwnDataActivity" />
+        <activity
+            android:name=".FirstLaunchActivity"
+            android:label="@string/title_activity_first_launch"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

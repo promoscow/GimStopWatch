@@ -20,4 +20,9 @@
     <string name="add_amount_in_grams">Введите кол-во в граммах:</string>
     <string name="nutrients_daily">С начала дня Вы употребили:</string>
     <string name="no_data">На сегодня пока нет данных. Увы.</string>
+    <string name="title_activity_first_launch">FirstLaunchActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="nutrients_explain" formatted="false">Идеальное соотношение нутриентов для активного образа жизни: 35% — белки, 15% — жиры и 50% — углеводы.></string>
+    <string name="your_ration_today">Ваш рацион сегодня</string>
 </resources>

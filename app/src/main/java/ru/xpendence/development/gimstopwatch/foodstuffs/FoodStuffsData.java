@@ -23,10 +23,10 @@ public class FoodStuffsData {
     public static List<String> goodsList = new ArrayList<>();
 
     /** Здесь хранятся рационы за сегодняшний день. */
-    public static SparseArray<GoodInDayRation> dailyGoods = new SparseArray<>();
+    public static ArrayList<GoodInDayRation> dailyGoods = new ArrayList<>();
 
     /** Сюда складываем архивные рационы. */
-    public static Map<String, SparseArray<GoodInDayRation>> archiveRations = new HashMap<>();
+    public static Map<String, ArrayList<GoodInDayRation>> archiveRations = new HashMap<>();
 
     public static int count = 0;
 
@@ -40,4 +40,6 @@ public class FoodStuffsData {
         dailyCaloriesSummary += calories;
         Log.d(TAG, String.valueOf(dailyCaloriesSummary));
     }
+
+
 }

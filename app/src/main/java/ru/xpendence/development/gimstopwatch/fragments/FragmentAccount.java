@@ -87,13 +87,13 @@ public class FragmentAccount extends Fragment {
 
     public FragmentAccount() {}
 
-    public void onStop() {
-        super.onStop();
-        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-        ViewGroup viewGroup = (FrameLayout) this.getActivity().findViewById(R.id.main_fragment_view);
-        viewGroup.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics.widthPixels,
-                (int) (250 * displayMetrics.density)));
-    }
+//    public void onStop() {
+//        super.onStop();
+//        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+//        ViewGroup viewGroup = (FrameLayout) this.getActivity().findViewById(R.id.main_fragment_view);
+//        viewGroup.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics.widthPixels,
+//                (int) (250 * displayMetrics.density)));
+//    }
 
     void showFragmentNutrientsPie(Fragment fragment) {
         getActivity().getSupportFragmentManager()

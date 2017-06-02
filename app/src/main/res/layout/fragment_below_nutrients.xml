@@ -130,7 +130,7 @@
             android:layout_weight="1"
             android:paddingBottom="16dp"
             android:paddingLeft="32dp"
-            android:text="Идеальное соотношение нутриентов для активного образа жизни: 35% — белки, 15% — жиры и 50% — углеводы."
+            android:text="@string/nutrients_explain"
             android:textColor="@color/primary_text"
             android:textSize="16sp" />
 
