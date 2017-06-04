@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,7 @@ import ru.xpendence.development.gimstopwatch.util.RVAdapter;
 
 /**
  * Created by promoscow on 02.06.17.
+ * Information about food, eaten today.
  */
 
 public class FragmentFoodsInfo extends Fragment {

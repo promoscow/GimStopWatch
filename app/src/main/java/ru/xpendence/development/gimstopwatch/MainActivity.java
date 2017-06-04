@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Map;
 
 import ru.xpendence.development.gimstopwatch.foodstuffs.ExcellParser;
 import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
+import ru.xpendence.development.gimstopwatch.util.FillArchiveScrypt;
 import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         for (String good : goods.keySet()) FoodStuffsData.goodsList.add(good);
         System.out.println(FoodStuffsData.goodsList.size());
+
+        FillArchiveScrypt.fillArchiveWithDefaultData();
 
         Intent intent = new Intent(MainActivity.this, FirstLaunchActivity.class);
         startActivity(intent);

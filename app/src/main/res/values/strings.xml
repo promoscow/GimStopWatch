@@ -25,4 +25,5 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="nutrients_explain" formatted="false">Идеальное соотношение нутриентов для активного образа жизни: 35% — белки, 15% — жиры и 50% — углеводы.></string>
     <string name="your_ration_today">Ваш рацион сегодня</string>
+    <string name="charts_text">Успехи и достижения</string>
 </resources>

@@ -1,5 +1,7 @@
 package ru.xpendence.development.gimstopwatch.foodstuffs;
 
+import android.util.Log;
+
 import java.util.Date;
 
 /**
@@ -15,6 +17,22 @@ public class GoodInDayRation {
     private String category;
     private int amount;
     private Date date;
+
+    public GoodInDayRation() {
+    }
+
+    public GoodInDayRation(String name, int amount) {
+        this.name = name;
+        Log.d("name.of.good", name);
+        Good good = FoodStuffsData.goods.get(name);
+        this.proteins = good.getProteins() * amount / 100;
+        this.fats = good.getFats() * amount / 100;
+        this.carbohydrates = good.getCarbohydrates() * amount / 100;
+        this.calories = good.getCalories() * amount / 100;
+        this.category = good.getCategory();
+        this.amount = amount;
+        this.date = new Date();
+    }
 
     public String getName() {
         return name;
