@@ -1,14 +1,22 @@
 package ru.xpendence.development.gimstopwatch.foodstuffs;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.util.Date;
+
+import ru.xpendence.development.gimstopwatch.util.ChartsGraphicsFactory;
+
+import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.dailyGoods;
 
 /**
  * Created by promoscow on 28.05.17.
  */
 
 public class GoodInDayRation {
+    Context context;
+
     private String name;
     private double proteins;
     private double fats;
@@ -21,7 +29,9 @@ public class GoodInDayRation {
     public GoodInDayRation() {
     }
 
-    public GoodInDayRation(String name, int amount) {
+    public GoodInDayRation(Context context, String name, int amount) {
+        this.context = context;
+
         this.name = name;
         Log.d("name.of.good", name);
         Good good = FoodStuffsData.goods.get(name);
@@ -32,6 +42,8 @@ public class GoodInDayRation {
         this.category = good.getCategory();
         this.amount = amount;
         this.date = new Date();
+
+
     }
 
     public String getName() {

@@ -26,4 +26,8 @@
     <string name="nutrients_explain" formatted="false">Идеальное соотношение нутриентов для активного образа жизни: 35% — белки, 15% — жиры и 50% — углеводы.></string>
     <string name="your_ration_today">Ваш рацион сегодня</string>
     <string name="charts_text">Успехи и достижения</string>
+    <string name="calories_label">Калорий</string>
+    <string name="proteins_label">Белков</string>
+    <string name="fats_label">Жиров</string>
+    <string name="carbohydrates_label">Углеводов</string>
 </resources>

@@ -4,7 +4,6 @@ package ru.xpendence.development.gimstopwatch.util;
  * Created by promoscow on 17.05.17.
  */
 
-import android.icu.text.LocaleDisplayNames;
 import android.util.Log;
 
 import ru.xpendence.development.gimstopwatch.R;

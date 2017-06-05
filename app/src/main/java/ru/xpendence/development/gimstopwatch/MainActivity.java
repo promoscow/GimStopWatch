@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         for (String good : goods.keySet()) FoodStuffsData.goodsList.add(good);
         System.out.println(FoodStuffsData.goodsList.size());
 
-        FillArchiveScrypt.fillArchiveWithDefaultData();
+        new FillArchiveScrypt(getBaseContext()).fillArchiveWithDefaultData();
 
         Intent intent = new Intent(MainActivity.this, FirstLaunchActivity.class);
         startActivity(intent);

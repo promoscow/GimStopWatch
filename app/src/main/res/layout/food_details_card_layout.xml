@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="175px"
+    android:layout_height="525px"
     android:clickable="true"
-    app:cardElevation="0dp"
     android:overScrollMode="never"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    app:cardElevation="0dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -39,7 +39,6 @@
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:paddingStart="16dp"
-                        android:text="TextView"
                         android:textColor="@color/primary_text"
                         android:textSize="16sp" />
 
@@ -47,7 +46,6 @@
                         android:id="@+id/food_card_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
                         android:textColor="@color/primary_text"
                         android:textSize="16sp" />
 
@@ -62,8 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="16dp"
-                        android:paddingStart="32dp"
-                        android:text="TextView" />
+                        android:paddingStart="32dp" />
 
                 </TableRow>
 
@@ -84,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="8dp"
                         android:paddingStart="32dp"
-                        android:text="Калорий"
+                        android:text="@string/calories_label"
                         android:textColor="@color/primary_text"
                         android:textSize="14sp" />
 
@@ -92,7 +89,6 @@
                         android:id="@+id/food_card_calories_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
                         android:textAlignment="textEnd"
                         android:textColor="@color/primary_text"
                         android:textSize="14sp" />
@@ -108,7 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="32dp"
-                        android:text="Белков"
+                        android:text="@string/proteins_label"
                         android:textColor="@color/nutrientBlue"
                         android:textSize="14sp" />
 
@@ -116,7 +112,6 @@
                         android:id="@+id/food_card_proteins_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
                         android:textAlignment="textEnd"
                         android:textColor="@color/primary_text"
                         android:textSize="14sp" />
@@ -131,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="32dp"
-                        android:text="Жиров"
+                        android:text="@string/fats_label"
                         android:textColor="@color/nutrientYellow"
                         android:textSize="14sp" />
 
@@ -139,7 +134,6 @@
                         android:id="@+id/food_card_fats_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
                         android:textAlignment="textEnd"
                         android:textColor="@color/primary_text"
                         android:textSize="14sp" />
@@ -154,7 +148,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="32dp"
-                        android:text="Углеводов"
+                        android:text="@string/carbohydrates_label"
                         android:textColor="@color/nutrientGreen"
                         android:textSize="14sp" />
 
@@ -162,7 +156,6 @@
                         android:id="@+id/food_card_carbohydrates_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
                         android:textAlignment="textEnd"
                         android:textColor="@color/primary_text"
                         android:textSize="14sp" />

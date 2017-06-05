@@ -1,5 +1,6 @@
 package ru.xpendence.development.gimstopwatch.foodstuffs;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import ru.xpendence.development.gimstopwatch.R;
 
 /**
  * Created by promoscow on 28.05.17.
+ * Class to store all information about foods.
  */
 
 public class FoodStuffsData {
@@ -26,11 +28,13 @@ public class FoodStuffsData {
     /** Здесь хранятся рационы за сегодняшний день. */
     public static ArrayList<GoodInDayRation> dailyGoods = new ArrayList<>();
 
+    // TODO: 05.06.17 Поменять на Map<Bitmap, GoodInDayRation>. Дата как имя Bitmap.
     /** Сюда складываем архивные рационы.
      * String — дата
      * ArrayList — дневной рацион
      */
     public static Map<String, ArrayList<GoodInDayRation>> archiveRations = new HashMap<>();
+    public static Map<String, Bitmap> archiveCharts = new HashMap<>();
 
     public static int count = 0;
 

@@ -47,9 +47,11 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentFoodsInfo;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentSettings;
+import ru.xpendence.development.gimstopwatch.util.ChartsGraphicsFactory;
 import ru.xpendence.development.gimstopwatch.util.CommonSettings;
 import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
+import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.archiveCharts;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.archiveRations;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.count;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.dailyGoods;
@@ -220,7 +222,7 @@ public class AppActivity extends AppCompatActivity {
                 chartsUnderline.setTextColor(getResources().getColor(R.color.accent_custom));
                 Fragment fragmentCharts = FragmentCharts.newInstance();
                 viewGroup.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics.widthPixels,
-                        (int) (250 * displayMetrics.density)));
+                        (int) (displayMetrics.heightPixels - (123 * displayMetrics.density))));
                 showFragmentTop(fragmentCharts);
                 showFragmentBottom(FragmentBelowTimer.newInstance());
                 break;
@@ -495,9 +497,9 @@ public class AppActivity extends AppCompatActivity {
                     dailyGoods.add(newPortion);
 
                     archiveRations.put(s1, dailyGoods);
+                    archiveCharts.put(s1, new ChartsGraphicsFactory(getBaseContext()).createChartImage(dailyGoods));
                     Log.e(s1, String.valueOf(archiveRations.get(s1)));
                     for (String archiveRation : archiveRations.keySet()) {
-
                         for (int i = 0; i < archiveRations.size() - 1; i++) {
                             Log.d("archive", archiveRations.get(archiveRation).get(i).toString());
                         }
