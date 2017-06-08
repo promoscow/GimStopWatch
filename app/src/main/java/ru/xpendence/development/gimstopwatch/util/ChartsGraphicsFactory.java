@@ -3,12 +3,8 @@ package ru.xpendence.development.gimstopwatch.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Environment;
 import android.util.Log;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
@@ -28,10 +24,9 @@ public class ChartsGraphicsFactory {
         context = baseContext;
     }
 
-    // TODO: 06.06.17 Разобраться, почему в параметрах dailyGoods.
     /**
      * Creates bitmap & saving in in Assets
-     * @param dailyGoods - - all meals today
+     * @param dailyGoods - all meals today
      */
     public Bitmap createChartImage(ArrayList<GoodInDayRation> dailyGoods) {
         Log.e(TAG, "enter.bitmap");
@@ -56,9 +51,14 @@ public class ChartsGraphicsFactory {
         return bitmap;
     }
 
+    /**
+     * Full cycle creating bitmap.
+     * @param dailyGoods - data to use for bitmap creating
+     * @return ready bitmap
+     */
     private Bitmap createNewBitmap(ArrayList<GoodInDayRation> dailyGoods) {
         // TODO: 04.06.17 Проверка на null;
-        Bitmap bitmap = Bitmap.createBitmap(175, 525, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(125, 525, Bitmap.Config.ARGB_8888);
 
         if (estimateHeight(dailyGoods) > 0) {
             /**
@@ -67,65 +67,77 @@ public class ChartsGraphicsFactory {
              * Начинаем с неё и заканчиваем 525. Это и будет высота столбика.
              */
             int chartHeight = 525 - estimateHeight(dailyGoods);
-            int chartWidth = 125;
+            int chartWidth = 75;
             int chartIndent = 25;
 
             int[] nutrientsHeights = estimateProteinsHeight(dailyGoods, chartHeight);
             int proteinsHeight = nutrientsHeights[0];
             int fatsHeight = nutrientsHeights[1];
-            int carbohydratesHeight = 525;
+            int carbohydratesHeight = 524;
             Log.e(TAG, String.format("height %d, prot %d, fat %d",
                     chartHeight, proteinsHeight, fatsHeight));
 
             bitmap = drawNutrients(bitmap,
                     chartHeight,
-                    proteinsHeight + chartHeight,
-                    chartWidth,
+                    proteinsHeight,
+                    fatsHeight,
                     chartIndent,
-                    NutrientsHelper.getBLUE());
-
-//            bitmap = drawNutrients(bitmap,
-//                    proteinsHeight,
-//                    fatsHeight,
-//                    chartWidth,
-//                    chartIndent,
-//                    NutrientsHelper.getYELLOW());
-//
-//            bitmap = drawNutrients(bitmap,
-//                    fatsHeight,
-//                    carbohydratesHeight,
-//                    chartWidth,
-//                    chartIndent,
-//                    NutrientsHelper.getGREEN());
-
-            for (int i = 0; i < 175; i++) {
+                    chartWidth,
+                    NutrientsHelper.getBLUE(),
+                    NutrientsHelper.getYELLOW(),
+                    NutrientsHelper.getGREEN());
+//            for (int y = 0; y < 525; y += 50) {
+//                for (int x = 0; x < 175; x++) {
+//                    bitmap.setPixel(x, y, Color.DKGRAY);
+//                }
+//            }
+            for (int i = 0; i < 125; i++) {
                 bitmap.setPixel(i, 524, Color.DKGRAY);
+            }
+            for (int i = 0; i < 125; i++) {
+                bitmap.setPixel(i, 0, Color.DKGRAY);
             }
         }
         return bitmap;
     }
 
     /**
-     * Drawing nutrients one by one.
-     * @param bitmap - target bitmap
-     * @param yStart — Y top
-     * @param yFinish - Y bottom
-     * @param xFinish - X bottom
-     * @param xStart - X top
-     * @param color - color of nutrient
-     * @return bitmap with drawn nutrient
+     * Draws all parts of chart.
+     * @param bitmap — main bitmap
+     * @param chartHeight — height of empty place above chart
+     * @param proteinsHeight - height of only proteins part
+     * @param fatsHeight - height of only fats part
+     * @param chartIndent - indent (left edge) of X axis
+     * @param chartWidth - right edge of X axis
+     * @param blue - proteins color
+     * @param yellow - fats color
+     * @param green - carbohydrates color
+     * @return bitmap fully ready
      */
     private Bitmap drawNutrients(Bitmap bitmap,
-                                 int yStart,
-                                 int yFinish,
-                                 int xFinish,
-                                 int xStart,
-                                 int color) {
-        System.out.println(yStart);
-        System.out.println(yFinish);
-        for (int y = yStart; y < yFinish; y++) {
-            for (int x = xStart; x < xFinish; x++) {
-                bitmap.setPixel(x, y, color);
+                                 int chartHeight,
+                                 int proteinsHeight,
+                                 int fatsHeight,
+                                 int chartIndent,
+                                 int chartWidth,
+                                 int blue,
+                                 int yellow,
+                                 int green) {
+        for (int y = chartHeight; y < chartHeight + proteinsHeight; y++) {
+            for (int x = chartIndent; x < chartWidth + chartIndent; x++) {
+                bitmap.setPixel(x, y, blue);
+            }
+        }
+
+        for (int y = chartHeight + proteinsHeight; y < chartHeight + proteinsHeight + fatsHeight; y++) {
+            for (int x = chartIndent; x < chartIndent + chartWidth; x++) {
+                bitmap.setPixel(x, y, yellow);
+            }
+        }
+
+        for (int y = chartHeight + proteinsHeight + fatsHeight; y < 524; y++) {
+            for (int x = chartIndent; x < chartIndent + chartWidth; x++) {
+                bitmap.setPixel(x, y, green);
             }
         }
         return bitmap;
@@ -151,16 +163,16 @@ public class ChartsGraphicsFactory {
         }
         summary = proteins + fats + carbons;
 
-        Log.e(TAG, String.format("proteins %d, fats %d, carbons %d",
-                (int) proteins, (int) fats, (int) carbons));
+        Log.e(TAG, String.format("proteins %d, fats %d, carbons %d, summary %d",
+                (int) proteins, (int) fats, (int) carbons, (int) summary));
 
         /**
          * Опять же, обратный порядок умножения, как в estimateHeight().
          * Правильно: нутриент / сумма нутриентов * высота.
          */
         return new int[] {
-                (int) (chartHeight * (proteins / summary)),
-                (int) (chartHeight * (fats / summary))
+                (int) ((525 - chartHeight) * (proteins / summary)),
+                (int) ((525 - chartHeight) * (fats / summary))
         };
     }
 

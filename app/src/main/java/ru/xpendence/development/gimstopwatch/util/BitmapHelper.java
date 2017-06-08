@@ -2,6 +2,7 @@ package ru.xpendence.development.gimstopwatch.util;
 
 /**
  * Created by promoscow on 17.05.17.
+ * This class helps using bitmaps & others.
  */
 
 import android.util.Log;

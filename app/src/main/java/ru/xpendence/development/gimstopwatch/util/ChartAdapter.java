@@ -11,8 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.TreeMap;
 
+import ru.xpendence.development.gimstopwatch.MainActivity;
 import ru.xpendence.development.gimstopwatch.R;
 import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
@@ -35,8 +38,14 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartHolder>
     public ChartAdapter(FragmentCharts fragmentCharts) {
         this.fragmentCharts = fragmentCharts;
         int index = 0;
-        Map<String, ArrayList<GoodInDayRation>> goods = FoodStuffsData.archiveRations;
-        Map<String, Bitmap> charts = FoodStuffsData.archiveCharts;
+        Map<String, ArrayList<GoodInDayRation>> goods = new TreeMap<>(FoodStuffsData.archiveRations);
+        for (String s : goods.keySet()) {
+            System.out.println(s);
+        }
+        Map<String, Bitmap> charts = new TreeMap<>(FoodStuffsData.archiveCharts);
+        for (String s : charts.keySet()) {
+            System.out.println(s);
+        }
         Log.d(TAG, String.valueOf(goods.size()));
         Log.d(TAG, String.valueOf(charts.size()));
         for (String key : FoodStuffsData.archiveRations.keySet()) {
@@ -58,7 +67,7 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartHolder>
     public void onBindViewHolder(ChartHolder holder, final int position) {
         Log.d("position", String.valueOf(position));
         if (position < 3) {
-            holder.chartDataImage.setImageResource(R.drawable.transparent);
+            holder.chartDataImage.setImageBitmap(MainActivity.transparentBitmap);
         } else {
 //            holder.chartDataImage.setImageResource(FoodStuffsData.setImageResourseForCharts(position));
             try {
@@ -66,8 +75,10 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartHolder>
                 holder.chartDataImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // TODO: 06.06.17 Проблема в том, что я инициализирую таблицу последней позицией.
+                        // TODO: 06.06.17 Отправлять весь архив и работать с ним.
                         fragmentCharts.setChartHeader(archivesForCharts.get(position - 3).get(0).getDate());
-                        fragmentCharts.showTable(archivesForCharts.get(position - 3));
+                        fragmentCharts.showTable(archivesForCharts, position - 3);
                     }
                 });
             } catch (IndexOutOfBoundsException e) {
@@ -96,8 +107,6 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartHolder>
 
             chartCardView = (CardView) itemView.findViewById(R.id.charts_card_view);
             chartDataImage = (ImageView) itemView.findViewById(R.id.charts_nutrients_image);
-//            chartDetailsHeading = (TextView) itemView.findViewById(R.id.chart_details_heading);
-//            chartDetailsHeading.setTypeface(CommonSettings.getRobotoCondLight());
         }
     }
 }

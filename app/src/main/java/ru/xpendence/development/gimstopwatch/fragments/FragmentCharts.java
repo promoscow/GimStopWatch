@@ -30,8 +30,17 @@ public class FragmentCharts extends Fragment {
 
     private final String TAG = this.getClass().getSimpleName();
 
+    /** Table */
     TextView chartDetailsHeader;
     TableLayout chartsTable;
+
+    /** Table labels */
+    TextView cal;
+    TextView pro;
+    TextView fat;
+    TextView car;
+
+    /** Table values */
     TextView calories;
     TextView proteins;
     TextView fats;
@@ -55,11 +64,24 @@ public class FragmentCharts extends Fragment {
         chartDetailsHeader = (TextView) view.findViewById(R.id.chart_details_heading);
         chartDetailsHeader.setTypeface(CommonSettings.getRobotoCondLight());
 
+        cal = (TextView) view.findViewById(R.id.calories);
+        cal.setTypeface(CommonSettings.getRobotoCondLight());
+        pro = (TextView) view.findViewById(R.id.proteins);
+        pro.setTypeface(CommonSettings.getRobotoCondLight());
+        fat = (TextView) view.findViewById(R.id.fats);
+        fat.setTypeface(CommonSettings.getRobotoCondLight());
+        car = (TextView) view.findViewById(R.id.carbohydrates);
+        car.setTypeface(CommonSettings.getRobotoCondLight());
+
         chartsTable = (TableLayout) view.findViewById(R.id.charts_table);
         calories = (TextView) view.findViewById(R.id.calories_value);
+        calories.setTypeface(CommonSettings.getRobotoCondLight());
         proteins = (TextView) view.findViewById(R.id.proteins_value);
+        proteins.setTypeface(CommonSettings.getRobotoCondLight());
         fats = (TextView) view.findViewById(R.id.fats_value);
+        fats.setTypeface(CommonSettings.getRobotoCondLight());
         carbohydrates = (TextView) view.findViewById(R.id.carbohydrates_value);
+        carbohydrates.setTypeface(CommonSettings.getRobotoCondLight());
 
         chartsTable.setVisibility(View.GONE);
 
@@ -82,12 +104,19 @@ public class FragmentCharts extends Fragment {
         chartDetailsHeader.setText(s);
     }
 
-    public void showTable(ArrayList<GoodInDayRation> list) {
-        String[] result = getValues(list);
-        calories.setText(result[0]);
-        proteins.setText(result[1]);
-        fats.setText(result[2]);
-        carbohydrates.setText(result[3]);
+    public void showTable(ArrayList<ArrayList<GoodInDayRation>> archivesForCharts, int i) {
+        System.out.println(i);
+
+        System.out.println(archivesForCharts.get(i));
+        String[] result = getValues(archivesForCharts.get(i));
+        String cal = result[0];
+        calories.setText(cal);
+        String pro = result[1];
+        proteins.setText(pro);
+        String fat = result[2];
+        fats.setText(fat);
+        String car = result[3];
+        carbohydrates.setText(car);
         chartsTable.setVisibility(View.VISIBLE);
     }
 

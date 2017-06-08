@@ -16,7 +16,7 @@ import java.util.TreeMap;
  * Temporary class to fill goods data from excell file.
  */
 
-public class ExcellParser {
+public class ExcelParser {
     public Map<String, Good> fill(InputStream iStream) {
 
         Map<String, Good> map = new TreeMap<>();

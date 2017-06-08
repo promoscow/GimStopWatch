@@ -81,7 +81,6 @@ public class AppActivity extends AppCompatActivity {
 //    View nutrientsUnderline;
 //    View chartsUnderline;
 //    View settingsUnderline;
-
     ViewGroup defaultViewGroup;
 
     /**
@@ -93,6 +92,7 @@ public class AppActivity extends AppCompatActivity {
     ImageView charts;
     ImageView settings;
 
+    /** TextViews */
     TextView accountUnderline;
     TextView fillDayRateUnderline;
     TextView nutrientsRatioUnderline;
@@ -159,6 +159,7 @@ public class AppActivity extends AppCompatActivity {
         Log.d("calcDP", String.valueOf(calcDP(100)));
     }
 
+    /** Underlines has been changed as accent color */
     private void setUnderlinesAsDefault() {
         accountUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
         fillDayRateUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
@@ -167,6 +168,7 @@ public class AppActivity extends AppCompatActivity {
         settingsUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
     }
 
+    /** Setting up menu icons color as default */
     private void setIconsColorAsDefault() {
         account.setImageResource(R.drawable.account);
         fillDayRate.setImageResource(R.drawable.format_line_weight);
@@ -192,6 +194,7 @@ public class AppActivity extends AppCompatActivity {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, i, r.getDisplayMetrics());
     }
 
+    /** Define all display parameters */
     public void defineDensity() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -203,6 +206,7 @@ public class AppActivity extends AppCompatActivity {
         Log.d("dpWidth", String.valueOf(dpWidth));
     }
 
+    /** Обработчик меню. Основные фрагменты запускаются отсюда. */
     public void onClickMenu(View view) {
 
         new AppActivity();
@@ -259,10 +263,10 @@ public class AppActivity extends AppCompatActivity {
                 account.setImageResource(R.drawable.account_accent);
                 accountUnderline.setTextColor(getResources().getColor(R.color.accent_custom));
                 headingText.setText(R.string.user_data);
-                Fragment fragment = FragmentAccount.newInstance();
+                Fragment fragmentAccount = FragmentAccount.newInstance();
                 viewGroup.setLayoutParams(new LinearLayout.LayoutParams(displayMetrics.widthPixels,
                         (int) (displayMetrics.heightPixels - (123 * displayMetrics.density))));
-                showFragmentTop(fragment);
+                showFragmentTop(fragmentAccount);
                 showFragmentBottom(FragmentBelowAccount.newInstance());
                 break;
             case R.id.settings:
@@ -480,7 +484,7 @@ public class AppActivity extends AppCompatActivity {
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     int amount = Integer.parseInt(addGoodEditText.getText().toString());
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy", Locale.US);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd", Locale.US);
                     String s1 = dateFormat.format(new Date());
                     Log.d("SimpleDateFormat", s1);
 
@@ -499,11 +503,11 @@ public class AppActivity extends AppCompatActivity {
                     archiveRations.put(s1, dailyGoods);
                     archiveCharts.put(s1, new ChartsGraphicsFactory(getBaseContext()).createChartImage(dailyGoods));
                     Log.e(s1, String.valueOf(archiveRations.get(s1)));
-                    for (String archiveRation : archiveRations.keySet()) {
-                        for (int i = 0; i < archiveRations.size() - 1; i++) {
-                            Log.d("archive", archiveRations.get(archiveRation).get(i).toString());
-                        }
-                    }
+//                    for (String archiveRation : archiveRations.keySet()) {
+//                        for (int i = 0; i < archiveRations.size() - 1; i++) {
+//                            Log.d("archive", archiveRations.get(archiveRation).get(i).toString());
+//                        }
+//                    }
 
                     FoodStuffsData.setDailyCaloriesSummary(dailyGoods.get(count).getCalories());
                     PersonalData.setDailyProteins(dailyGoods.get(count).getProteins());
@@ -512,6 +516,9 @@ public class AppActivity extends AppCompatActivity {
 
                     PersonalData.setTotalDailyNutrients();
                     FragmentFillDayRate.isCaloriesChanged = true;
+
+                    showFragmentTop(FragmentAccount.newInstance());
+                    showFragmentBottom(FragmentBelowAccount.newInstance());
 
 //                    TextView headingText = (TextView) findViewById(R.id.heading);
 //                    setUnderlineAlpha(fillUnderline);
@@ -604,7 +611,7 @@ public class AppActivity extends AppCompatActivity {
 
     /** Переход на фрагмент, вместо @FragmentBelowFillDayRate выводим фрагмент
      * со списком съеденных продуктов и возможностью их удалять/редактировать.
-     * @param view
+     * @param view — обычный View (кнопка, в данном случае).
      */
     public void onClickEditFoodButton(View view) {
     }
