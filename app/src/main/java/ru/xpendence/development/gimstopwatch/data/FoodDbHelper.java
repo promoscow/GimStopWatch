@@ -254,25 +254,44 @@ public class FoodDbHelper extends SQLiteOpenHelper {
                 int caloriesIndex = cursor.getColumnIndex(FoodDbContract.GoodsArchive.CALORIES);
                 int dateIndex = cursor.getColumnIndex(FoodDbContract.GoodsArchive.DATE);
 
-                double proteins = Double.parseDouble(String.valueOf(cursor.getDouble(proteinsIndex))
-                        .replace(",", "."));
-                double fats = Double.parseDouble(String.valueOf(cursor.getDouble(fatsIndex))
-                        .replace(",", "."));
-                double carbohydrates = Double.parseDouble(String.valueOf(cursor.getDouble(carbohydratesIndex))
-                        .replace(",", "."));
-                int calories = (int) cursor.getDouble(caloriesIndex);
-                String date = cursor.getString(dateIndex);
-                Log.d("FROM_ARCHIVE_DB", String.format("%s, %s, %s, %d, %s",
-                        String.valueOf(proteins),
-                        String.valueOf(fats),
-                        String.valueOf(carbohydrates),
-                        calories,
-                        date));
+                do {
+                    double proteinsTemp = Double.parseDouble(String.valueOf(cursor.getDouble(proteinsIndex))
+                            .replace(",", "."));
+                    double fatsTemp = Double.parseDouble(String.valueOf(cursor.getDouble(fatsIndex))
+                            .replace(",", "."));
+                    double carbohydratesTemp = Double.parseDouble(String.valueOf(cursor.getDouble(carbohydratesIndex))
+                            .replace(",", "."));
+                    int calories = (int) cursor.getDouble(caloriesIndex);
+                    String date = cursor.getString(dateIndex);
 
-                GoodsArchiveObject goodsArchiveObject = new GoodsArchiveObject(proteins, fats,
-                        carbohydrates, calories, date);
-                System.out.println(goodsArchiveObject.toString());
-                map.put(date, goodsArchiveObject);
+                    NumberFormat numberFormat = new DecimalFormat("0.00");
+                    numberFormat.setRoundingMode(RoundingMode.DOWN);
+
+                    double proteins =
+                            Double.parseDouble(String.valueOf(numberFormat.format(proteinsTemp))
+                                    .replace(",", "."));
+                    double fats =
+                            Double.parseDouble(String.valueOf(numberFormat.format(fatsTemp))
+                                    .replace(",", "."));
+                    double carbohydrates =
+                            Double.parseDouble(String.valueOf(numberFormat.format(carbohydratesTemp))
+                                    .replace(",", "."));
+
+                    Log.d("FROM_ARCHIVE_DB", String.format("%s, %s, %s, %d, %s",
+                            String.valueOf(proteins),
+                            String.valueOf(fats),
+                            String.valueOf(carbohydrates),
+                            calories,
+                            date));
+
+                    GoodsArchiveObject goodsArchiveObject = new GoodsArchiveObject(proteins, fats,
+                            carbohydrates, calories, date);
+                    System.out.println(goodsArchiveObject.toString());
+                    map.put(date, goodsArchiveObject);
+                } while (cursor.moveToNext());
+            }
+            for (String s : map.keySet()) {
+                Log.e("FROM_DATABASE", map.get(s).toString());
             }
             cursor.close();
             return map;
@@ -311,5 +330,7 @@ public class FoodDbHelper extends SQLiteOpenHelper {
         contentValues.put(FoodDbContract.GoodsArchive.DATE, date);
 
         database.insert(FoodDbContract.GoodsArchive.TABLE_NAME, null, contentValues);
+
+
     }
 }

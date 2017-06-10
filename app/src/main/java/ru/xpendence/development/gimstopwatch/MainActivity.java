@@ -8,11 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.IOException;
 import java.util.Map;
 
 import ru.xpendence.development.gimstopwatch.data.FoodDbHelper;
-import ru.xpendence.development.gimstopwatch.foodstuffs.ExcelParser;
 import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.util.FillArchiveScript;
@@ -40,15 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         FoodDbHelper foodDbHelper = new FoodDbHelper(this);
         SQLiteDatabase database = foodDbHelper.getWritableDatabase();
-//        ExcelParser parser = new ExcelParser();
         String s = this.getClass().getPackage().getName();
         Log.e(TAG, s);
-
         /** Filling goods list from database. */
         Map<String, Good> goods = FoodDbHelper.GoodsObjectsInit.fillGoods(database);
-
-        /** Reading archive goods from database. */
-        FoodStuffsData.archiveRations = FoodDbHelper.GoodsObjectsInit.fillArchiveGoods(database);
 
         assert goods != null;
         Log.d(TAG, String.valueOf(goods.size()));
@@ -58,7 +51,12 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(FoodStuffsData.goodsList.size());
 
         new FillArchiveScript(getBaseContext(),
-                FoodStuffsData.dailyGoods).fillArchiveWithDefaultData();
+                FoodStuffsData.dailyGoods).fillArchiveWithDefaultData(this);
+
+        /** Reading archive goods from database. */
+        FoodStuffsData.archiveStrings = FoodDbHelper.GoodsObjectsInit.fillArchiveGoods(database);
+
+        FoodStuffsData.checkDate(this);
 
         Intent intent = new Intent(MainActivity.this, FirstLaunchActivity.class);
         startActivity(intent);

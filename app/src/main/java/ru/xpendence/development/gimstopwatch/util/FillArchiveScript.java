@@ -4,15 +4,15 @@ import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 
-import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
+import ru.xpendence.development.gimstopwatch.MainActivity;
+import ru.xpendence.development.gimstopwatch.data.FoodDbHelper;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
+import ru.xpendence.development.gimstopwatch.foodstuffs.GoodsArchiveObject;
 
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.archiveCharts;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.archiveRations;
-import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.dailyGoods;
 
 /**
  * Created by promoscow on 04.06.17.
@@ -30,7 +30,7 @@ public class FillArchiveScript {
         dGoods = dailyGoods;
     }
 
-    public void fillArchiveWithDefaultData() {
+    public void fillArchiveWithDefaultData(MainActivity mainActivity) {
 
         Random random = new Random();
         String[] goods = {"Букатини", "Верблюжатина вареная", "Гейнер IronMaxx Titan V.2.0",
@@ -63,21 +63,51 @@ public class FillArchiveScript {
                 System.out.println(goodInDayRation.toString());
                 dGoods.add(goodInDayRation);
             }
+            // TODO: 10.06.17 Нужно получить <String, GoodArchiveObject>.
             String s = "2017060" + ++i;
+
             Log.d("dailyGoods", s + " / " + dGoods.toString());
             ArrayList<GoodInDayRation> temp = (ArrayList<GoodInDayRation>) dGoods.clone();
-            archiveRations.put(s, temp);
-            Log.i("ARCHIVE_RATIONS", String.valueOf(archiveRations.get(s)));
-            archiveCharts.put(s, new ChartsGraphicsFactory(context).createChartImage(temp));
-            // TODO: 06.06.17 Стирает запись из archiveRations!!!
-//            for (int j = 0; j < dGoods.size(); j++) {
-//                dGoods.remove(j);
-//            }
-            dGoods.clear();
-            Log.i("ARCHIVE_RATIONS_AFTER", String.valueOf(archiveRations.get(s)));
-            Log.e("dailyGoods.cleared", String.valueOf(dGoods));
+            GoodsArchiveObject goodsArchiveObject = recreateTemp(dGoods, s);
+
+            /** Эта строчка добавляет строчку в архив БД */
+            FoodDbHelper.writeArchiveToDb(s, temp, mainActivity);
+
+
+//            archiveRations.put(s, temp);
+//            Log.i("ARCHIVE_RATIONS", String.valueOf(archiveRations.get(s)));
+//            archiveCharts.put(s, new ChartsGraphicsFactory(context).createChartImage(temp));
+//            // TODO: 06.06.17 Стирает запись из archiveRations!!!
+////            for (int j = 0; j < dGoods.size(); j++) {
+////                dGoods.remove(j);
+////            }
+//            dGoods.clear();
+//            Log.i("ARCHIVE_RATIONS_AFTER", String.valueOf(archiveRations.get(s)));
+//            Log.e("dailyGoods.cleared", String.valueOf(dGoods));
         }
-        Log.i("archiveRations.final", String.valueOf(archiveRations));
-        Log.i("archiveCharts.final", String.valueOf(archiveCharts));
+//        Log.i("archiveRations.final", String.valueOf(archiveRations));
+//        Log.i("archiveCharts.final", String.valueOf(archiveCharts));
+    }
+
+    private GoodsArchiveObject recreateTemp(ArrayList<GoodInDayRation> dGoods, String s) {
+        double proteins = 0;
+        double fats = 0;
+        double carbohydrates = 0;
+        int calories = 0;
+        String date = null;
+        for (GoodInDayRation good : dGoods) {
+            proteins += good.getProteins();
+            fats += good.getFats();
+            carbohydrates += good.getCarbohydrates();
+            calories += good.getCalories();
+        }
+        date = s;
+        return new GoodsArchiveObject(
+                proteins,
+                fats,
+                carbohydrates,
+                calories,
+                date
+        );
     }
 }

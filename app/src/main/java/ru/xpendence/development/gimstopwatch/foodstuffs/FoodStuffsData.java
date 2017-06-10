@@ -26,6 +26,13 @@ public class FoodStuffsData {
 
     public static String date;
 
+    static {
+        if (date == null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
+            date = dateFormat.format(new Date());
+        }
+    }
+
     /** Каталог продуктов */
     public static Map<String, Good> goods;
 
@@ -41,6 +48,9 @@ public class FoodStuffsData {
      */
     public static Map<String, ArrayList<GoodInDayRation>> archiveRations = new TreeMap<>();
     public static Map<String, Bitmap> archiveCharts = new TreeMap<>();
+
+    /** Архив истории, получаемый из БД */
+    public static Map<String, GoodsArchiveObject> archiveStrings = new TreeMap<>();
 
     public static int count = 0;
 
