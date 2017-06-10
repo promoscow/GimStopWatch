@@ -1,5 +1,7 @@
 package ru.xpendence.development.gimstopwatch.foodstuffs;
 
+import android.content.Context;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,6 +19,13 @@ import java.util.TreeMap;
  */
 
 public class ExcelParser {
+
+    private Context context;
+
+    public ExcelParser(Context context) {
+        this.context = context;
+    }
+
     public Map<String, Good> fill(InputStream iStream) {
 
         Map<String, Good> map = new TreeMap<>();
@@ -35,16 +44,18 @@ public class ExcelParser {
                 Iterator<Cell> cells = row.iterator();
                 while (cells.hasNext()) {
                     Cell cell = cells.next();
-                    Good good = new Good();
                     if (cell.toString().equals("Name")) break;
-                    else good.setName(cell.getStringCellValue());
-                    good.setProteins(cells.next().getNumericCellValue());
-                    good.setFats(cells.next().getNumericCellValue());
-                    good.setCarbohydrates(cells.next().getNumericCellValue());
-                    int x = (int) Double.parseDouble(String.valueOf(cells.next().getNumericCellValue()));
-                    good.setCalories(x);
-                    good.setCategory(cells.next().getStringCellValue());
-                    map.put(good.getName(), good);
+
+//                    Good good = new Good();
+//                    if (cell.toString().equals("Name")) break;
+//                    else good.setName(cell.getStringCellValue());
+//                    good.setProteins(cells.next().getNumericCellValue());
+//                    good.setFats(cells.next().getNumericCellValue());
+//                    good.setCarbohydrates(cells.next().getNumericCellValue());
+//                    int x = (int) Double.parseDouble(String.valueOf(cells.next().getNumericCellValue()));
+//                    good.setCalories(x);
+//                    good.setCategory(cells.next().getStringCellValue());
+//                    map.put(good.getName(), good);
                 }
             }
         }

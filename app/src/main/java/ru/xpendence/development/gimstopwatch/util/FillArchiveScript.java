@@ -63,7 +63,7 @@ public class FillArchiveScript {
                 System.out.println(goodInDayRation.toString());
                 dGoods.add(goodInDayRation);
             }
-            String s = "2017_06_0" + ++i;
+            String s = "2017060" + ++i;
             Log.d("dailyGoods", s + " / " + dGoods.toString());
             ArrayList<GoodInDayRation> temp = (ArrayList<GoodInDayRation>) dGoods.clone();
             archiveRations.put(s, temp);

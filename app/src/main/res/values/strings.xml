@@ -30,4 +30,5 @@
     <string name="proteins_label">Белков</string>
     <string name="fats_label">Жиров</string>
     <string name="carbohydrates_label">Углеводов</string>
+    <string name="you_eaten_today">С начала дня Вы употребили:</string>
 </resources>

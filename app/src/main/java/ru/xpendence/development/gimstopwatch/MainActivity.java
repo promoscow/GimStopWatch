@@ -20,6 +20,7 @@ import ru.xpendence.development.gimstopwatch.util.FillArchiveScript;
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
+
     public static Bitmap transparentBitmap;
 
     static {
@@ -39,16 +40,16 @@ public class MainActivity extends AppCompatActivity {
 
         FoodDbHelper foodDbHelper = new FoodDbHelper(this);
         SQLiteDatabase database = foodDbHelper.getWritableDatabase();
-
-        ExcelParser parser = new ExcelParser();
+//        ExcelParser parser = new ExcelParser();
         String s = this.getClass().getPackage().getName();
         Log.e(TAG, s);
-        Map<String, Good> goods = null;
-        try {
-            goods = parser.fill(getAssets().open("calories.xls"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        /** Filling goods list from database. */
+        Map<String, Good> goods = FoodDbHelper.GoodsObjectsInit.fillGoods(database);
+
+        /** Reading archive goods from database. */
+        FoodStuffsData.archiveRations = FoodDbHelper.GoodsObjectsInit.fillArchiveGoods(database);
+
         assert goods != null;
         Log.d(TAG, String.valueOf(goods.size()));
         FoodStuffsData.goods = goods;
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         for (String good : goods.keySet()) FoodStuffsData.goodsList.add(good);
         System.out.println(FoodStuffsData.goodsList.size());
 
-        new FillArchiveScript(getBaseContext(), FoodStuffsData.dailyGoods).fillArchiveWithDefaultData();
+        new FillArchiveScript(getBaseContext(),
+                FoodStuffsData.dailyGoods).fillArchiveWithDefaultData();
 
         Intent intent = new Intent(MainActivity.this, FirstLaunchActivity.class);
         startActivity(intent);

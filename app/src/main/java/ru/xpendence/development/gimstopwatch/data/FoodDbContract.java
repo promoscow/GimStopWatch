@@ -13,7 +13,7 @@ public class FoodDbContract {
     public static final class GoodsCatalog implements BaseColumns {
         public final static String TABLE_NAME = "goods";
 
-        public final static String ID = BaseColumns._ID;
+        public final static String _ID = BaseColumns._ID;
         public final static String NAME = "name";
         public final static String PROTEINS = "proteins";
         public final static String FATS = "fats";
@@ -25,7 +25,7 @@ public class FoodDbContract {
     public static final class GoodsArchive implements BaseColumns {
         public final static String TABLE_NAME = "archiveGoods";
 
-        public final static String ID = BaseColumns._ID;
+        public final static String _ID = BaseColumns._ID;
 //        public final static String NAME = "name";
         public final static String PROTEINS = "proteins";
         public final static String FATS = "fats";

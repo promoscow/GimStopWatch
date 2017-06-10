@@ -1,15 +1,19 @@
 package ru.xpendence.development.gimstopwatch.foodstuffs;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-import ru.xpendence.development.gimstopwatch.R;
+import ru.xpendence.development.gimstopwatch.data.FoodDbHelper;
+import ru.xpendence.development.gimstopwatch.util.ChartsGraphicsFactory;
 
 /**
  * Created by promoscow on 28.05.17.
@@ -19,6 +23,8 @@ import ru.xpendence.development.gimstopwatch.R;
 public class FoodStuffsData {
 
     private static final String TAG = "FoodStuffData";
+
+    public static String date;
 
     /** Каталог продуктов */
     public static Map<String, Good> goods;
@@ -49,40 +55,56 @@ public class FoodStuffsData {
         Log.d(TAG, String.valueOf(dailyCaloriesSummary));
     }
 
-
-    public static int setImageResourseForCharts(int position) {
-        switch (position) {
-            case 0:
-                return R.drawable.chart_01_06_2017;
-            case 1:
-                return R.drawable.chart_02_06_2017;
-            case 2:
-                return R.drawable.chart_03_06_2017;
-            case 3:
-                return R.drawable.chart_01_06_2017;
-            case 4:
-                return R.drawable.chart_02_06_2017;
-            case 5:
-                return R.drawable.chart_03_06_2017;
-            case 6:
-                return R.drawable.chart_01_06_2017;
-            case 7:
-                return R.drawable.chart_02_06_2017;
-            case 8:
-                return R.drawable.chart_03_06_2017;
-            case 9:
-                return R.drawable.chart_01_06_2017;
-            case 10:
-                return R.drawable.chart_02_06_2017;
-            case 11:
-                return R.drawable.chart_03_06_2017;
-            case 12:
-                return R.drawable.chart_01_06_2017;
-            case 13:
-                return R.drawable.chart_02_06_2017;
-            case 14:
-                return R.drawable.chart_03_06_2017;
+    public static void checkDate(Context context) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
+        String todayDate = dateFormat.format(new Date());
+        if (!date.equals(todayDate)) {
+            for (GoodInDayRation good : dailyGoods) {
+                String goodDate = dateFormat.format(good.getDate());
+                if (!goodDate.equals(date)) dailyGoods.remove(good);
+            }
+            ArrayList<GoodInDayRation> temp = (ArrayList<GoodInDayRation>) dailyGoods.clone();
+            archiveRations.put(date, temp);
+            archiveCharts.put(date, new ChartsGraphicsFactory(context).createChartImage(temp));
+            FoodDbHelper.writeArchiveToDb(date, temp, context);
         }
-        return R.drawable.testing1;
+        dailyGoods.clear();
+        date = todayDate;
     }
+
+//    public static int setImageResourseForCharts(int position) {
+//        switch (position) {
+//            case 0:
+//                return R.drawable.chart_01_06_2017;
+//            case 1:
+//                return R.drawable.chart_02_06_2017;
+//            case 2:
+//                return R.drawable.chart_03_06_2017;
+//            case 3:
+//                return R.drawable.chart_01_06_2017;
+//            case 4:
+//                return R.drawable.chart_02_06_2017;
+//            case 5:
+//                return R.drawable.chart_03_06_2017;
+//            case 6:
+//                return R.drawable.chart_01_06_2017;
+//            case 7:
+//                return R.drawable.chart_02_06_2017;
+//            case 8:
+//                return R.drawable.chart_03_06_2017;
+//            case 9:
+//                return R.drawable.chart_01_06_2017;
+//            case 10:
+//                return R.drawable.chart_02_06_2017;
+//            case 11:
+//                return R.drawable.chart_03_06_2017;
+//            case 12:
+//                return R.drawable.chart_01_06_2017;
+//            case 13:
+//                return R.drawable.chart_02_06_2017;
+//            case 14:
+//                return R.drawable.chart_03_06_2017;
+//        }
+//        return R.drawable.testing1;
+//    }
 }

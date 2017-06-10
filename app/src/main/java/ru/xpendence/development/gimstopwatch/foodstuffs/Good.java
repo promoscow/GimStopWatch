@@ -13,6 +13,19 @@ public class Good {
     private int calories;
     private String category;
 
+    public Good(String name, double proteins, double fats, double carbohydrates, int calories,
+                String category) {
+        this.name = name;
+        this.proteins = proteins;
+        this.fats = fats;
+        this.carbohydrates = carbohydrates;
+        this.calories = calories;
+        this.category = category;
+    }
+
+    public Good(String string, String format, String format1, String format2, int anInt, String string1) {
+    }
+
     @Override
     public String toString() {
         return "Good{" +

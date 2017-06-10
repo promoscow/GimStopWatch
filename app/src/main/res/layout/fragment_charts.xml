@@ -11,7 +11,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rations_chart"
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="150dp"
+        android:overScrollMode="never"/>
 
         <TextView
             android:id="@+id/chart_details_heading"
@@ -28,7 +29,8 @@
         android:id="@+id/charts_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="32dp">
+        android:paddingStart="32dp"
+        android:paddingLeft="32dp">
 
         <TableRow
             android:layout_width="match_parent"

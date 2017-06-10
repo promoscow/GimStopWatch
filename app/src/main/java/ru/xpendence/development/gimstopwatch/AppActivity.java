@@ -484,7 +484,7 @@ public class AppActivity extends AppCompatActivity {
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     int amount = Integer.parseInt(addGoodEditText.getText().toString());
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd", Locale.US);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
                     String s1 = dateFormat.format(new Date());
                     Log.d("SimpleDateFormat", s1);
 
