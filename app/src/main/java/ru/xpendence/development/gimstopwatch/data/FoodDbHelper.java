@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -26,6 +27,7 @@ import java.util.TreeMap;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodsArchiveObject;
+import ru.xpendence.development.gimstopwatch.util.ChartsGraphicsFactory;
 
 /**
  * Created by promoscow on 26.05.17.
@@ -102,8 +104,21 @@ public class FoodDbHelper extends SQLiteOpenHelper {
                 + FoodDbContract.GoodsArchive.CALORIES + " INTEGER NOT NULL, "
                 + FoodDbContract.GoodsArchive.DATE + " TEXT NOT NULL);";
 
+        String SQL_CREATE_TEMPORARY_STORAGE = "CREATE TABLE "
+                + FoodDbContract.GoodsTemporaryStorage.TABLE_NAME + " ("
+                + FoodDbContract.GoodsTemporaryStorage._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + FoodDbContract.GoodsTemporaryStorage.NAME + " TEXT NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.PROTEINS + " DOUBLE NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.FATS + " DOUBLE NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.CARBOHYDRATES + " DOUBLE NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.CALORIES + " INTEGER NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.CATEGORY + " TEXT NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.AMOUNT + " INTEGER NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.DATE + " TEXT NOT NULL);";
+
         db.execSQL(SQL_CREATE_GOODS_CATALOG_TABLE);
         db.execSQL(SQL_CREATE_GOODS_ARCHIVE);
+        db.execSQL(SQL_CREATE_TEMPORARY_STORAGE);
 
         FoodDbHelper.ExcelParser parser = new FoodDbHelper.ExcelParser(db);
         try {
@@ -234,8 +249,6 @@ public class FoodDbHelper extends SQLiteOpenHelper {
             return map;
         }
 
-        // TODO: 09.06.17 Придётся менять archiveRations на Map<String, GoodsArchiveObject>, потому что из БД мы получаем лишь строчку.
-
         /**
          * This method fills archiveRations & archiveCharts
          *
@@ -318,6 +331,14 @@ public class FoodDbHelper extends SQLiteOpenHelper {
             carbohydrates += good.getCarbohydrates();
             calories += good.getCalories();
         }
+
+        Log.e("TO_ARCHIVE_DB", String.format("%s, %s, %s, %d, %s",
+                String.valueOf(proteins),
+                String.valueOf(fats),
+                String.valueOf(carbohydrates),
+                calories,
+                date));
+
         FoodDbHelper foodDbHelper = new FoodDbHelper(context);
         SQLiteDatabase database = foodDbHelper.getWritableDatabase();
 
@@ -330,7 +351,9 @@ public class FoodDbHelper extends SQLiteOpenHelper {
         contentValues.put(FoodDbContract.GoodsArchive.DATE, date);
 
         database.insert(FoodDbContract.GoodsArchive.TABLE_NAME, null, contentValues);
+    }
 
-
+    public Bitmap createBitmap(GoodsArchiveObject goodsArchiveObject) {
+        return new ChartsGraphicsFactory(context).createChartImage(goodsArchiveObject);
     }
 }

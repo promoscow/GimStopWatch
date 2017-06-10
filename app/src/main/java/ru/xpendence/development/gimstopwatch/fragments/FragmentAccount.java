@@ -31,7 +31,7 @@ public class FragmentAccount extends Fragment {
 
     public ImageView fragmentFillDayRatioImage;
 
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_account, container, false);
         Log.d(TAG, "enter");
 
@@ -85,7 +85,8 @@ public class FragmentAccount extends Fragment {
         return fragment;
     }
 
-    public FragmentAccount() {}
+    public FragmentAccount() {
+    }
 
 //    public void onStop() {
 //        super.onStop();

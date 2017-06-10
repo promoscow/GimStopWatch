@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
 
-import java.util.ArrayList;
-
-import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
+import ru.xpendence.development.gimstopwatch.foodstuffs.GoodsArchiveObject;
 
 /**
  * Created by promoscow on 04.06.17.
@@ -17,8 +15,7 @@ import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
 public class ChartsGraphicsFactory {
     private final String TAG = this.getClass().getSimpleName();
 
-    Context context;
-    private final String IMAGE_PATH = "charts";
+    private Context context;
 
     public ChartsGraphicsFactory(Context baseContext) {
         context = baseContext;
@@ -26,54 +23,39 @@ public class ChartsGraphicsFactory {
 
     /**
      * Creates bitmap & saving in in Assets
+     *
      * @param dailyGoods - all meals today
      */
-    public Bitmap createChartImage(ArrayList<GoodInDayRation> dailyGoods) {
+    public Bitmap createChartImage(GoodsArchiveObject dailyGoods) {
         Log.e(TAG, "enter.bitmap");
 
-//        String baseFolder = Environment.getExternalStorageDirectory().getAbsolutePath();
-//        File file = new File(baseFolder + "/a111.png");
-        Bitmap bitmap = createNewBitmap(dailyGoods);
-//        Log.e(TAG, String.valueOf(bitmap));
-
-//        String filePath = context.getFilesDir().getAbsolutePath() + "/" + IMAGE_PATH + "/" + "asdfg.png";
-//        FileOutputStream fileOutputStream;
-//        try {
-//            fileOutputStream = new FileOutputStream(file);
-////            fileOutputStream = new FileOutputStream(context.getAssets() + "/test.png");
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-//            fileOutputStream.flush();
-//            fileOutputStream.close();
-//            Log.e(TAG, "bitmap written");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        return bitmap;
+        return createNewBitmap(dailyGoods);
     }
 
     /**
      * Full cycle creating bitmap.
-     * @param dailyGoods - data to use for bitmap creating
+     *
+     * @param goodsArchiveObject - data to use for bitmap creating
      * @return ready bitmap
      */
-    private Bitmap createNewBitmap(ArrayList<GoodInDayRation> dailyGoods) {
+    private Bitmap createNewBitmap(GoodsArchiveObject goodsArchiveObject) {
         // TODO: 04.06.17 Проверка на null;
         Bitmap bitmap = Bitmap.createBitmap(125, 525, Bitmap.Config.ARGB_8888);
 
-        if (estimateHeight(dailyGoods) > 0) {
+        if (estimateHeight(goodsArchiveObject) > 0) {
             /**
              * Поскольку Bitmap рисуется сверху, а нам надо снизу,
              * то charHeight — это пустота над рисунком.
              * Начинаем с неё и заканчиваем 525. Это и будет высота столбика.
              */
-            int chartHeight = 525 - estimateHeight(dailyGoods);
+            int chartHeight = 525 - estimateHeight(goodsArchiveObject);
             int chartWidth = 75;
             int chartIndent = 25;
 
-            int[] nutrientsHeights = estimateProteinsHeight(dailyGoods, chartHeight);
-            int proteinsHeight = nutrientsHeights[0];
-            int fatsHeight = nutrientsHeights[1];
-            int carbohydratesHeight = 524;
+            int summary = (int) (goodsArchiveObject.getProteins() + goodsArchiveObject.getFats()
+                    + goodsArchiveObject.getCarbohydrates());
+            int proteinsHeight = (int) ((525 - chartHeight) * (goodsArchiveObject.getProteins() / summary));
+            int fatsHeight = (int) ((525 - chartHeight) * (goodsArchiveObject.getFats() / summary));
             Log.e(TAG, String.format("height %d, prot %d, fat %d",
                     chartHeight, proteinsHeight, fatsHeight));
 
@@ -103,15 +85,16 @@ public class ChartsGraphicsFactory {
 
     /**
      * Draws all parts of chart.
-     * @param bitmap — main bitmap
-     * @param chartHeight — height of empty place above chart
+     *
+     * @param bitmap         — main bitmap
+     * @param chartHeight    — height of empty place above chart
      * @param proteinsHeight - height of only proteins part
-     * @param fatsHeight - height of only fats part
-     * @param chartIndent - indent (left edge) of X axis
-     * @param chartWidth - right edge of X axis
-     * @param blue - proteins color
-     * @param yellow - fats color
-     * @param green - carbohydrates color
+     * @param fatsHeight     - height of only fats part
+     * @param chartIndent    - indent (left edge) of X axis
+     * @param chartWidth     - right edge of X axis
+     * @param blue           - proteins color
+     * @param yellow         - fats color
+     * @param green          - carbohydrates color
      * @return bitmap fully ready
      */
     private Bitmap drawNutrients(Bitmap bitmap,
@@ -143,57 +126,57 @@ public class ChartsGraphicsFactory {
         return bitmap;
     }
 
-    /**
-     * Estimates nutrients heights.
-     * @param dailyGoods - all meals today
-     * @param chartHeight - total height of nutrients
-     * @return proteins finish Y, fats finish Y
-     * carbohydrates finish Y = 525
-     */
-    private int[] estimateProteinsHeight(ArrayList<GoodInDayRation> dailyGoods, int chartHeight) {
-        double proteins = 0;
-        double fats = 0;
-        double carbons = 0;
-        double summary;
-
-        for (GoodInDayRation dailyGood : dailyGoods) {
-            proteins += dailyGood.getProteins();
-            fats += dailyGood.getFats();
-            carbons += dailyGood.getCarbohydrates();
-        }
-        summary = proteins + fats + carbons;
-
-        Log.e(TAG, String.format("proteins %d, fats %d, carbons %d, summary %d",
-                (int) proteins, (int) fats, (int) carbons, (int) summary));
-
-        /**
-         * Опять же, обратный порядок умножения, как в estimateHeight().
-         * Правильно: нутриент / сумма нутриентов * высота.
-         */
-        return new int[] {
-                (int) ((525 - chartHeight) * (proteins / summary)),
-                (int) ((525 - chartHeight) * (fats / summary))
-        };
-    }
+//    /**
+//     * Estimates nutrients heights.
+//     *
+//     * @param dailyGoods  - all meals today
+//     * @param chartHeight - total height of nutrients
+//     * @return proteins finish Y, fats finish Y
+//     * carbohydrates finish Y = 525
+//     */
+//    private int[] estimateProteinsHeight(ArrayList<GoodInDayRation> dailyGoods, int chartHeight) {
+//        double proteins = 0;
+//        double fats = 0;
+//        double carbons = 0;
+//        double summary;
+//
+//        for (GoodInDayRation dailyGood : dailyGoods) {
+//            proteins += dailyGood.getProteins();
+//            fats += dailyGood.getFats();
+//            carbons += dailyGood.getCarbohydrates();
+//        }
+//        summary = proteins + fats + carbons;
+//
+//        Log.e(TAG, String.format("proteins %d, fats %d, carbons %d, summary %d",
+//                (int) proteins, (int) fats, (int) carbons, (int) summary));
+//
+//        /**
+//         * Опять же, обратный порядок умножения, как в estimateHeight().
+//         * Правильно: нутриент / сумма нутриентов * высота.
+//         */
+//        return new int[]{
+//                (int) ((525 - chartHeight) * (proteins / summary)),
+//                (int) ((525 - chartHeight) * (fats / summary))
+//        };
+//    }
 
     /**
      * Estimates total nutrients height.
-     * @return total nutrients height.
-     * @param dailyGoods
+     *
+     * @param dailyGoods - String from database archive in object implementation.
+     * @return — total nutrients height in pixels.
      */
-    private int estimateHeight(ArrayList<GoodInDayRation> dailyGoods) {
-        int summary = 0;
-
-        for (GoodInDayRation good : dailyGoods) summary += good.getCalories();
+    private int estimateHeight(GoodsArchiveObject dailyGoods) {
+        int summary = dailyGoods.getCalories();
 
         /**
          * Изменил порядок, чтобы не морочаться с приведением к int.
          * Правильно было бы: калории за день / цель за день * высота.
          */
         Log.e(TAG, String.valueOf("summary: " + summary));
-        Log.e(TAG, String.valueOf((summary <  PersonalData.getGoalCalories())
+        Log.e(TAG, String.valueOf((summary < PersonalData.getGoalCalories())
                 ? 525 * summary / PersonalData.getGoalCalories() : 525));
-        return (summary <  PersonalData.getGoalCalories())
+        return (summary < PersonalData.getGoalCalories())
                 ? 525 * summary / PersonalData.getGoalCalories() : 525;
     }
 }

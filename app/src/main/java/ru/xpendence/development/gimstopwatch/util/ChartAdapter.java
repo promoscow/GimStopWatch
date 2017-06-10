@@ -1,6 +1,7 @@
 package ru.xpendence.development.gimstopwatch.util;
 
 import android.graphics.Bitmap;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,17 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.TreeMap;
 
 import ru.xpendence.development.gimstopwatch.MainActivity;
 import ru.xpendence.development.gimstopwatch.R;
+import ru.xpendence.development.gimstopwatch.data.FoodDbHelper;
 import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
-import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
+import ru.xpendence.development.gimstopwatch.foodstuffs.GoodsArchiveObject;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentCharts;
 
 /**
@@ -32,26 +31,29 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartHolder>
 
     private FragmentCharts fragmentCharts;
 
-    private ArrayList<ArrayList<GoodInDayRation>> archivesForCharts = new ArrayList<>();
+    /**
+     * Создаём два архива.
+     * Первый — содержит объекты, значения которых потом пойдут в таблицу и Bitmap.
+     * Второй — содержит Bitmap'ы.
+     */
+    private ArrayList<GoodsArchiveObject> archivesForCharts = new ArrayList<>();
     private ArrayList<Bitmap> bitmapsForCharts = new ArrayList<>();
 
-    public ChartAdapter(FragmentCharts fragmentCharts) {
+    public ChartAdapter(FragmentCharts fragmentCharts, FragmentActivity activity) {
         this.fragmentCharts = fragmentCharts;
         int index = 0;
-        Map<String, ArrayList<GoodInDayRation>> goods = new TreeMap<>(FoodStuffsData.archiveRations);
+        TreeMap<String, GoodsArchiveObject> goods = new TreeMap<>(FoodStuffsData.archiveStrings);
         for (String s : goods.keySet()) {
             System.out.println(s);
         }
-        Map<String, Bitmap> charts = new TreeMap<>(FoodStuffsData.archiveCharts);
-        for (String s : charts.keySet()) {
+        for (String s : goods.keySet()) {
             System.out.println(s);
         }
         Log.d(TAG, String.valueOf(goods.size()));
-        Log.d(TAG, String.valueOf(charts.size()));
-        for (String key : FoodStuffsData.archiveRations.keySet()) {
+        for (String key : FoodStuffsData.archiveStrings.keySet()) {
             Log.d(TAG, "index - " + String.valueOf(index));
             archivesForCharts.add(index, goods.get(key));
-            bitmapsForCharts.add(index++, charts.get(key));
+            bitmapsForCharts.add(index++, new FoodDbHelper(activity).createBitmap(goods.get(key)));
         }
     }
 
@@ -77,7 +79,7 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartHolder>
                     public void onClick(View v) {
                         // TODO: 06.06.17 Проблема в том, что я инициализирую таблицу последней позицией.
                         // TODO: 06.06.17 Отправлять весь архив и работать с ним.
-                        fragmentCharts.setChartHeader(archivesForCharts.get(position - 3).get(0).getDate());
+                        fragmentCharts.setChartHeader(archivesForCharts.get(position - 3).getDate());
                         fragmentCharts.showTable(archivesForCharts, position - 3);
                     }
                 });

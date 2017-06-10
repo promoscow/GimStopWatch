@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         for (String good : goods.keySet()) FoodStuffsData.goodsList.add(good);
         System.out.println(FoodStuffsData.goodsList.size());
 
+        /** Filling archive database from script. */
         new FillArchiveScript(getBaseContext(),
                 FoodStuffsData.dailyGoods).fillArchiveWithDefaultData(this);
 
@@ -62,4 +63,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        /** Проверка, не настало ли завтра */
+        FoodStuffsData.checkDate(this);
+    }
 }

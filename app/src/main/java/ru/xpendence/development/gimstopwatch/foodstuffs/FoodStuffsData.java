@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import ru.xpendence.development.gimstopwatch.data.FoodDbHelper;
-import ru.xpendence.development.gimstopwatch.util.ChartsGraphicsFactory;
 
 /**
  * Created by promoscow on 28.05.17.
@@ -75,46 +74,9 @@ public class FoodStuffsData {
             }
             ArrayList<GoodInDayRation> temp = (ArrayList<GoodInDayRation>) dailyGoods.clone();
             archiveRations.put(date, temp);
-            archiveCharts.put(date, new ChartsGraphicsFactory(context).createChartImage(temp));
             FoodDbHelper.writeArchiveToDb(date, temp, context);
         }
         dailyGoods.clear();
         date = todayDate;
     }
-
-//    public static int setImageResourseForCharts(int position) {
-//        switch (position) {
-//            case 0:
-//                return R.drawable.chart_01_06_2017;
-//            case 1:
-//                return R.drawable.chart_02_06_2017;
-//            case 2:
-//                return R.drawable.chart_03_06_2017;
-//            case 3:
-//                return R.drawable.chart_01_06_2017;
-//            case 4:
-//                return R.drawable.chart_02_06_2017;
-//            case 5:
-//                return R.drawable.chart_03_06_2017;
-//            case 6:
-//                return R.drawable.chart_01_06_2017;
-//            case 7:
-//                return R.drawable.chart_02_06_2017;
-//            case 8:
-//                return R.drawable.chart_03_06_2017;
-//            case 9:
-//                return R.drawable.chart_01_06_2017;
-//            case 10:
-//                return R.drawable.chart_02_06_2017;
-//            case 11:
-//                return R.drawable.chart_03_06_2017;
-//            case 12:
-//                return R.drawable.chart_01_06_2017;
-//            case 13:
-//                return R.drawable.chart_02_06_2017;
-//            case 14:
-//                return R.drawable.chart_03_06_2017;
-//        }
-//        return R.drawable.testing1;
-//    }
 }

@@ -47,11 +47,9 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentBelowNutrients;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentFoodsInfo;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentSettings;
-import ru.xpendence.development.gimstopwatch.util.ChartsGraphicsFactory;
 import ru.xpendence.development.gimstopwatch.util.CommonSettings;
 import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
-import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.archiveCharts;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.archiveRations;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.count;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.dailyGoods;
@@ -92,7 +90,9 @@ public class AppActivity extends AppCompatActivity {
     ImageView charts;
     ImageView settings;
 
-    /** TextViews */
+    /**
+     * TextViews
+     */
     TextView accountUnderline;
     TextView fillDayRateUnderline;
     TextView nutrientsRatioUnderline;
@@ -104,6 +104,9 @@ public class AppActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+
+        /** Проверка, не настало ли завтра */
+        FoodStuffsData.checkDate(this);
 
         final float scale = getResources().getDisplayMetrics().density;
 
@@ -159,7 +162,9 @@ public class AppActivity extends AppCompatActivity {
         Log.d("calcDP", String.valueOf(calcDP(100)));
     }
 
-    /** Underlines has been changed as accent color */
+    /**
+     * Underlines has been changed as accent color
+     */
     private void setUnderlinesAsDefault() {
         accountUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
         fillDayRateUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
@@ -168,7 +173,9 @@ public class AppActivity extends AppCompatActivity {
         settingsUnderline.setTextColor(getResources().getColor(R.color.primary_dark_custom));
     }
 
-    /** Setting up menu icons color as default */
+    /**
+     * Setting up menu icons color as default
+     */
     private void setIconsColorAsDefault() {
         account.setImageResource(R.drawable.account);
         fillDayRate.setImageResource(R.drawable.format_line_weight);
@@ -194,7 +201,9 @@ public class AppActivity extends AppCompatActivity {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, i, r.getDisplayMetrics());
     }
 
-    /** Define all display parameters */
+    /**
+     * Define all display parameters
+     */
     public void defineDensity() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -206,7 +215,9 @@ public class AppActivity extends AppCompatActivity {
         Log.d("dpWidth", String.valueOf(dpWidth));
     }
 
-    /** Обработчик меню. Основные фрагменты запускаются отсюда. */
+    /**
+     * Обработчик меню. Основные фрагменты запускаются отсюда.
+     */
     public void onClickMenu(View view) {
 
         new AppActivity();
@@ -218,7 +229,9 @@ public class AppActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.charts:
-//                setUnderlineAlpha(chartsUnderline);
+                /** Проверка, не настало ли завтра */
+                FoodStuffsData.checkDate(this);
+
                 headingText.setText(R.string.charts_text);
                 setIconsColorAsDefault();
                 setUnderlinesAsDefault();
@@ -231,7 +244,9 @@ public class AppActivity extends AppCompatActivity {
                 showFragmentBottom(FragmentBelowTimer.newInstance());
                 break;
             case R.id.fill_day_rate:
-//                setUnderlineAlpha(fillUnderline);
+                /** Проверка, не настало ли завтра */
+                FoodStuffsData.checkDate(this);
+
                 headingText.setText(R.string.cal_daily_norm);
                 setIconsColorAsDefault();
                 setUnderlinesAsDefault();
@@ -244,7 +259,9 @@ public class AppActivity extends AppCompatActivity {
                 showFragmentBottom(FragmentBelowFillDayRate.newInstance());
                 break;
             case R.id.nutrients_ratio:
-//                setUnderlineAlpha(nutrientsUnderline);
+                /** Проверка, не настало ли завтра */
+                FoodStuffsData.checkDate(this);
+
                 setIconsColorAsDefault();
                 setUnderlinesAsDefault();
                 nutrientsRatio.setImageResource(R.drawable.chart_donut_accent);
@@ -257,7 +274,9 @@ public class AppActivity extends AppCompatActivity {
                 showFragmentBottom(FragmentBelowNutrients.newInstance());
                 break;
             case R.id.account:
-//                setUnderlineAlpha(accountUnderline);
+                /** Проверка, не настало ли завтра */
+                FoodStuffsData.checkDate(this);
+
                 setIconsColorAsDefault();
                 setUnderlinesAsDefault();
                 account.setImageResource(R.drawable.account_accent);
@@ -270,7 +289,9 @@ public class AppActivity extends AppCompatActivity {
                 showFragmentBottom(FragmentBelowAccount.newInstance());
                 break;
             case R.id.settings:
-//                setUnderlineAlpha(settingsUnderline);
+                /** Проверка, не настало ли завтра */
+                FoodStuffsData.checkDate(this);
+
                 setIconsColorAsDefault();
                 setUnderlinesAsDefault();
                 settings.setImageResource(R.drawable.settings_accent);
@@ -283,6 +304,9 @@ public class AppActivity extends AppCompatActivity {
                 showFragmentBottom(FragmentBelowAccount.newInstance());
                 break;
             case R.id.info_food_button:
+                /** Проверка, не настало ли завтра */
+                FoodStuffsData.checkDate(this);
+
                 headingText.setText(R.string.your_ration_today);
 
                 Fragment fragmentInfo = FragmentFoodsInfo.newInstance();
@@ -326,8 +350,13 @@ public class AppActivity extends AppCompatActivity {
     AlertDialog alertDialog;
     AutoCompleteTextView autoCompleteTextView;
 
-    /** Обработчик поиска продукта */
+    /**
+     * Обработчик поиска продукта
+     */
     public void onClickAddFoodButton(View view) {
+        /** Проверка, не настало ли завтра */
+        FoodStuffsData.checkDate(this);
+
         layoutInflater = LayoutInflater.from(view.getContext());
         addFoodView = layoutInflater.inflate(R.layout.add_food_layout, null);
         alertDialogBuilder = new AlertDialog.Builder(view.getContext());
@@ -402,6 +431,7 @@ public class AppActivity extends AppCompatActivity {
             }
 
             TextView textView = (TextView) addFoodView.findViewById(R.id.good_name);
+
             @Override
             public void afterTextChanged(Editable s) {
                 if (s != null && s.length() != 0) {
@@ -443,11 +473,16 @@ public class AppActivity extends AppCompatActivity {
         alertDialog.setCanceledOnTouchOutside(true);
     }
 
-    /** Информация о выбранном продукте и добавление его в список съеденных */
+    /**
+     * Информация о выбранном продукте и добавление его в список съеденных
+     */
     private void addGoodsToRation(String goodName) {
 
+        /** Проверка, не настало ли завтра */
+        FoodStuffsData.checkDate(this);
+
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.hideSoftInputFromWindow(autoCompleteTextView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
         try {
             Thread.sleep(200);
@@ -500,8 +535,8 @@ public class AppActivity extends AppCompatActivity {
                     System.out.println(newPortion.toString());
                     dailyGoods.add(newPortion);
 
-                    archiveRations.put(s1, dailyGoods);
-                    archiveCharts.put(s1, new ChartsGraphicsFactory(getBaseContext()).createChartImage(dailyGoods));
+//                    archiveRations.put(s1, dailyGoods);
+//                    archiveCharts.put(s1, new ChartsGraphicsFactory(getBaseContext()).createChartImage(dailyGoods));
                     Log.e(s1, String.valueOf(archiveRations.get(s1)));
 //                    for (String archiveRation : archiveRations.keySet()) {
 //                        for (int i = 0; i < archiveRations.size() - 1; i++) {
@@ -604,42 +639,26 @@ public class AppActivity extends AppCompatActivity {
         caloriesTableValue.setText(caloriesValue);
     }
 
-    private void runFillDayRateFragment() {
-        showFragmentTop(FragmentFillDayRate.newInstance());
-        showFragmentBottom(FragmentBelowFillDayRate.newInstance());
-    }
-
-    /** Переход на фрагмент, вместо @FragmentBelowFillDayRate выводим фрагмент
+    /**
+     * Переход на фрагмент, вместо @FragmentBelowFillDayRate выводим фрагмент
      * со списком съеденных продуктов и возможностью их удалять/редактировать.
+     *
      * @param view — обычный View (кнопка, в данном случае).
      */
     public void onClickEditFoodButton(View view) {
-    }
-
-//    /** Переход на @FragmentFillDayRate */
-//    public void onClickInfoFoodButton(View view) {
-////        setUnderlineAlpha(fillUnderline);
-//        TextView headingText = (TextView) findViewById(R.id.heading);
-//        headingText.setText(R.string.your_ration_today);
-//        Fragment fragmentInfo = FragmentFoodsInfo.newInstance();
-//        CommonSettings.getInstance(this);
-//        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
-//        ViewGroup viewGroup = (FrameLayout) findViewById(R.id.main_fragment_view);
-//
-//    }
-
-    private void setMenuButtonToFDR(TextView headingText) {
-        headingText.setText(R.string.cal_daily_norm);
-        setIconsColorAsDefault();
-        setUnderlinesAsDefault();
-        fillDayRate.setImageResource(R.drawable.format_line_weight_accent);
-        fillDayRateUnderline.setTextColor(getResources().getColor(R.color.accent_custom));
-        runFillDayRateFragment();
     }
 
     public void onClickEditAccountButton(View view) {
     }
 
     public void onClickInfoAccountButton(View view) {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        /** Проверка, не настало ли завтра */
+        FoodStuffsData.checkDate(this);
     }
 }

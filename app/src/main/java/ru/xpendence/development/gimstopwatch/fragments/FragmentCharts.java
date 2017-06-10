@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import ru.xpendence.development.gimstopwatch.R;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
+import ru.xpendence.development.gimstopwatch.foodstuffs.GoodsArchiveObject;
 import ru.xpendence.development.gimstopwatch.util.ChartAdapter;
 import ru.xpendence.development.gimstopwatch.util.CommonSettings;
 
@@ -30,23 +31,29 @@ public class FragmentCharts extends Fragment {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    /** Table */
+    /**
+     * Table
+     */
     TextView chartDetailsHeader;
     TableLayout chartsTable;
 
-    /** Table labels */
+    /**
+     * Table labels
+     */
     TextView cal;
     TextView pro;
     TextView fat;
     TextView car;
 
-    /** Table values */
+    /**
+     * Table values
+     */
     TextView calories;
     TextView proteins;
     TextView fats;
     TextView carbohydrates;
 
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_charts, container, false);
 
         RecyclerView rationsChart = (RecyclerView) view.findViewById(R.id.rations_chart);
@@ -58,7 +65,7 @@ public class FragmentCharts extends Fragment {
                 true);
         rationsChart.setLayoutManager(rationsChartLayoutManager);
 
-        ChartAdapter chartAdapter = new ChartAdapter(this);
+        ChartAdapter chartAdapter = new ChartAdapter(this, getActivity());
         rationsChart.setAdapter(chartAdapter);
 
         chartDetailsHeader = (TextView) view.findViewById(R.id.chart_details_heading);
@@ -96,49 +103,51 @@ public class FragmentCharts extends Fragment {
         return fragment;
     }
 
-    public void setChartHeader(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM", Locale.US);
-        String s = dateFormat.format(date);
-        System.out.println(s);
-        System.out.println(chartDetailsHeader);
+    public void setChartHeader(String date) {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM", Locale.US);
+//        String s = dateFormat.format(date);
+//        System.out.println(s);
+
+        char[] c = date.toCharArray();
+        String s = String.format("%s%s.%s%s.%s%s%s%s", c[6], c[7], c[4], c[5], c[0], c[1], c[2], c[3]);
         chartDetailsHeader.setText(s);
     }
 
-    public void showTable(ArrayList<ArrayList<GoodInDayRation>> archivesForCharts, int i) {
+    public void showTable(ArrayList<GoodsArchiveObject> archivesForCharts, int i) {
         System.out.println(i);
 
         System.out.println(archivesForCharts.get(i));
-        String[] result = getValues(archivesForCharts.get(i));
-        String cal = result[0];
+
+        String cal = String.valueOf(archivesForCharts.get(i).getCalories());
         calories.setText(cal);
-        String pro = result[1];
+        String pro = String.valueOf((int) archivesForCharts.get(i).getProteins());
         proteins.setText(pro);
-        String fat = result[2];
+        String fat = String.valueOf((int) archivesForCharts.get(i).getFats());
         fats.setText(fat);
-        String car = result[3];
+        String car = String.valueOf((int) archivesForCharts.get(i).getCarbohydrates());
         carbohydrates.setText(car);
         chartsTable.setVisibility(View.VISIBLE);
     }
 
-    private String[] getValues(ArrayList<GoodInDayRation> list) {
-        double calories = 0;
-        double proteins = 0;
-        double fats = 0;
-        double carbons = 0;
-
-        for (GoodInDayRation ration : list) {
-            calories += ration.getCalories();
-            proteins += ration.getProteins();
-            fats += ration.getFats();
-            carbons += ration.getCarbohydrates();
-        }
-        Log.e(TAG, String.format("%d, %d, %d, %d", (int) calories, (int) proteins, (int) fats, (int) carbons));
-
-        return new String[] {String.valueOf((int) calories),
-                String.valueOf((int) proteins),
-                String.valueOf((int) fats),
-                String.valueOf((int) carbons)
-        };
-    }
+//    private String[] getValues(ArrayList<GoodsArchiveObject> list) {
+//        double calories = 0;
+//        double proteins = 0;
+//        double fats = 0;
+//        double carbons = 0;
+//
+//        for (GoodInDayRation ration : list) {
+//            calories += ration.getCalories();
+//            proteins += ration.getProteins();
+//            fats += ration.getFats();
+//            carbons += ration.getCarbohydrates();
+//        }
+//        Log.e(TAG, String.format("%d, %d, %d, %d", (int) calories, (int) proteins, (int) fats, (int) carbons));
+//
+//        return new String[] {String.valueOf((int) calories),
+//                String.valueOf((int) proteins),
+//                String.valueOf((int) fats),
+//                String.valueOf((int) carbons)
+//        };
+//    }
 }
 
