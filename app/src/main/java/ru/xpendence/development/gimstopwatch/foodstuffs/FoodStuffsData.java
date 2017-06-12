@@ -64,19 +64,28 @@ public class FoodStuffsData {
         Log.d(TAG, String.valueOf(dailyCaloriesSummary));
     }
 
+    // TODO: 11.06.17 Прописать логи каждого шага!
+    // TODO: 11.06.17 Смотреть логику скрипта и работать от неё!!!
     public static void checkDate(Context context) {
+        Log.d(TAG, "enter checkDate");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.US);
         String todayDate = dateFormat.format(new Date());
         if (!date.equals(todayDate)) {
+            Log.d(TAG, "date not equals");
+            Log.d(TAG, String.valueOf(dailyGoods.size()));
             for (GoodInDayRation good : dailyGoods) {
                 String goodDate = dateFormat.format(good.getDate());
-                if (!goodDate.equals(date)) dailyGoods.remove(good);
+                if (!goodDate.equals(date)) {
+                    Log.d(TAG, "dailyGoods.remove(good);");
+                    dailyGoods.remove(good);
+                }
             }
+            Log.d(TAG, String.valueOf(dailyGoods.size()));
             ArrayList<GoodInDayRation> temp = (ArrayList<GoodInDayRation>) dailyGoods.clone();
             archiveRations.put(date, temp);
             FoodDbHelper.writeArchiveToDb(date, temp, context);
+            dailyGoods.clear();
+            date = todayDate;
         }
-        dailyGoods.clear();
-        date = todayDate;
     }
 }

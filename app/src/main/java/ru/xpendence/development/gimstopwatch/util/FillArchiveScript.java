@@ -32,7 +32,6 @@ public class FillArchiveScript {
 
     public void fillArchiveWithDefaultData(MainActivity mainActivity) {
 
-        Random random = new Random();
         String[] goods = {"Букатини", "Верблюжатина вареная", "Гейнер IronMaxx Titan V.2.0",
                 "Гейнер Optimum Pro Complex Gainer", "Горбуша горячего копчения", "Гречневая каша Nestle молочная",
                 "Гусь", "Десерт Чизкейк Нью Йорк Клубника KFC", "Дыня", "Жир рыбий", "Зубатка отварная",

@@ -18,6 +18,4 @@ public class Preferences {
     public static final String TODAY_FATS = "todayFats";
     public static final String TODAY_CARBOHYDRATES = "todayCarbohydrates";
     public static final String TODAY_ALL_NUTRIENTS = "todayAllNutrients";
-
-    // TODO: 10.06.17 Вероятно, придётся создать ещё одну таблицу БД для хранения сегодняшних продуктов.
 }

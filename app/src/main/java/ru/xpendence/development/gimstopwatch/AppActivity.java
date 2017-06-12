@@ -533,11 +533,16 @@ public class AppActivity extends AppCompatActivity {
                     newPortion.setAmount(amount);
                     newPortion.setDate(new Date());
                     System.out.println(newPortion.toString());
+
+                    /** Adding to today meals list. */
                     dailyGoods.add(newPortion);
+                    Log.d(TAG, String.valueOf(newPortion));
+                    Log.d("portions", String.valueOf(dailyGoods.size()));
 
 //                    archiveRations.put(s1, dailyGoods);
 //                    archiveCharts.put(s1, new ChartsGraphicsFactory(getBaseContext()).createChartImage(dailyGoods));
                     Log.e(s1, String.valueOf(archiveRations.get(s1)));
+
 //                    for (String archiveRation : archiveRations.keySet()) {
 //                        for (int i = 0; i < archiveRations.size() - 1; i++) {
 //                            Log.d("archive", archiveRations.get(archiveRation).get(i).toString());

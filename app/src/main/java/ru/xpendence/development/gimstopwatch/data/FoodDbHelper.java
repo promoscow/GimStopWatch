@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import ru.xpendence.development.gimstopwatch.MainActivity;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodsArchiveObject;
@@ -308,6 +309,26 @@ public class FoodDbHelper extends SQLiteOpenHelper {
             }
             cursor.close();
             return map;
+        }
+
+        // TODO: 11.06.17 Сделать 11 июня!!!
+        /** Наполняет dailyGoods из goodsTemporaryStorage (базы данных). */
+        public static ArrayList<GoodInDayRation> fillDailyGoodsFromDbStorage(SQLiteDatabase database) {
+            ArrayList<GoodInDayRation> mList = new ArrayList<>();
+            Cursor cursor = database.query(FoodDbContract.GoodsTemporaryStorage.TABLE_NAME,
+                    null, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                int nameIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.NAME);
+                int proteinsIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.PROTEINS);
+                int fatsIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.FATS);
+                int carbohydratesIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.CARBOHYDRATES);
+                int caloriesIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.CALORIES);
+                int category = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.CATEGORY);
+                int amount = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.AMOUNT);
+                int date = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.DATE);
+            }
+            cursor.close();
+            return mList;
         }
     }
 

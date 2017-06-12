@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         for (String good : goods.keySet()) FoodStuffsData.goodsList.add(good);
         System.out.println(FoodStuffsData.goodsList.size());
 
+        FoodStuffsData.dailyGoods = FoodDbHelper.GoodsObjectsInit.fillDailyGoodsFromDbStorage(database);
+
         /** Filling archive database from script. */
         new FillArchiveScript(getBaseContext(),
                 FoodStuffsData.dailyGoods).fillArchiveWithDefaultData(this);
