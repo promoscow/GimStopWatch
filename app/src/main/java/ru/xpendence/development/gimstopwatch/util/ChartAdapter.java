@@ -53,7 +53,14 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartHolder>
         for (String key : FoodStuffsData.archiveStrings.keySet()) {
             Log.d(TAG, "index - " + String.valueOf(index));
             archivesForCharts.add(index, goods.get(key));
-            bitmapsForCharts.add(index++, new FoodDbHelper(activity).createBitmap(goods.get(key)));
+            if (goods.get(key).getCalories() > 0) {
+                bitmapsForCharts.add(index++,
+                        new ChartsGraphicsFactory(activity).createChartImage(goods.get(key)));
+            } else {
+                Log.e(goods.get(key).getDate(), goods.get(key).toString());
+                bitmapsForCharts.add(index++,
+                        new ChartsGraphicsFactory(activity).createBlankImage(goods.get(key)));
+            }
         }
     }
 

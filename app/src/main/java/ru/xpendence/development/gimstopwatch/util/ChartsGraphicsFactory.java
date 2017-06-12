@@ -179,4 +179,15 @@ public class ChartsGraphicsFactory {
         return (summary < PersonalData.getGoalCalories())
                 ? 525 * summary / PersonalData.getGoalCalories() : 525;
     }
+
+    public Bitmap createBlankImage(GoodsArchiveObject object) {
+        Bitmap transparentBitmap = Bitmap.createBitmap(125, 525, Bitmap.Config.ARGB_8888);
+        for (int i = 0; i < 125; i++) {
+            transparentBitmap.setPixel(i, 524, Color.DKGRAY);
+        }
+        for (int i = 0; i < 125; i++) {
+            transparentBitmap.setPixel(i, 0, Color.DKGRAY);
+        }
+        return transparentBitmap;
+    }
 }

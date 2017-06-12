@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import ru.xpendence.development.gimstopwatch.data.FoodDbHelper;
 import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
@@ -54,6 +55,7 @@ import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.ar
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.count;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.dailyGoods;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.goodsList;
+import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.updateSummaries;
 
 /**
  * Main Activity for all frames.
@@ -538,6 +540,7 @@ public class AppActivity extends AppCompatActivity {
                     dailyGoods.add(newPortion);
                     Log.d(TAG, String.valueOf(newPortion));
                     Log.d("portions", String.valueOf(dailyGoods.size()));
+                    FoodDbHelper.writePortionToStorage(getBaseContext(), newPortion);
 
 //                    archiveRations.put(s1, dailyGoods);
 //                    archiveCharts.put(s1, new ChartsGraphicsFactory(getBaseContext()).createChartImage(dailyGoods));
@@ -549,13 +552,7 @@ public class AppActivity extends AppCompatActivity {
 //                        }
 //                    }
 
-                    FoodStuffsData.setDailyCaloriesSummary(dailyGoods.get(count).getCalories());
-                    PersonalData.setDailyProteins(dailyGoods.get(count).getProteins());
-                    PersonalData.setDailyFats(dailyGoods.get(count).getFats());
-                    PersonalData.setDailyCarbohydrates(dailyGoods.get(count).getCarbohydrates());
-
-                    PersonalData.setTotalDailyNutrients();
-                    FragmentFillDayRate.isCaloriesChanged = true;
+                    updateSummaries(count++);
 
                     showFragmentTop(FragmentAccount.newInstance());
                     showFragmentBottom(FragmentBelowAccount.newInstance());

@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import ru.xpendence.development.gimstopwatch.data.FoodDbHelper;
+import ru.xpendence.development.gimstopwatch.fragments.FragmentFillDayRate;
+import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 /**
  * Created by promoscow on 28.05.17.
@@ -87,5 +89,15 @@ public class FoodStuffsData {
             dailyGoods.clear();
             date = todayDate;
         }
+    }
+
+    public static void updateSummaries(int i) {
+        FoodStuffsData.setDailyCaloriesSummary(dailyGoods.get(i).getCalories());
+        PersonalData.setDailyProteins(dailyGoods.get(i).getProteins());
+        PersonalData.setDailyFats(dailyGoods.get(i).getFats());
+        PersonalData.setDailyCarbohydrates(dailyGoods.get(i).getCarbohydrates());
+
+        PersonalData.setTotalDailyNutrients();
+        FragmentFillDayRate.isCaloriesChanged = true;
     }
 }

@@ -45,11 +45,6 @@ public class FoodDbContract {
 
         public final static String _ID = BaseColumns._ID;
         public final static String NAME = "name";
-        public final static String PROTEINS = "proteins";
-        public final static String FATS = "fats";
-        public final static String CARBOHYDRATES = "carbohydrates";
-        public final static String CALORIES = "calories";
-        public final static String CATEGORY = "category";
         public final static String AMOUNT = "amount";
         public final static String DATE = "date";
     }

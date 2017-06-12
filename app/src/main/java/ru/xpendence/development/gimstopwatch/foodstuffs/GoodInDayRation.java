@@ -15,6 +15,9 @@ import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.da
  */
 
 public class GoodInDayRation {
+
+    private final String TAG = this.getClass().getSimpleName();
+
     Context context;
 
     private String name;
@@ -27,6 +30,23 @@ public class GoodInDayRation {
     private Date date;
 
     public GoodInDayRation() {
+    }
+
+    public GoodInDayRation(Context context, String name, int amount, Date date) {
+        this.context = context;
+
+
+
+        this.name = name;
+        Log.d("name.of.good", name);
+        Good good = FoodStuffsData.goods.get(name);
+        this.proteins = good.getProteins() * amount / 100;
+        this.fats = good.getFats() * amount / 100;
+        this.carbohydrates = good.getCarbohydrates() * amount / 100;
+        this.calories = good.getCalories() * amount / 100;
+        this.category = good.getCategory();
+        this.amount = amount;
+        this.date = date;
     }
 
     public GoodInDayRation(Context context, String name, int amount) {
@@ -42,8 +62,6 @@ public class GoodInDayRation {
         this.category = good.getCategory();
         this.amount = amount;
         this.date = new Date();
-
-
     }
 
     public String getName() {

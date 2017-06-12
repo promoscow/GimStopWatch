@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FoodDbHelper foodDbHelper = new FoodDbHelper(this);
-        SQLiteDatabase database = foodDbHelper.getWritableDatabase();
+        SQLiteDatabase database = FoodDbHelper.getInstance(this).getWritableDatabase();
         String s = this.getClass().getPackage().getName();
         Log.e(TAG, s);
         /** Filling goods list from database. */
@@ -50,7 +49,12 @@ public class MainActivity extends AppCompatActivity {
         for (String good : goods.keySet()) FoodStuffsData.goodsList.add(good);
         System.out.println(FoodStuffsData.goodsList.size());
 
-        FoodStuffsData.dailyGoods = FoodDbHelper.GoodsObjectsInit.fillDailyGoodsFromDbStorage(database);
+//        /** Временный скрипт, добавляющий еду */
+//        GoodInDayRation ration = new GoodInDayRation(this, "Рис Жменька Суши", 300, new Date());
+//        FoodStuffsData.archiveRations.put("20170612", ration);
+//        FoodDbHelper.writeArchiveToDb("20170613", temp, context);
+
+        FoodStuffsData.dailyGoods = FoodDbHelper.GoodsObjectsInit.fillDailyGoodsFromDbStorage(database, this);
 
         /** Filling archive database from script. */
         new FillArchiveScript(getBaseContext(),
@@ -65,11 +69,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // TODO: 13.06.17 Данные удаляются раньше, чем создаётся столбик.
     @Override
     public void onResume() {
         super.onResume();
 
         /** Проверка, не настало ли завтра */
         FoodStuffsData.checkDate(this);
+
+        if (FoodStuffsData.dailyGoods == null || FoodStuffsData.dailyGoods.size() == 0) {
+            Log.e(TAG, "dailyGoods == null");
+            SQLiteDatabase database = FoodDbHelper.getInstance(this).getWritableDatabase();
+            FoodDbHelper.GoodsObjectsInit.fillDailyGoodsFromDbStorage(database, this);
+
+            for (int i = 0; i < FoodStuffsData.dailyGoods.size(); i++) {
+                FoodStuffsData.updateSummaries(i);
+            }
+        }
     }
 }

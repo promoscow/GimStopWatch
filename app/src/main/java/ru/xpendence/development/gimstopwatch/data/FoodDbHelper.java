@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,19 +16,24 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
 import ru.xpendence.development.gimstopwatch.MainActivity;
+import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodsArchiveObject;
-import ru.xpendence.development.gimstopwatch.util.ChartsGraphicsFactory;
 
 /**
  * Created by promoscow on 26.05.17.
@@ -40,6 +45,15 @@ public class FoodDbHelper extends SQLiteOpenHelper {
     private final String TAG = this.getClass().getSimpleName();
 
     Context context;
+
+    /** Единственно правильная инициализация коннекта к БД. Через синглтон. */
+    private static FoodDbHelper mInstance = null;
+    public static FoodDbHelper getInstance(Context context) {
+        if (mInstance == null) {
+            mInstance = new FoodDbHelper(context.getApplicationContext());
+        }
+        return mInstance;
+    }
 
     /**
      * Name of main database.
@@ -109,11 +123,6 @@ public class FoodDbHelper extends SQLiteOpenHelper {
                 + FoodDbContract.GoodsTemporaryStorage.TABLE_NAME + " ("
                 + FoodDbContract.GoodsTemporaryStorage._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + FoodDbContract.GoodsTemporaryStorage.NAME + " TEXT NOT NULL, "
-                + FoodDbContract.GoodsTemporaryStorage.PROTEINS + " DOUBLE NOT NULL, "
-                + FoodDbContract.GoodsTemporaryStorage.FATS + " DOUBLE NOT NULL, "
-                + FoodDbContract.GoodsTemporaryStorage.CARBOHYDRATES + " DOUBLE NOT NULL, "
-                + FoodDbContract.GoodsTemporaryStorage.CALORIES + " INTEGER NOT NULL, "
-                + FoodDbContract.GoodsTemporaryStorage.CATEGORY + " TEXT NOT NULL, "
                 + FoodDbContract.GoodsTemporaryStorage.AMOUNT + " INTEGER NOT NULL, "
                 + FoodDbContract.GoodsTemporaryStorage.DATE + " TEXT NOT NULL);";
 
@@ -121,7 +130,7 @@ public class FoodDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_GOODS_ARCHIVE);
         db.execSQL(SQL_CREATE_TEMPORARY_STORAGE);
 
-        FoodDbHelper.ExcelParser parser = new FoodDbHelper.ExcelParser(db);
+        FoodDbHelper.ExcelParser parser = new ExcelParser(db);
         try {
             parser.fill(context.getAssets().open("calories.xls"));
         } catch (IOException e) {
@@ -200,6 +209,8 @@ public class FoodDbHelper extends SQLiteOpenHelper {
      * Service class to work with database.
      */
     public static class GoodsObjectsInit {
+
+        private final String TAG = this.getClass().getSimpleName();
 
         /**
          * This method filling goods list from database
@@ -311,24 +322,47 @@ public class FoodDbHelper extends SQLiteOpenHelper {
             return map;
         }
 
-        // TODO: 11.06.17 Сделать 11 июня!!!
         /** Наполняет dailyGoods из goodsTemporaryStorage (базы данных). */
-        public static ArrayList<GoodInDayRation> fillDailyGoodsFromDbStorage(SQLiteDatabase database) {
-            ArrayList<GoodInDayRation> mList = new ArrayList<>();
+        public static ArrayList<GoodInDayRation> fillDailyGoodsFromDbStorage(SQLiteDatabase database, MainActivity mainActivity) {
+            ArrayList<GoodInDayRation> list = new ArrayList<>();
             Cursor cursor = database.query(FoodDbContract.GoodsTemporaryStorage.TABLE_NAME,
                     null, null, null, null, null, null);
+            int count = 0;
             if (cursor.moveToFirst()) {
                 int nameIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.NAME);
-                int proteinsIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.PROTEINS);
-                int fatsIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.FATS);
-                int carbohydratesIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.CARBOHYDRATES);
-                int caloriesIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.CALORIES);
-                int category = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.CATEGORY);
-                int amount = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.AMOUNT);
-                int date = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.DATE);
+                int amountIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.AMOUNT);
+                int dateIndex = cursor.getColumnIndex(FoodDbContract.GoodsTemporaryStorage.DATE);
+
+                do {
+                    NumberFormat numberFormat = new DecimalFormat("0.00");
+                    numberFormat.setRoundingMode(RoundingMode.DOWN);
+
+                    String name = cursor.getString(nameIndex);
+                    int amount = (int) cursor.getDouble(amountIndex);
+                    String dateString = cursor.getString(dateIndex);
+
+//                    Toast.makeText(mainActivity,
+//                            String.format("%s, %d, %s", name, amount, dateString),
+//                            Toast.LENGTH_SHORT).show();
+                    Log.d("GET_FROM_STORAGE", String.format("%s, %d, %s", name, amount, dateString));
+
+                    DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
+                    Date date = null;
+                    try {
+                        date = format.parse(dateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (date != null) {
+                        Log.e("dateFormated", date.toString());
+                    }
+
+                    GoodInDayRation goodInDayRation = new GoodInDayRation(mainActivity, name, amount, date);
+                    FoodStuffsData.dailyGoods.add(count++, goodInDayRation);
+                } while (cursor.moveToNext());
             }
             cursor.close();
-            return mList;
+            return list;
         }
     }
 
@@ -360,8 +394,7 @@ public class FoodDbHelper extends SQLiteOpenHelper {
                 calories,
                 date));
 
-        FoodDbHelper foodDbHelper = new FoodDbHelper(context);
-        SQLiteDatabase database = foodDbHelper.getWritableDatabase();
+        SQLiteDatabase database = FoodDbHelper.getInstance(context).getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
@@ -372,9 +405,35 @@ public class FoodDbHelper extends SQLiteOpenHelper {
         contentValues.put(FoodDbContract.GoodsArchive.DATE, date);
 
         database.insert(FoodDbContract.GoodsArchive.TABLE_NAME, null, contentValues);
+//        database.execSQL("DROP TABLE IF EXISTS " + FoodDbContract.GoodsTemporaryStorage.TABLE_NAME);
+//        String SQL_CREATE_TEMPORARY_STORAGE = "CREATE TABLE "
+//                + FoodDbContract.GoodsTemporaryStorage.TABLE_NAME + " ("
+//                + FoodDbContract.GoodsTemporaryStorage._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+//                + FoodDbContract.GoodsTemporaryStorage.NAME + " TEXT NOT NULL, "
+//                + FoodDbContract.GoodsTemporaryStorage.AMOUNT + " INTEGER NOT NULL, "
+//                + FoodDbContract.GoodsTemporaryStorage.DATE + " TEXT NOT NULL);";
+//        database.execSQL(SQL_CREATE_TEMPORARY_STORAGE);
+
+        /** Creating new GoodsArchiveObject for charts */
+        GoodsArchiveObject goodsArchiveObject = new GoodsArchiveObject(proteins, fats,
+                carbohydrates, calories, date);
+        FoodStuffsData.archiveStrings.put(date, goodsArchiveObject);
     }
 
-    public Bitmap createBitmap(GoodsArchiveObject goodsArchiveObject) {
-        return new ChartsGraphicsFactory(context).createChartImage(goodsArchiveObject);
+    /** Запись только что добавленной порции в GoodsTemporaryStorage */
+    public static void writePortionToStorage(Context context, GoodInDayRation newPortion) {
+        SQLiteDatabase database = FoodDbHelper.getInstance(context).getWritableDatabase();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
+        String date = dateFormat.format(newPortion.getDate());
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(FoodDbContract.GoodsTemporaryStorage.NAME, newPortion.getName());
+        contentValues.put(FoodDbContract.GoodsTemporaryStorage.AMOUNT, newPortion.getAmount());
+        contentValues.put(FoodDbContract.GoodsTemporaryStorage.DATE, date);
+        Log.e("WRITE_TO_STORAGE", date);
+
+        database.insert(FoodDbContract.GoodsTemporaryStorage.TABLE_NAME, null, contentValues);
     }
 }
