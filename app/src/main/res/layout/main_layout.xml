@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_linear_container"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/timer_main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/primary_text"
+            android:textSize="24sp" />
+
+        <FrameLayout
+            android:id="@+id/main_fragment_view"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:paddingTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/clock_rewersed">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_below_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="16dp"
+            android:paddingTop="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/clock_rewersed">
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="125dp" />
+
+    <RelativeLayout
+        android:id="@+id/menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/account"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/fill_day_rate"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_toStartOf="@+id/fill_day_rate"
+            android:onClick="onClickMenu"
+            android:padding="5dp"
+            android:src="@drawable/account" />
+
+        <ImageView
+            android:id="@+id/fill_day_rate"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/nutrients_ratio"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_toStartOf="@+id/nutrients_ratio"
+            android:onClick="onClickMenu"
+            android:padding="5dp"
+            android:src="@drawable/format_line_weight" />
+
+        <ImageView
+            android:id="@+id/nutrients_ratio"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/charts"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:onClick="onClickMenu"
+            android:padding="5dp"
+            android:src="@drawable/chart_donut" />
+
+        <ImageView
+            android:id="@+id/charts"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_toEndOf="@+id/nutrients_ratio"
+            android:onClick="onClickMenu"
+            android:padding="5dp"
+            android:src="@drawable/chart_bar_stacked" />
+
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_toEndOf="@+id/charts"
+            android:onClick="onClickMenu"
+            android:padding="5dp"
+            android:src="@drawable/settings" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/menu_layout_underline"
+        android:layout_width="match_parent"
+        android:layout_height="18sp">
+
+        <TextView
+            android:id="@+id/account_underline"
+            android:layout_width="70dp"
+            android:layout_height="14sp"
+            android:layout_alignParentBottom="false"
+            android:layout_alignTop="@+id/fill_day_rate_underline"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_toStartOf="@+id/fill_day_rate_underline"
+            android:onClick="onClickMenu"
+            android:text="Я"
+            android:textAlignment="center"
+            android:textColor="@color/primary_dark"
+            android:textSize="12sp"
+            app:srcCompat="@drawable/underline"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="125dp" />
+
+        <TextView
+            android:id="@+id/fill_day_rate_underline"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignTop="@+id/nutrients_ratio_underline"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_toStartOf="@+id/nutrients_ratio_underline"
+            android:onClick="onClickMenu"
+            android:text="Нутриенты"
+            android:textAlignment="center"
+            android:textColor="@color/primary_dark"
+            android:textSize="12sp"
+            app:srcCompat="@drawable/underline"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="125dp" />
+
+        <TextView
+            android:id="@+id/nutrients_ratio_underline"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignTop="@+id/charts_underline"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:onClick="onClickMenu"
+            android:text="Калории"
+            android:textAlignment="center"
+            android:textColor="@color/primary_dark"
+            android:textSize="12sp"
+            app:srcCompat="@drawable/underline"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="125dp" />
+
+        <TextView
+            android:id="@+id/charts_underline"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_toEndOf="@+id/nutrients_ratio_underline"
+            android:onClick="onClickMenu"
+            android:text="История"
+            android:textAlignment="center"
+            android:textColor="@color/primary_dark"
+            android:textSize="12sp"
+            app:srcCompat="@drawable/underline"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="125dp" />
+
+        <TextView
+            android:id="@+id/settings_underline"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_alignTop="@+id/charts_underline"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_toEndOf="@+id/charts_underline"
+            android:text="Настройки"
+            android:textAlignment="center"
+            android:textColor="@color/primary_dark"
+            android:textSize="12sp"
+            app:srcCompat="@drawable/underline"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="125dp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
