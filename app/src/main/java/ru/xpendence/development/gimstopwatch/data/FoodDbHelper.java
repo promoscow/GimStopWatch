@@ -29,11 +29,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
+import ru.xpendence.development.gimstopwatch.AppActivity;
 import ru.xpendence.development.gimstopwatch.MainActivity;
 import ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData;
 import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodInDayRation;
 import ru.xpendence.development.gimstopwatch.foodstuffs.GoodsArchiveObject;
+import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 /**
  * Created by promoscow on 26.05.17.
@@ -405,19 +407,22 @@ public class FoodDbHelper extends SQLiteOpenHelper {
         contentValues.put(FoodDbContract.GoodsArchive.DATE, date);
 
         database.insert(FoodDbContract.GoodsArchive.TABLE_NAME, null, contentValues);
-//        database.execSQL("DROP TABLE IF EXISTS " + FoodDbContract.GoodsTemporaryStorage.TABLE_NAME);
-//        String SQL_CREATE_TEMPORARY_STORAGE = "CREATE TABLE "
-//                + FoodDbContract.GoodsTemporaryStorage.TABLE_NAME + " ("
-//                + FoodDbContract.GoodsTemporaryStorage._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                + FoodDbContract.GoodsTemporaryStorage.NAME + " TEXT NOT NULL, "
-//                + FoodDbContract.GoodsTemporaryStorage.AMOUNT + " INTEGER NOT NULL, "
-//                + FoodDbContract.GoodsTemporaryStorage.DATE + " TEXT NOT NULL);";
-//        database.execSQL(SQL_CREATE_TEMPORARY_STORAGE);
 
         /** Creating new GoodsArchiveObject for charts */
         GoodsArchiveObject goodsArchiveObject = new GoodsArchiveObject(proteins, fats,
                 carbohydrates, calories, date);
         FoodStuffsData.archiveStrings.put(date, goodsArchiveObject);
+
+        database.execSQL("DROP TABLE IF EXISTS " + FoodDbContract.GoodsTemporaryStorage.TABLE_NAME);
+        String SQL_CREATE_TEMPORARY_STORAGE = "CREATE TABLE "
+                + FoodDbContract.GoodsTemporaryStorage.TABLE_NAME + " ("
+                + FoodDbContract.GoodsTemporaryStorage._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + FoodDbContract.GoodsTemporaryStorage.NAME + " TEXT NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.AMOUNT + " INTEGER NOT NULL, "
+                + FoodDbContract.GoodsTemporaryStorage.DATE + " TEXT NOT NULL);";
+        database.execSQL(SQL_CREATE_TEMPORARY_STORAGE);
+        PersonalData.clearDailyData();
+        FoodStuffsData.clearDailyData();
     }
 
     /** Запись только что добавленной порции в GoodsTemporaryStorage */

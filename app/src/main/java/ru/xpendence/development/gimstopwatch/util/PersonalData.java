@@ -117,4 +117,17 @@ public class PersonalData {
     public static void setGoalCalories(int goalCalories) {
         PersonalData.goalCalories = goalCalories;
     }
+
+    public static void clearDailyData() {
+        dailyProteins = 0;
+        dailyFats = 0;
+        dailyCarbohydrates = 0;
+        dailyCalories = 0;
+        totalDailyNutrients = 0;
+        System.out.println(dailyProteins);
+        System.out.println(dailyFats);
+        System.out.println(dailyCarbohydrates);
+        System.out.println(dailyCalories);
+        System.out.println(totalDailyNutrients);
+    }
 }

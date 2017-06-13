@@ -61,6 +61,14 @@ public class FoodStuffsData {
 
     public static int dailyCaloriesSummary = 0;
 
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        FoodStuffsData.count = count;
+    }
+
     public static void setDailyCaloriesSummary(int calories) {
         dailyCaloriesSummary += calories;
         Log.d(TAG, String.valueOf(dailyCaloriesSummary));
@@ -99,5 +107,14 @@ public class FoodStuffsData {
 
         PersonalData.setTotalDailyNutrients();
         FragmentFillDayRate.isCaloriesChanged = true;
+    }
+
+    public static void clearDailyData() {
+        dailyGoods.clear();
+        dailyCaloriesSummary = 0;
+        setCount(0);
+        System.out.println(dailyGoods);
+        System.out.println("dailyGoods size " + dailyGoods.size());
+        System.out.println(count);
     }
 }
