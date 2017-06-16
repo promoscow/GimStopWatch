@@ -2,6 +2,7 @@ package ru.xpendence.development.gimstopwatch;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
@@ -49,6 +50,7 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentFoodsInfo;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentSettings;
 import ru.xpendence.development.gimstopwatch.util.CommonSettings;
+import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.archiveRations;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.count;
@@ -63,6 +65,16 @@ import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.up
 public class AppActivity extends AppCompatActivity {
 
     private final String TAG = this.getClass().getSimpleName();
+
+    public static final String APP_PREFERENCES = "appSettings";
+
+    /** User preferences */
+    public static final String USER_NAME = "userName";
+    public static final String USER_AGE = "userAge";
+    public static final String USER_WEIGHT = "userWeight";
+    public static final String GOAL_CALORIES = "goalCalories";
+
+    private SharedPreferences mSettings;
 
     /**
      * Static sizes of display.
@@ -100,6 +112,13 @@ public class AppActivity extends AppCompatActivity {
     TextView chartsUnderline;
     TextView settingsUnderline;
 
+    /**
+     * Alert dialogs.
+     */
+    LayoutInflater layoutInflater;
+    AlertDialog.Builder alertDialogBuilder;
+    AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -108,6 +127,9 @@ public class AppActivity extends AppCompatActivity {
 
         /** Проверка, не настало ли завтра */
         FoodStuffsData.checkDate(this);
+
+        /** Создание файла настроек */
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         final float scale = getResources().getDisplayMetrics().density;
 
@@ -345,12 +367,8 @@ public class AppActivity extends AppCompatActivity {
                 .commit();
     }
 
-    LayoutInflater layoutInflater;
     View addFoodView;
-    AlertDialog.Builder alertDialogBuilder;
-    AlertDialog alertDialog;
     AutoCompleteTextView autoCompleteTextView;
-
     /**
      * Обработчик поиска продукта
      */
@@ -655,15 +673,95 @@ public class AppActivity extends AppCompatActivity {
     public void onClickInfoAccountButton(View view) {
     }
 
+    View changeNameView;
+    TextView enterName;
+    EditText enterNameEdit;
+    /**
+     * Обработчик клика по имени
+     */
+    public void onClickChangeName(View view) {
+        layoutInflater = LayoutInflater.from(view.getContext());
+        changeNameView = layoutInflater.inflate(R.layout.set_name_layout, null);
+        alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+        alertDialogBuilder.setView(changeNameView);
+        alertDialog = alertDialogBuilder.create();
+
+        enterName = (TextView) changeNameView.findViewById(R.id.enter_name);
+        enterName.setTypeface(CommonSettings.getRobotoCondLight());
+
+        enterNameEdit = (EditText) changeNameView.findViewById(R.id.enter_name_edit);
+
+        enterNameEdit.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                    Log.e(TAG, "enter.nameChange");
+                    String result = enterNameEdit.getText().toString();
+                    if (result.matches("^[a-zA-Zа-яА-Я -]{3,30}$")) {
+                        PersonalData.setName(result);
+                        Log.e(TAG, PersonalData.getName());
+
+                        showFragmentTop(FragmentSettings.newInstance());
+                        showFragmentBottom(FragmentBelowAccount.newInstance());
+                    }
+                    alertDialog.cancel();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        alertDialog.show();
+        alertDialog.setCanceledOnTouchOutside(true);
+    }
+
+    private boolean validate(String result) {
+        return true;
+    }
+
+    public void onClickChangeAge(View view) {
+    }
+
+    public void onClickChangeWeight(View view) {
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
 
+        /** Сохранение настроек */
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putString(USER_NAME, PersonalData.getName());
+        Log.e("SAVING_NAME", PersonalData.getName());
+        editor.putInt(USER_AGE, PersonalData.getAge());
+        editor.putFloat(USER_WEIGHT, (float) PersonalData.getWeight());
+        editor.putInt(GOAL_CALORIES, PersonalData.getGoalCalories());
+        editor.apply();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        /** Загрузка сохранённых настроек */
+        if (mSettings.contains(USER_NAME)) {
+            PersonalData.setName(mSettings.getString(USER_NAME, "Новый пользователь"));
+            Log.e(TAG, PersonalData.getName());
+        }
+        if (mSettings.contains(USER_AGE)) {
+            PersonalData.setAge(mSettings.getInt(USER_AGE, 25));
+            Log.e(TAG, String.valueOf(PersonalData.getAge()));
+        }
+        if (mSettings.contains(USER_WEIGHT)) {
+            PersonalData.setWeight((double) mSettings.getFloat(USER_WEIGHT, 70));
+            Log.e(TAG, String.valueOf(PersonalData.getWeight()));
+        }
+        if (mSettings.contains(GOAL_CALORIES)) {
+            PersonalData.setGoalCalories(mSettings.getInt(GOAL_CALORIES, 2500));
+            Log.e(TAG, String.valueOf(PersonalData.getGoalCalories()));
+        }
 
         /** Проверка, не настало ли завтра */
         FoodStuffsData.checkDate(this);

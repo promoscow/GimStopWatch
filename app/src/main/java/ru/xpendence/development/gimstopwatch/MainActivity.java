@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.Map;
 
@@ -18,14 +17,6 @@ import ru.xpendence.development.gimstopwatch.foodstuffs.Good;
 import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final String APP_PREFERENCES = "appSettings";
-
-    /** User preferences */
-    public static final String USER_NAME = "userName";
-    public static final String USER_AGE = "userAge";
-    public static final String USER_WEIGHT = "userWeight";
-    public static final String GOAL_CALORIES = "goalCalories";
 
     private final String TAG = this.getClass().getSimpleName();
     public static Bitmap transparentBitmap;
@@ -46,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /** Создание файла настроек */
-        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         SQLiteDatabase database = FoodDbHelper.getInstance(this).getWritableDatabase();
         String s = this.getClass().getPackage().getName();
@@ -85,37 +73,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        /** Сохранение настроек */
-        SharedPreferences.Editor editor = mSettings.edit();
-        editor.putString(USER_NAME, PersonalData.getName());
-        editor.putInt(USER_AGE, PersonalData.getAge());
-        editor.putFloat(USER_WEIGHT, (float) PersonalData.getWeight());
-        editor.putInt(GOAL_CALORIES, PersonalData.getGoalCalories());
-        editor.apply();
     }
 
     // TODO: 13.06.17 Данные удаляются раньше, чем создаётся столбик.
     @Override
     public void onResume() {
         super.onResume();
-        /** Загрузка сохранённых настроек */
-        if (mSettings.contains(USER_NAME)) {
-            PersonalData.setName(mSettings.getString(USER_NAME, "Новый пользователь"));
-            Log.e(TAG, PersonalData.getName());
-        }
-        if (mSettings.contains(USER_AGE)) {
-            PersonalData.setAge(mSettings.getInt(USER_AGE, 25));
-            Log.e(TAG, String.valueOf(PersonalData.getAge()));
-        }
-        if (mSettings.contains(USER_WEIGHT)) {
-            PersonalData.setWeight((double) mSettings.getFloat(USER_WEIGHT, 70));
-            Log.e(TAG, String.valueOf(PersonalData.getWeight()));
-        }
-        if (mSettings.contains(GOAL_CALORIES)) {
-            PersonalData.setGoalCalories(mSettings.getInt(GOAL_CALORIES, 2500));
-            Log.e(TAG, String.valueOf(PersonalData.getGoalCalories()));
-        }
 
         /** Проверка, не настало ли завтра */
         FoodStuffsData.checkDate(this);

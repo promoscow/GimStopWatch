@@ -1,5 +1,7 @@
 package ru.xpendence.development.gimstopwatch.util;
 
+import android.util.Log;
+
 /**
  * Created by promoscow on 24.05.17.
  * All user personal data is here.
@@ -31,7 +33,10 @@ public class PersonalData {
      * Temporary static hardcode block.
      */
     static {
-        name = "John Smith";
+        if (name == null || name.length() == 0) {
+            name = "John Smith";
+            Log.e("set.name.as.default", name);
+        }
         age = 31;
         weight = 82;
         dailyCalories = 0;
