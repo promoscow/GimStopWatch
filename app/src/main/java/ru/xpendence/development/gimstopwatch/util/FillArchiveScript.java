@@ -27,7 +27,7 @@ public class FillArchiveScript {
 
     public FillArchiveScript(Context baseContext, ArrayList<GoodInDayRation> dailyGoods) {
         context = baseContext;
-        dGoods = dailyGoods;
+        dGoods = (ArrayList<GoodInDayRation>) dailyGoods.clone();
     }
 
     public void fillArchiveWithDefaultData(MainActivity mainActivity) {
@@ -59,13 +59,13 @@ public class FillArchiveScript {
 //                String a = FoodStuffsData.goods.get(String.valueOf(index)).getName();
 //                Log.d("key", a);
                 GoodInDayRation goodInDayRation = new GoodInDayRation(context, goods[x++], 100);
-                System.out.println(goodInDayRation.toString());
+//                System.out.println(goodInDayRation.toString());
                 dGoods.add(goodInDayRation);
             }
             // TODO: 10.06.17 Нужно получить <String, GoodArchiveObject>.
             String s = "2017060" + ++i;
 
-            Log.d("dailyGoods", s + " / " + dGoods.toString());
+//            Log.d("dailyGoods", s + " / " + dGoods.toString());
             ArrayList<GoodInDayRation> temp = (ArrayList<GoodInDayRation>) dGoods.clone();
             GoodsArchiveObject goodsArchiveObject = recreateTemp(dGoods, s);
 

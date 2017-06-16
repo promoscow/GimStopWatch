@@ -8,11 +8,27 @@
     android:overScrollMode="never"
     android:scrollbars="none">
 
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="125dp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rations_chart"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:overScrollMode="never"/>
+
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="125dp" />
 
         <TextView
             android:id="@+id/chart_details_heading"

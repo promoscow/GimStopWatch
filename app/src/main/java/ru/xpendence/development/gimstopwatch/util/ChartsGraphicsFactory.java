@@ -73,12 +73,12 @@ public class ChartsGraphicsFactory {
 //                    bitmap.setPixel(x, y, Color.DKGRAY);
 //                }
 //            }
-            for (int i = 0; i < 125; i++) {
-                bitmap.setPixel(i, 524, Color.DKGRAY);
-            }
-            for (int i = 0; i < 125; i++) {
-                bitmap.setPixel(i, 0, Color.DKGRAY);
-            }
+//            for (int i = 0; i < 125; i++) {
+//                bitmap.setPixel(i, 524, Color.DKGRAY);
+//            }
+//            for (int i = 0; i < 125; i++) {
+//                bitmap.setPixel(i, 0, Color.DKGRAY);
+//            }
         }
         return bitmap;
     }
@@ -182,12 +182,12 @@ public class ChartsGraphicsFactory {
 
     public Bitmap createBlankImage(GoodsArchiveObject object) {
         Bitmap transparentBitmap = Bitmap.createBitmap(125, 525, Bitmap.Config.ARGB_8888);
-        for (int i = 0; i < 125; i++) {
-            transparentBitmap.setPixel(i, 524, Color.DKGRAY);
-        }
-        for (int i = 0; i < 125; i++) {
-            transparentBitmap.setPixel(i, 0, Color.DKGRAY);
-        }
+//        for (int i = 0; i < 125; i++) {
+//            transparentBitmap.setPixel(i, 524, Color.DKGRAY);
+//        }
+//        for (int i = 0; i < 125; i++) {
+//            transparentBitmap.setPixel(i, 0, Color.DKGRAY);
+//        }
         return transparentBitmap;
     }
 }

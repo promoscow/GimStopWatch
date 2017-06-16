@@ -1,5 +1,6 @@
 package ru.xpendence.development.gimstopwatch.data;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -184,13 +185,13 @@ public class FoodDbHelper extends SQLiteOpenHelper {
                         int calories = (int) cells.next().getNumericCellValue();
                         String category = cells.next().getStringCellValue();
 
-                        Log.d(TAG, String.format("%s, %s, %s, %s, %d, %s",
-                                name,
-                                String.valueOf(proteins),
-                                String.valueOf(fats),
-                                String.valueOf(carbohydrates),
-                                calories,
-                                category));
+//                        Log.d(TAG, String.format("%s, %s, %s, %s, %d, %s",
+//                                name,
+//                                String.valueOf(proteins),
+//                                String.valueOf(fats),
+//                                String.valueOf(carbohydrates),
+//                                calories,
+//                                category));
 
                         ContentValues contentValues = new ContentValues();
                         contentValues.put(FoodDbContract.GoodsCatalog.NAME, name);
@@ -246,16 +247,16 @@ public class FoodDbHelper extends SQLiteOpenHelper {
                     int calories = (int) cursor.getDouble(caloriesIndex);
                     String category = cursor.getString(categoryIndex);
 
-                    Log.d("FROM_DATABASE", String.format("%s, %s, %s, %s, %d, %s",
-                            name,
-                            String.valueOf(proteins),
-                            String.valueOf(fats),
-                            String.valueOf(carbohydrates),
-                            calories,
-                            category));
+//                    Log.d("FROM_DATABASE", String.format("%s, %s, %s, %s, %d, %s",
+//                            name,
+//                            String.valueOf(proteins),
+//                            String.valueOf(fats),
+//                            String.valueOf(carbohydrates),
+//                            calories,
+//                            category));
 
                     Good good = new Good(name, proteins, fats, carbohydrates, calories, category);
-                    System.out.println(good.toString());
+//                    System.out.println(good.toString());
                     map.put(good.getName(), good);
                 } while (cursor.moveToNext());
             }
@@ -304,28 +305,29 @@ public class FoodDbHelper extends SQLiteOpenHelper {
                             Double.parseDouble(String.valueOf(numberFormat.format(carbohydratesTemp))
                                     .replace(",", "."));
 
-                    Log.d("FROM_ARCHIVE_DB", String.format("%s, %s, %s, %d, %s",
-                            String.valueOf(proteins),
-                            String.valueOf(fats),
-                            String.valueOf(carbohydrates),
-                            calories,
-                            date));
+//                    Log.d("FROM_ARCHIVE_DB", String.format("%s, %s, %s, %d, %s",
+//                            String.valueOf(proteins),
+//                            String.valueOf(fats),
+//                            String.valueOf(carbohydrates),
+//                            calories,
+//                            date));
 
                     GoodsArchiveObject goodsArchiveObject = new GoodsArchiveObject(proteins, fats,
                             carbohydrates, calories, date);
-                    System.out.println(goodsArchiveObject.toString());
+//                    System.out.println(goodsArchiveObject.toString());
                     map.put(date, goodsArchiveObject);
                 } while (cursor.moveToNext());
             }
-            for (String s : map.keySet()) {
-                Log.e("FROM_DATABASE", map.get(s).toString());
-            }
+//            for (String s : map.keySet()) {
+//                Log.e("FROM_DATABASE", map.get(s).toString());
+//            }
             cursor.close();
             return map;
         }
 
         /** Наполняет dailyGoods из goodsTemporaryStorage (базы данных). */
-        public static ArrayList<GoodInDayRation> fillDailyGoodsFromDbStorage(SQLiteDatabase database, MainActivity mainActivity) {
+        public static ArrayList<GoodInDayRation> fillDailyGoodsFromDbStorage(SQLiteDatabase database, Activity mainActivity) {
+            Log.e("ENTER_STORAGE", "OKAY");
             ArrayList<GoodInDayRation> list = new ArrayList<>();
             Cursor cursor = database.query(FoodDbContract.GoodsTemporaryStorage.TABLE_NAME,
                     null, null, null, null, null, null);
@@ -360,8 +362,10 @@ public class FoodDbHelper extends SQLiteOpenHelper {
                     }
 
                     GoodInDayRation goodInDayRation = new GoodInDayRation(mainActivity, name, amount, date);
-                    FoodStuffsData.dailyGoods.add(count++, goodInDayRation);
+                    list.add(count++, goodInDayRation);
+                    System.out.println(list.get(count - 1));
                 } while (cursor.moveToNext());
+//                PersonalData.fillPersonalDataAfterWakeUp();
             }
             cursor.close();
             return list;

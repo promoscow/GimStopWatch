@@ -31,6 +31,9 @@ public class PersonalData {
      * Temporary static hardcode block.
      */
     static {
+        name = "John Smith";
+        age = 31;
+        weight = 82;
         dailyCalories = 0;
         goalCalories = 2500;
 
@@ -129,5 +132,8 @@ public class PersonalData {
         System.out.println(dailyCarbohydrates);
         System.out.println(dailyCalories);
         System.out.println(totalDailyNutrients);
+    }
+
+    public static void fillPersonalDataAfterWakeUp() {
     }
 }

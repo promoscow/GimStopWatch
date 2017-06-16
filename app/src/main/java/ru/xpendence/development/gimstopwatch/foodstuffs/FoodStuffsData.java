@@ -117,4 +117,26 @@ public class FoodStuffsData {
         System.out.println("dailyGoods size " + dailyGoods.size());
         System.out.println(count);
     }
+
+    public static void fillDailyGoodsAfterWakeUp() {
+        Log.d(TAG, dailyGoods.toString());
+        for (GoodInDayRation good : dailyGoods) {
+            Log.e(TAG, good.toString());
+            PersonalData.setDailyProteins(good.getProteins());
+            PersonalData.setDailyFats(good.getFats());
+            PersonalData.setDailyCarbohydrates(good.getCarbohydrates());
+            PersonalData.setDailyCalories(good.getCalories());
+            PersonalData.setTotalDailyNutrients();
+            setDailyCaloriesSummary(good.getCalories());
+        }
+        setCount(dailyGoods.size());
+        Log.d(TAG, String.format("%s, %s, %s, %s, = %s; %s,",
+                String.valueOf(PersonalData.getDailyProteins()),
+                String.valueOf(PersonalData.getDailyFats()),
+                String.valueOf(PersonalData.getDailyCarbohydrates()),
+                String.valueOf(PersonalData.getDailyCalories()),
+                String.valueOf(PersonalData.getTotalDailyNutrients()),
+                String.valueOf(getDailyCaloriesSummary())));
+        Log.d("count", String.valueOf(count));
+    }
 }

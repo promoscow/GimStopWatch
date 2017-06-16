@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +49,6 @@ import ru.xpendence.development.gimstopwatch.fragments.FragmentFoodsInfo;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentNutrientsRatio;
 import ru.xpendence.development.gimstopwatch.fragments.FragmentSettings;
 import ru.xpendence.development.gimstopwatch.util.CommonSettings;
-import ru.xpendence.development.gimstopwatch.util.PersonalData;
 
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.archiveRations;
 import static ru.xpendence.development.gimstopwatch.foodstuffs.FoodStuffsData.count;
@@ -384,7 +383,7 @@ public class AppActivity extends AppCompatActivity {
         addGoodInGramsText.setTypeface(CommonSettings.getRobotoCondLight());
         addGoodInGramsText.setVisibility(View.GONE);
 
-        RelativeLayout addGood = (RelativeLayout) addFoodView.findViewById(R.id.add_good_layout);
+        LinearLayout addGood = (LinearLayout) addFoodView.findViewById(R.id.add_good_layout);
         addGood.setVisibility(View.GONE);
 
 //        final EditText addFoodEditText = (EditText) addFoodView.findViewById(R.id.add_food_name_text);
@@ -509,7 +508,7 @@ public class AppActivity extends AppCompatActivity {
         addGoodInGramsText.setTypeface(CommonSettings.getRobotoCondLight());
         addGoodInGramsText.setVisibility(View.VISIBLE);
 
-        RelativeLayout addGood = (RelativeLayout) addFoodView.findViewById(R.id.add_good_layout);
+        LinearLayout addGood = (LinearLayout) addFoodView.findViewById(R.id.add_good_layout);
         addGood.setVisibility(View.VISIBLE);
 
         final EditText addGoodEditText = (EditText) addFoodView.findViewById(R.id.add_good_edit_text);
@@ -657,10 +656,26 @@ public class AppActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
         /** Проверка, не настало ли завтра */
         FoodStuffsData.checkDate(this);
+
+        if (FoodStuffsData.dailyGoods == null || FoodStuffsData.dailyGoods.size() == 0) {
+            Log.e(TAG, "dailyGoods == null");
+            SQLiteDatabase database = FoodDbHelper.getInstance(this).getWritableDatabase();
+            FoodDbHelper.GoodsObjectsInit.fillDailyGoodsFromDbStorage(database, this);
+
+            for (int i = 0; i < FoodStuffsData.dailyGoods.size(); i++) {
+                FoodStuffsData.updateSummaries(i);
+            }
+        }
     }
 }
