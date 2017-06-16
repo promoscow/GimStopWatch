@@ -717,11 +717,17 @@ public class AppActivity extends AppCompatActivity {
         alertDialog.setCanceledOnTouchOutside(true);
     }
 
-    private boolean validate(String result) {
-        return true;
-    }
+    View changeAgeView;
 
     public void onClickChangeAge(View view) {
+        layoutInflater = LayoutInflater.from(view.getContext());
+        changeAgeView = layoutInflater.inflate(R.layout.set_age_layout, null);
+        alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+        alertDialogBuilder.setView(changeAgeView);
+        alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+        alertDialog.setCanceledOnTouchOutside(true);
     }
 
     public void onClickChangeWeight(View view) {
